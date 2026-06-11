@@ -1,0 +1,42 @@
+{
+  "summary": "Iter 382 — Verified chat message EDIT optimistic-update fix in /app/frontend/src/pages/ChatPage.js saveEdit() (~line 442-456). Full e2e flow validated as admin@meetflow.com on /chat. Sent 'ORIG msg E1 iter382', clicked title='Bearbeiten' pencil button, typed 'EDITED msg E1 iter382', pressed Enter. The bubble updated IMMEDIATELY to the new content and the '(bearbeitet)' label appeared — without WS round-trip and without switching chats. After hard reload, the edit persists from server. However, the SAME class of bug still exists for the DELETE flow: deleteMessage() (line 459-461) has no optimistic update and relies solely on the WS 'message-deleted' event. In the test session the WS repeatedly failed to connect (see console), so after clicking the trash icon the backend DELETE succeeded but the bubble remained visible on screen. This is the next bug to fix to fully close the issue the user reported.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "ChatPage.deleteMessage()",
+        "issue": "Same root cause as the edit bug just fixed: deleteMessage() only awaits api.delete(...) and depends on the WebSocket 'message-deleted' event to remove the bubble from local state. When the WS is closed/reconnecting (observed multiple 'WebSocket is closed before the connection is established' warnings in the preview env), the backend deletion happens but the UI keeps showing the deleted message until the user changes chats or reloads. Apply the same optimistic-update pattern: after a successful DELETE, do setMessages(prev => prev.filter(m => m.message_id !== msgId)).",
+        "selector": "button[title=\"Löschen\"] (no data-testid)",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Chat WebSocket",
+        "issue": "wss://.../api/ws/chat/user_<id> repeatedly fails with 'WebSocket is closed before the connection is established.' This causes all features that rely on WS push events (delete, reaction, new-message from other users) to be unreliable. Edit is now safe thanks to the optimistic update; delete is NOT. Investigate the WS endpoint health / ingress upgrade headers.",
+        "affected_selectors": ["any WS-driven chat update"]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Apply the same optimistic-update pattern in deleteMessage() — after api.delete succeeds, call setMessages(prev => prev.filter(m => m.message_id !== msgId)) so the bubble disappears immediately regardless of WS state.",
+    "Add data-testid attributes to the Bearbeiten / Löschen / Antworten / Reaction buttons (e.g. data-testid={`msg-edit-${msg.message_id}`}) so future Playwright tests don't have to rely on the German title attribute.",
+    "Investigate why wss://.../api/ws/chat/<user_id> keeps closing immediately in the preview env — even though the optimistic updates mask edit/delete latency, the real-time push to OTHER participants will silently fail."
+  ],
+  "critical_code_review_comments": [
+    "ChatPage.js is now 1409 lines long — well over the 700-line guideline. Split into ChatSidebar, ChatHeader, MessageList, MessageBubble, MessageInput, EditMessageInline, NewChatDialog sub-components for maintainability and so the optimistic-update fixes live next to the component that owns the state.",
+    "deleteMessage(), togglePin(), toggleMute() all silently swallow errors with `catch { /* ignore */ }` or only a generic toast — they should surface the server error like the recently-improved deleteConversation() does (HTTP status + detail), so production failures stay diagnosable.",
+    "The edit pencil and trash buttons appear only on hover and have no data-testid — testability is poor. Add stable testids.",
+    "saveEdit() does not trim editContent before sending — empty-whitespace edits are blocked client-side via `!editContent.trim()` but the trimmed value is not what gets sent; minor inconsistency."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (frontend-only request)", "frontend": "edit flow: 100% PASS; delete flow: FAIL (same root cause, not part of the reported fix)"},
+  "test_credentials": "admin@meetflow.com / admin123 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Sent one message 'ORIG msg E1 iter382' into the first existing conversation (Test Group Remove). After test the edited message was attempted-deleted; due to the bug above it may still exist server-side — verify if cleanup matters.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "The reported edit bug IS fixed and verified end-to-end (optimistic update + reload persistence). DO NOT regress this. Next iteration should add the analogous optimistic update to deleteMessage() — pattern is exactly: `setMessages(prev => prev.filter(m => m.message_id !== msgId))` right after `await api.delete(...)`. Login testid: `login-email-input` / `login-password-input` / `login-submit-button`. Chat list items have data-testid `conv-conv_<id>` (NOT `conv-item-`). The message input is `input[placeholder*=\"Nachricht\"]`. Edit/Delete buttons currently selectable only via `button[title=\"Bearbeiten\"]` / `button[title=\"Löschen\"]`.",
+  "rca of the issue": "Reported edit bug RCA: saveEdit() used to call only `api.put(...)` and waited for the WS 'message-edited' broadcast to update local React state. When the WS push was delayed/dropped/socket-reconnecting (which happens often in the preview env), the local `messages` array was never updated, so the bubble kept showing the old text until the user switched conversations or reloaded. Fix applied: take the PUT response data and immediately splice it into the messages state — `setMessages(prev => prev.map(m => m.message_id === data.message_id ? data : m))`. Verified: edit reflected without page change and persisted after F5. Residual bug: same RCA still affects deleteMessage() — needs the analogous filter-out call right after `await api.delete(...)`."
+}

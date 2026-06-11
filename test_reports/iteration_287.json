@@ -1,0 +1,63 @@
+{
+  "summary": "Iteration 287 — Dialog Outside-Click Prevention + Catering Push Notifications Fix. Backend: 10/10 tests passed. Frontend: All dialog behaviors verified (outside-click blocked, Escape/X-button close works). Notification bell shows catering_status notifications correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter287_dialog_notifications.py",
+    "/app/test_reports/pytest/iteration_287_notifications.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "DIALOG OUTSIDE-CLICK FIX: dialog.jsx and sheet.jsx now have onPointerDownOutside/onInteractOutside with e.preventDefault() - dialogs stay open when clicking outside",
+    "DIALOG CLOSE METHODS: X-button and Escape key still work correctly to close dialogs",
+    "NOTIFICATION FIX: GET /api/notifications cutoff now uses datetime object instead of isoformat() string - fixes type mismatch with MongoDB",
+    "CATERING NOTIFICATIONS: _notify_catering_status in _common.py creates notifications with type='catering_status', category='bookings'",
+    "NOTIFICATION CATEGORIES: Bookings tab in notification panel shows catering_status notifications (Catering bestaetigt, Catering abgelehnt)",
+    "REJECTION REASON: Notification body includes 'Grund: {reason}' when catering is rejected"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter287_dialog_notifications.py"
+  ],
+  "success_rate": {
+    "backend": "100% (10/10 passed)",
+    "frontend": "100% (all dialog and notification behaviors verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Used existing test data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 287 tested successfully. Two fixes verified: (1) Dialog outside-click prevention - dialogs (Neue Aufgabe, Buchung anlegen) no longer close when clicking outside, but X-button and Escape still work. (2) Notification since_days filter fix - catering_status notifications now appear in the notification panel under 'Buchungen' category. The notification bell shows correct unread count (15+).",
+  "test_details": {
+    "backend_api": {
+      "notifications_since_days": "PASS - GET /api/notifications?since_days=30 returns notifications (fix for datetime vs ISO-string)",
+      "notifications_have_category": "PASS - All notifications have category field (chat, news, tasks, meetings, bookings, surveys, system)",
+      "notifications_have_link_target": "PASS - All notifications have link_target for deep-linking",
+      "catering_status_notifications_exist": "PASS - catering_status notifications are returned",
+      "catering_status_category_bookings": "PASS - catering_status notifications have category='bookings'",
+      "catering_requests_list": "PASS - GET /api/catering-requests returns list",
+      "catering_transition_confirmed": "PASS - POST /api/catering-requests/{id}/transition with status='confirmed' works",
+      "catering_transition_rejected": "PASS - POST /api/catering-requests/{id}/transition with status='rejected' includes reason",
+      "notification_categories_endpoint": "PASS - GET /api/notifications/categories returns per-category counts",
+      "unread_count_endpoint": "PASS - GET /api/notifications/unread-count returns count"
+    },
+    "frontend_components": {
+      "neue_aufgabe_dialog_outside_click": "PASS - Dialog stays open after clicking outside",
+      "neue_aufgabe_dialog_escape_close": "PASS - Dialog closes with Escape key",
+      "neue_aufgabe_dialog_x_button_close": "PASS - Dialog closes with X button",
+      "booking_dialog_outside_click": "PASS - Booking dialog stays open after clicking outside",
+      "notification_bell_visible": "PASS - Notification bell shows unread count (15)",
+      "notification_panel_opens": "PASS - Clicking bell opens notification panel",
+      "notification_categories_tabs": "PASS - Panel has category tabs (Chat, News, Aufgaben, Meetings, Buchungen)",
+      "catering_notifications_visible": "PASS - Catering bestaetigt/abgelehnt notifications visible in panel"
+    }
+  }
+}

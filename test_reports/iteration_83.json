@@ -1,0 +1,131 @@
+{
+  "summary": "Iteration 83 - Rate-Limits, System-Audit Panel, Cron-Idle Rule: All 21 backend tests PASSED (100%). Frontend UI fully verified: System-Audit panel with category/action filters, audit entries showing session events with IP/UA, health alerts with details. Cron-idle input visible in Alert Settings with default value 90. Fixed timezone bug in health_alerts.py cron_idle rule. Mobile dropdown includes System-Audit option.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_83_rate_limits_audit.py",
+    "/app/test_reports/pytest/iteration_83_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BACKEND: services/rate_limit.py - Well-structured MongoDB-based rate limiter with fixed-window counter, TTL 1h, fail-open on DB errors",
+    "BACKEND: services/rate_limit.py lines 88-98 - enforce_rate_limit raises HTTPException 429 with Retry-After header and detail message",
+    "BACKEND: routes/surveys.py lines 317-324 - feedback.submit rate-limit: 5/300s per user",
+    "BACKEND: routes/news.py lines 1183-1190 - news.report rate-limit: 10/600s per user",
+    "BACKEND: routes/news.py lines 1259-1268 - push.subscribe rate-limit: 20/60s per user",
+    "BACKEND: services/permission_audit.py lines 10-65 - log_caps_change now captures IP from request.client.host (with x-forwarded-for fallback) and user_agent from headers",
+    "BACKEND: routes/admin.py lines 121-138 - force-logout endpoint passes category='session' and request to log_caps_change for IP/UA capture",
+    "BACKEND: services/health_alerts.py lines 137-149 - _dispatch_alert writes audit entry with category='alert', action='health_alert', actor_id='system'",
+    "BACKEND: services/health_alerts.py lines 211-229 - cron_idle rule checks maintenance_runs collection, fires when last tick > cron_idle_minutes",
+    "BACKEND: routes/admin.py lines 942-956 - GET /admin/audit/system with category/action filters, limit capped at 500, sorted timestamp desc",
+    "FRONTEND: SystemAuditPanel.js - Complete panel with data-testid='system-audit-panel', category filter, action filter, refresh button, audit entries with badges",
+    "FRONTEND: AdminPage.js line 268 - System-Audit tab added to desktop tab bar with data-testid='admin-tab-system-audit'",
+    "FRONTEND: AdminPage.js line 248 - System-Audit option added to mobile dropdown",
+    "FRONTEND: HealthDashboard.js lines 421-428 - Cron-idle input with data-testid='alerts-cron-idle-input', label shows '0 = aus'"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_83_rate_limits_audit.py",
+    "/app/backend/services/health_alerts.py (fixed timezone bug in cron_idle rule)"
+  ],
+  "success_rate": {
+    "backend": "100% (21/21 passed)",
+    "frontend": "100% (all UI elements verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Rate limit counters created during testing (auto-expire via TTL), audit entries created via force-logout and health-alert test",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 83 validated: (1) Rate-limits on /feedback/submit (5/300s), /news/report (10/600s), /news/push/subscribe (20/60s) - all per-user via user_id. 429 response includes Retry-After header and 'Rate limit exceeded: N/Xs' detail. (2) GET /api/admin/audit/system returns {entries:[], total} with filters: category (capabilities|session|alert), action (force_logout|health_alert|...). Admin-only (403 else). Limit capped at 500. Sorted timestamp desc. (3) Force-logout creates audit entry with category='session', action='force_logout', IP from request.client.host (or x-forwarded-for), user_agent from headers. (4) Health-alert creates audit entry with category='alert', action='health_alert', actor_id='system', details containing subject/severity/emails/pushes/recipients. (5) cron_idle_minutes config: default 90, 0 disables. Rule fires when maintenance_runs last tick > cron_idle_minutes. (6) Frontend: data-testid='system-audit-panel' with 'audit-category-filter', 'audit-action-filter', 'audit-refresh-btn', 'audit-entry-{id}' rows. Mobile dropdown includes System-Audit. (7) data-testid='alerts-cron-idle-input' in HealthDashboard AlertSettings. BUG FIXED: health_alerts.py cron_idle rule had timezone-naive vs aware datetime comparison - fixed by ensuring tick_ts has tzinfo. MOCKED: Push delivery (no push sub), SMTP delivery (invalid host from prior tests).",
+  "test_results_summary": {
+    "rate_limit_feedback_submit": {
+      "first_5_succeed": "PASSED",
+      "6th_returns_429": "PASSED - with Retry-After header and 'Rate limit exceeded: 5/300s' detail"
+    },
+    "rate_limit_news_report": {
+      "10_per_600s": "PASSED"
+    },
+    "rate_limit_push_subscribe": {
+      "20_per_60s": "PASSED"
+    },
+    "rate_limit_isolation": {
+      "per_user_isolation": "PASSED - different users have separate counters"
+    },
+    "rate_limit_service_code": {
+      "enforce_rate_limit_exists": "PASSED",
+      "check_rate_limit_exists": "PASSED"
+    },
+    "system_audit_endpoint": {
+      "requires_admin": "PASSED - 403 for non-admin",
+      "returns_entries_and_total": "PASSED",
+      "filter_by_category": "PASSED - capabilities, session, alert",
+      "filter_by_action": "PASSED - force_logout, health_alert, etc.",
+      "limit_capped_at_500": "PASSED",
+      "sorted_timestamp_desc": "PASSED"
+    },
+    "force_logout_audit": {
+      "creates_audit_entry": "PASSED",
+      "category_session": "PASSED",
+      "action_force_logout": "PASSED",
+      "ip_captured": "PASSED - 34.16.56.64 visible in UI"
+    },
+    "health_alert_audit": {
+      "creates_audit_entry": "PASSED",
+      "category_alert": "PASSED",
+      "action_health_alert": "PASSED",
+      "actor_id_system": "PASSED",
+      "details_contain_subject_severity": "PASSED"
+    },
+    "cron_idle_rule_config": {
+      "default_90": "PASSED",
+      "set_to_0_disables": "PASSED",
+      "rule_evaluated_in_check_and_alert": "PASSED"
+    },
+    "frontend_system_audit_panel": {
+      "panel_visible": "PASSED - data-testid='system-audit-panel'",
+      "category_filter": "PASSED - data-testid='audit-category-filter' with 4 options",
+      "action_filter": "PASSED - data-testid='audit-action-filter'",
+      "refresh_button": "PASSED - data-testid='audit-refresh-btn'",
+      "audit_entries": "PASSED - 90 entries visible with badges (ALERT, SESSION)",
+      "ip_displayed": "PASSED - IP visible in session entries",
+      "details_summary": "PASSED - emails, pushes, recipients shown"
+    },
+    "frontend_cron_idle_input": {
+      "input_visible": "PASSED - data-testid='alerts-cron-idle-input'",
+      "default_value_90": "PASSED",
+      "label_shows_0_aus": "PASSED"
+    },
+    "frontend_mobile_dropdown": {
+      "system_audit_option": "PASSED - visible in mobile dropdown"
+    },
+    "regression_iteration_82": {
+      "health_dashboard_endpoint": "PASSED",
+      "health_alerts_config_endpoint": "PASSED",
+      "health_alerts_history_endpoint": "PASSED"
+    },
+    "regression_iteration_81": {
+      "health_tiles_data": "PASSED"
+    }
+  },
+  "bug_fixed": {
+    "file": "/app/backend/services/health_alerts.py",
+    "issue": "TypeError: can't subtract offset-naive and offset-aware datetimes in cron_idle rule",
+    "fix": "Added timezone awareness check: if tick_ts.tzinfo is None: tick_ts = tick_ts.replace(tzinfo=timezone.utc)",
+    "line": "218"
+  },
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": [
+      "Actual SMTP delivery (smtp.stored.example is invalid host - dispatch attempted and logged)",
+      "Actual push delivery (no admin push subscription - returns sent:0)"
+    ]
+  }
+}

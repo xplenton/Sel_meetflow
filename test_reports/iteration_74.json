@@ -1,0 +1,78 @@
+{
+  "summary": "Iteration 74 - Newsletter Preferences Frontend UI + Public Unsubscribe Page: All features tested and working correctly. ProfilePage E-Mail-Einstellungen block loads preferences from GET /api/users/me/email-preferences, toggles work (newsletter, meeting invites), digest frequency select has 3 options (immediate/daily/weekly), save persists via PUT. UnsubscribePage (public, no auth) works: valid token shows email/status, confirm-unsubscribe-button sets newsletter_enabled=false, done screen shows resubscribe-after-unsub-button, invalid token shows error with login link. State sync verified: after unsubscribe via public page, ProfilePage shows newsletter toggle as OFF.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/iteration_74.json"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "FRONTEND: ProfilePage.js - useEffect correctly fetches email preferences on mount via api.get('/users/me/email-preferences')",
+    "FRONTEND: ProfilePage.js - handleSavePrefs correctly sends PUT /users/me/email-preferences with newsletter_enabled, meeting_invites_enabled, digest_frequency",
+    "FRONTEND: ProfilePage.js - All data-testid attributes present: email-preferences-block, newsletter-enabled-toggle, meeting-invites-toggle, digest-frequency-select, save-email-preferences-button",
+    "FRONTEND: UnsubscribePage.js - Uses axios directly with REACT_APP_BACKEND_URL (correct for public page without auth context)",
+    "FRONTEND: UnsubscribePage.js - State machine: loading -> ready/error, ready -> done_unsub/error, done_unsub -> done_resub/error",
+    "FRONTEND: UnsubscribePage.js - All data-testid attributes present: unsubscribe-page, unsubscribe-loading, unsubscribe-ready, unsubscribe-error, unsubscribe-done, resubscribe-done, unsubscribe-email, confirm-unsubscribe-button, resubscribe-button, resubscribe-after-unsub-button, unsubscribe-login-link, resub-login-link",
+    "FRONTEND: App.js - Route /unsubscribe/:token correctly configured as public (no ProtectedRoute wrapper)",
+    "BACKEND: routes/auth.py - GET/PUT /users/me/email-preferences endpoints work correctly with authentication",
+    "BACKEND: routes/auth.py - GET/POST /unsubscribe/{token} and POST /unsubscribe/{token}/resubscribe work correctly with HMAC-signed tokens (no auth required)"
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend-only testing)",
+    "frontend": "100% (all 9 test scenarios passed)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123",
+    "unsubscribe_token": "dXNlcl82ZDViODc2MWFlNWU.8V9dujbeV4jUZOUy (for admin user)"
+  },
+  "seed_data_creation": "None - used existing admin user",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 74 tested Newsletter Preferences Frontend UI and Public Unsubscribe Page. Key findings: (1) ProfilePage E-Mail-Einstellungen block works correctly - loads preferences on mount, toggles work, digest frequency select has 3 options, save persists. (2) UnsubscribePage (public route /unsubscribe/:token) works correctly - shows email/status for valid token, confirm unsubscribe works, resubscribe-after-unsub works, invalid token shows error with login link. (3) State sync verified - after unsubscribe via public page, ProfilePage shows newsletter toggle as OFF. (4) Regression tests passed - profile name save, auto-reply toggle, avatar upload button all working. (5) Unsubscribe token generation: use HMAC-SHA256 with JWT_SECRET from backend/.env, payload is user_id, signature is first 12 bytes of HMAC digest, format is base64url(payload).base64url(sig).",
+  "test_results_summary": {
+    "profile_email_preferences_block": {
+      "loads_on_mount": "PASSED - GET /api/users/me/email-preferences called, toggles reflect server state",
+      "newsletter_toggle": "PASSED - data-testid='newsletter-enabled-toggle' found and works",
+      "meeting_invites_toggle": "PASSED - data-testid='meeting-invites-toggle' found and works",
+      "digest_frequency_select": "PASSED - data-testid='digest-frequency-select' has 3 options (Sofort/Taeglich/Woechentlich)",
+      "save_button": "PASSED - data-testid='save-email-preferences-button' persists via PUT /api/users/me/email-preferences"
+    },
+    "profile_toggle_persistence": {
+      "newsletter_off_save": "PASSED - toggle OFF, save, reload -> toggle still OFF",
+      "digest_daily_save": "PASSED - select 'Taeglich', save, reload -> still 'Taeglich'"
+    },
+    "unsubscribe_page_valid_token": {
+      "loads_preview": "PASSED - GET /api/unsubscribe/{token} returns email, name, newsletter_enabled",
+      "shows_email": "PASSED - data-testid='unsubscribe-email' shows admin@meetflow.com",
+      "shows_status": "PASSED - shows 'Du bist derzeit fuer den Newsletter angemeldet' or 'Du hast den Newsletter bereits abbestellt'",
+      "confirm_unsubscribe": "PASSED - data-testid='confirm-unsubscribe-button' sets newsletter_enabled=false via POST /api/unsubscribe/{token}",
+      "done_screen": "PASSED - data-testid='unsubscribe-done' shows success message",
+      "resubscribe_after_unsub": "PASSED - data-testid='resubscribe-after-unsub-button' re-enables via POST /api/unsubscribe/{token}/resubscribe"
+    },
+    "unsubscribe_page_invalid_token": {
+      "shows_error": "PASSED - data-testid='unsubscribe-error' shown for invalid_abc token",
+      "error_message": "PASSED - shows 'Ungueltiger Unsubscribe-Link'",
+      "login_link": "PASSED - data-testid='unsubscribe-login-link' found"
+    },
+    "state_sync": {
+      "profile_after_unsubscribe": "PASSED - after unsubscribe via public page, ProfilePage shows newsletter toggle as OFF"
+    },
+    "regression_tests": {
+      "profile_name_save": "PASSED - name update shows 'Profil aktualisiert' toast",
+      "auto_reply_toggle": "PASSED - toggle state changes on click",
+      "avatar_upload_button": "PASSED - data-testid='avatar-upload-button' and 'change-avatar-link' found"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

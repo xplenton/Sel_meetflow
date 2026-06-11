@@ -1,0 +1,110 @@
+{
+  "summary": "Iteration 356 - Unified Hybrid Endpoint /api/resource-availability VERIFIED. All 42 tests PASSED (16 new iter356 tests + 26 iter351/352 regression tests). The new hybrid endpoint correctly returns BOTH snapshot AND bookings_by_resource in a single request. Single Mongo query ensures no status drift. Legacy /api/resource-availability-snapshot remains as backwards-compat alias.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "hybrid_endpoint_global": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "GET /api/resource-availability (no params) returns {snapshot: {...}, bookings_by_resource: {}} for ALL resources. Parent shows next_busy when children are booked."
+    },
+    "hybrid_endpoint_scoped": {
+      "status": "PASS",
+      "tests_passed": 3,
+      "description": "GET /api/resource-availability?resource_ids=A,B,C returns scoped snapshot + bookings_by_resource. Child bookings appear in BOTH child's list AND parent's list (phantom entry)."
+    },
+    "legacy_snapshot_endpoint": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Legacy GET /api/resource-availability-snapshot still works and returns identical snapshot data as hybrid endpoint (no drift)."
+    },
+    "parent_next_free_max": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "When parent has 2 children both booked at same time, parent's next_free uses MAX(end_at) - so we don't say 'frei ab 22:00' when another sub is still booked until 23:00."
+    },
+    "non_splittable_resources": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Non-splittable resources return snapshot/bookings unchanged (no fake parent/child expansion)."
+    },
+    "permission_check": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Only users with view:resources cap can call either endpoint (401/403 for unauthenticated requests)."
+    },
+    "legacy_availability_only": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Existing /resource-bookings?availability_only=true list endpoint still works for backwards-compat."
+    },
+    "regression_booking_snapshot_sync": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Create booking → snapshot updates within next request → cancel booking → snapshot reflects."
+    },
+    "bookings_list_structure": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Bookings have required fields (booking_id, resource_id, start_at, end_at, status) and are privacy-safe (no user info)."
+    },
+    "snapshot_structure": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Snapshot entries have valid structure (busy_now, next_free if busy, next_busy if not busy)."
+    },
+    "iter351_regression": {
+      "status": "PASS",
+      "tests_passed": 14,
+      "description": "All 14 iter351 splitable parent room tests pass - backward compatibility confirmed."
+    },
+    "iter352_regression": {
+      "status": "PASS",
+      "tests_passed": 12,
+      "description": "All 12 iter352 resource hierarchy refactor tests pass - DRY refactor behavior preserved."
+    }
+  },
+  "code_review": {
+    "routes/resources/admin/analytics.py (lines 108-260)": "_compute_availability() is the single source of truth for both snapshot and bookings_by_resource. Uses child_to_parent_map() to fold sub-room bookings into parents. Single Mongo query ensures no drift.",
+    "/api/resource-availability (line 229-251)": "New hybrid endpoint. resource_ids param is optional comma-separated list. When provided, returns scoped snapshot + bookings_by_resource. When omitted, returns global snapshot + empty bookings_by_resource.",
+    "/api/resource-availability-snapshot (line 111-122)": "Legacy endpoint now delegates to _compute_availability(with_bookings=False) - same source of truth as hybrid endpoint.",
+    "services/resource_hierarchy.py": "child_to_parent_map() correctly builds {child_id: parent_id} map used by _compute_availability for folding children into parent entries."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter356_hybrid_resource_availability.py",
+    "/app/backend/tests/test_iter351_splitable_parent_rooms.py",
+    "/app/backend/tests/test_iter352_resource_hierarchy_refactor.py",
+    "/app/test_reports/pytest/iteration_356_hybrid_resource_availability.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Single Mongo query in _compute_availability() ensures snapshot and bookings_by_resource can never drift - physically impossible",
+    "Phantom booking entries correctly added to parent's bookings list when children are booked",
+    "MAX(end_at) logic for parent's next_free correctly implemented - uses latest child end time",
+    "Legacy /api/resource-availability-snapshot delegates to same _compute_availability() - no code duplication",
+    "Privacy-safe bookings list: only booking_id, resource_id, start_at, end_at, status - no user info leaked"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter356_hybrid_resource_availability.py"
+  ],
+  "success_rate": {
+    "backend": "100% (42/42 tests passed: 16 iter356 + 14 iter351 + 12 iter352 regression)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "Test fixture creates fresh bookings on Child A and Child B with different end times (Child B ends 1 hour later) to test MAX(end_at) logic, then cleans up after tests complete.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 356 adds unified hybrid endpoint /api/resource-availability that returns BOTH snapshot AND bookings_by_resource in a single request. Replaces 165 legacy calls with 2 calls. Single Mongo query ensures no status drift. Legacy /api/resource-availability-snapshot remains as backwards-compat alias. All 42 tests pass (16 new + 26 regression). Outlook Calendar sync remains MOCKED (503 stub).",
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": ["Outlook Calendar OAuth sync (503 stub)"]
+  }
+}

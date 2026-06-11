@@ -1,0 +1,650 @@
+{
+  "summary": {
+    "total_files": 64,
+    "total_strings": 360,
+    "top_files": [
+      [
+        "./pages/AdminPage.js",
+        29
+      ],
+      [
+        "./pages/ChatPage.js",
+        17
+      ],
+      [
+        "./components/NewsModerationPanel.js",
+        16
+      ],
+      [
+        "./pages/MeetingsPage.js",
+        15
+      ],
+      [
+        "./components/admin/HealthDashboard.js",
+        14
+      ],
+      [
+        "./components/BulkInviteDialog.js",
+        13
+      ],
+      [
+        "./pages/ProfilePage.js",
+        11
+      ],
+      [
+        "./components/admin/EmailConfigPanel.js",
+        11
+      ],
+      [
+        "./components/admin/RolesCapsPanel.js",
+        10
+      ],
+      [
+        "./pages/PreJoinPage.js",
+        9
+      ],
+      [
+        "./pages/NewsPage.js",
+        9
+      ],
+      [
+        "./pages/PublicPollPage.js",
+        9
+      ],
+      [
+        "./components/admin/AutoAssignRulesPanel.js",
+        9
+      ],
+      [
+        "./pages/MeetingCreatePage.js",
+        8
+      ],
+      [
+        "./pages/BookingSettingsPage.js",
+        8
+      ],
+      [
+        "./components/DocumentPanel.js",
+        8
+      ],
+      [
+        "./components/admin/GroupsPanel.js",
+        8
+      ],
+      [
+        "./pages/SchedulePage.js",
+        7
+      ],
+      [
+        "./pages/PublicBookingPage.js",
+        7
+      ],
+      [
+        "./components/admin/PoliciesPanel.js",
+        7
+      ]
+    ],
+    "samples": {
+      "./pages/AdminPage.js": [
+        "Administratorzugang erforderlich",
+        "Gruppen",
+        "Rollen &amp; Rechte",
+        "News-Moderation",
+        "Alle abmelden"
+      ],
+      "./pages/ChatPage.js": [
+        "Laden...",
+        "Keine Unterhaltungen",
+        "Waehle eine Unterhaltung oder starte eine neue",
+        "Keine GIFs gefunden",
+        "Suchbegriff eingeben"
+      ],
+      "./components/NewsModerationPanel.js": [
+        "Meldungen",
+        "Laden...",
+        "Keine Daten",
+        "Pflicht-Lesebestätigungsraten",
+        "Aktualisieren"
+      ],
+      "./pages/MeetingsPage.js": [
+        "Zum Kalender",
+        "Bearbeiten",
+        "Zusammenfassung senden",
+        "Löschen",
+        "Meeting bearbeiten"
+      ],
+      "./components/admin/HealthDashboard.js": [
+        "Keine Daten verfügbar.",
+        "Kein E-Mail-Versand in den letzten 7 Tagen.",
+        "Kein Absender konfiguriert.",
+        "Session-Aktivität (24 h)",
+        "Keine Auffälligkeiten"
+      ],
+      "./components/BulkInviteDialog.js": [
+        "Mehrere Benutzer einladen",
+        "E-Mail-Adressen (komma-, semikolon- oder zeilengetrennt)",
+        "Mitglied",
+        "Moderator",
+        "Gruppe zuweisen (optional)"
+      ],
+      "./pages/ProfilePage.js": [
+        "Meine Daten als JSON exportieren",
+        "Account endgültig löschen",
+        "Account wirklich löschen?",
+        "Diese Aktion ist",
+        "endgültig"
+      ],
+      "./components/admin/EmailConfigPanel.js": [
+        "Wähle den Versandweg für Meeting-Einladungen, Newsletter und Systemmails.",
+        "E-Mail-Versand aktiviert",
+        "Bei aus: E-Mails werden nur geloggt (simuliert).",
+        "Kein Provider",
+        "Verschlüsselung"
+      ],
+      "./components/admin/RolesCapsPanel.js": [
+        "Laden...",
+        "Administrator, Moderator, Mitarbeiter, Gast",
+        "Rollen-Rechte-Matrix",
+        "Zusaetzliche Rechte gewaehren, entziehen oder bulk-applicieren",
+        "Rechte bearbeiten"
+      ],
+      "./pages/PreJoinPage.js": [
+        "Bitte warten Sie, bis der Host Sie zum Meeting zulässt.",
+        "Abbrechen",
+        "Zurück zum Dashboard",
+        "Einstellungen -&gt; Safari oeffnen",
+        "Unter „Kamera\" / „Mikrofon\" auf „Fragen\" oder „Erlauben\" stellen"
+      ]
+    }
+  },
+  "by_file": {
+    "./lib/permissions.js": [
+      "Freigeben",
+      "Keine Berechtigung"
+    ],
+    "./pages/ScheduleCreatePage.js": [
+      "Teile den Link mit Teilnehmern zur Abstimmung",
+      "Abstimmungs-Deadline (optional)",
+      "Optionale Beschreibung...",
+      "Passwort eingeben"
+    ],
+    "./pages/UnsubscribePage.js": [
+      "Newsletter abmelden",
+      "Zur Anmeldung",
+      "Du wurdest erfolgreich aus dem Newsletter ausgetragen.",
+      "Dein Newsletter-Abo wurde reaktiviert."
+    ],
+    "./pages/RecordingsPage.js": [
+      "Keine Datei",
+      "Dein Browser unterstuetzt kein Video.",
+      "Keine Zusammenfassung vorhanden"
+    ],
+    "./pages/CalendarPage.js": [
+      "Für Buchungen blockiert",
+      "Meeting bearbeiten",
+      "Abbrechen",
+      "Speichern",
+      "Schließen",
+      "Bearbeiten"
+    ],
+    "./pages/GeneralPollCreatePage.js": [
+      "Einzelauswahl (eine Option)",
+      "Deadline (optional)",
+      "Optionale Details..."
+    ],
+    "./pages/ChatPage.js": [
+      "Laden...",
+      "Keine Unterhaltungen",
+      "Waehle eine Unterhaltung oder starte eine neue",
+      "Keine GIFs gefunden",
+      "Suchbegriff eingeben",
+      "Neue Gruppe erstellen",
+      "Teilnehmer waehlen",
+      "Gruppe erstellen",
+      "Mitglied hinzufuegen",
+      "Keine weiteren Nutzer verfuegbar",
+      "Noch keine Antworten",
+      "Nutzer oder Chat suchen...",
+      "Dringender Anruf — durchbricht Nicht-Stören-Modus",
+      "Nachrichten durchsuchen...",
+      "Zurückrufen",
+      "Bearbeiten",
+      "Gruppenname"
+    ],
+    "./pages/AnalyticsPage.js": [
+      "Keine Terminplanungen vorhanden",
+      "Keine Umfragen vorhanden",
+      "Noch keine Buchungen"
+    ],
+    "./pages/DiagSharedPage.js": [
+      "Prüfe Link …",
+      "Link ungültig",
+      "Gerät-Diagnose",
+      "Benachrichtigungen",
+      "Diagnose senden",
+      "Dein Name (optional)"
+    ],
+    "./pages/MeetingCreatePage.js": [
+      "Erforderliche Teilnehmer",
+      "Optionale Teilnehmer",
+      "Optionale Teilnehmer erhalten eine Einladung, muessen aber nicht teilnehmen.",
+      "Keine Erinnerung",
+      "Speichern",
+      "Noch keine Zeit-Slots. Unten hinzufügen.",
+      "Slot hinzufügen",
+      "optional1@beispiel.de, optional2@beispiel.de"
+    ],
+    "./pages/PreJoinPage.js": [
+      "Bitte warten Sie, bis der Host Sie zum Meeting zulässt.",
+      "Abbrechen",
+      "Zurück zum Dashboard",
+      "Einstellungen -&gt; Safari oeffnen",
+      "Unter „Kamera\" / „Mikrofon\" auf „Fragen\" oder „Erlauben\" stellen",
+      "Diese Seite neu laden",
+      "Ohne Kamera &amp; Mikrofon beitreten",
+      "Keine Kamera gefunden",
+      "Kein Mikrofon gefunden"
+    ],
+    "./pages/NewsPage.js": [
+      "Pflicht",
+      "Gelesen",
+      "Zur Pruefung einreichen",
+      "Freigeben",
+      "Ablehnen",
+      "Bearbeiten",
+      "Laden...",
+      "Bitte Benachrichtigungen in Browser-Einstellungen erlauben",
+      "Newsletter-Vorschau und Versand"
+    ],
+    "./pages/SchedulePage.js": [
+      "Noch keine Terminabstimmungen erstellt",
+      "Erste Terminabstimmung erstellen",
+      "Noch keine Termine gebucht",
+      "Buchungsseite einrichten",
+      "Noch keine Umfragen erstellt",
+      "Erste Umfrage erstellen",
+      "Keine Stimmen"
+    ],
+    "./pages/LiveMeetingPage.js": [
+      "Seite neu laden",
+      "Aufnahme läuft",
+      "Reaktion wählen",
+      "Abbrechen",
+      "Geraeteeinstellungen",
+      "Kamera und Mikrofon waehlen"
+    ],
+    "./pages/MeetingSummaryPage.js": [
+      "Meeting nicht gefunden",
+      "Teilnehmer",
+      "Per E-Mail senden",
+      "Noch keine Zusammenfassung vorhanden",
+      "Klicke auf \"Zusammenfassung generieren\" um eine KI-Zusammenfassung zu erstellen"
+    ],
+    "./pages/ScheduleDetailPage.js": [
+      "Nicht gefunden",
+      "Zum Kalender",
+      "Noch keine Abstimmungen",
+      "Teilnehmer"
+    ],
+    "./pages/PublicBookingPage.js": [
+      "Ein MeetFlow-Meeting wurde automatisch erstellt.",
+      "Zum Kalender hinzufuegen",
+      "Laden...",
+      "Keine freien Termine an diesem Tag",
+      "Dein Name *",
+      "E-Mail (optional)",
+      "Thema / Nachricht (optional)"
+    ],
+    "./pages/AdminPage.js": [
+      "Administratorzugang erforderlich",
+      "Gruppen",
+      "Rollen &amp; Rechte",
+      "News-Moderation",
+      "Alle abmelden",
+      "Mehrere einladen",
+      "Einladen",
+      "Alle Rollen",
+      "Alle Abteilungen",
+      "Alle Standorte",
+      "Alle Status",
+      "Deaktiviert",
+      "Zurücksetzen",
+      "Zuletzt gesehen",
+      "nie eingeloggt",
+      "Weiter »",
+      "Administrator",
+      "Moderator",
+      "Mitarbeiter",
+      "Berufsgruppe",
+      "Org.-Einheit",
+      "Speichern",
+      "Benutzer einladen",
+      "Benutzer erfolgreich eingeladen!",
+      "Einladung per E-Mail gesendet",
+      "E-Mail konnte nicht gesendet werden - bitte Zugangsdaten manuell weitergeben",
+      "Abbrechen",
+      "Alle Nutzer abmelden (Sessions zurücksetzen)",
+      "Vor- und Nachname"
+    ],
+    "./pages/DiagPage.js": [
+      "Geräte-Diagnose",
+      "Push-Benachrichtigungen",
+      "Vollständiger Export aller Beiträge für Compliance / Audit.",
+      "Noch keine Links erstellt.",
+      "Einreichungen ansehen"
+    ],
+    "./pages/PublicSurveyPage.js": [
+      "Nicht gefunden",
+      "Deine Abstimmung",
+      "Ziehe die Optionen in deine bevorzugte Reihenfolge (1 = beste)",
+      "Danke fuer deine Abstimmung!",
+      "Dein Name *"
+    ],
+    "./pages/VerifyEmailPage.js": [
+      "Bestätige deine E-Mail...",
+      "E-Mail bestätigt!",
+      "Bestätigung fehlgeschlagen",
+      "Zur Anmeldung"
+    ],
+    "./pages/BookingSettingsPage.js": [
+      "Laden...",
+      "Noch keine Buchungsseiten erstellt",
+      "Erste Seite erstellen",
+      "Noch keine Buchungen fuer diese Seite",
+      "Noch keine Buchungen vorhanden",
+      "Buchungsseite aktiviert",
+      "Abbrechen",
+      "Bearbeiten"
+    ],
+    "./pages/PublicPollPage.js": [
+      "Passwort erforderlich",
+      "Nicht gefunden",
+      "Zum Kalender",
+      "Teilnehmer",
+      "Deine Abstimmung",
+      "Keine Antwort",
+      "Deine Abstimmung wurde gespeichert!",
+      "Dein Name *",
+      "E-Mail (optional)"
+    ],
+    "./pages/MeetingsPage.js": [
+      "Zum Kalender",
+      "Bearbeiten",
+      "Zusammenfassung senden",
+      "Löschen",
+      "Meeting bearbeiten",
+      "Abbrechen",
+      "Meeting löschen?",
+      "Keine Termine",
+      "Bulk-Änderungen",
+      "Zukünftige",
+      "Serie löschen",
+      "Alle als ICS",
+      "Schließen",
+      "Einzeltermin wiederherstellen",
+      "Diesen Einzeltermin absagen (kann wiederhergestellt werden)"
+    ],
+    "./pages/ProfilePage.js": [
+      "Meine Daten als JSON exportieren",
+      "Account endgültig löschen",
+      "Account wirklich löschen?",
+      "Diese Aktion ist",
+      "endgültig",
+      "Veröffentlichte News-Posts und -Kommentare bleiben bestehen, werden aber auf",
+      "Deine Sessions werden sofort ungültig",
+      "Tippe zum Bestätigen",
+      "LÖSCHEN",
+      "in das Feld ein:",
+      "Abbrechen"
+    ],
+    "./pages/SurveysPage.js": [
+      "Pulse-Check erstellen"
+    ],
+    "./pages/PublicSignPage.js": [
+      "Erfolgreich unterschrieben",
+      "Weiter zur Unterschrift"
+    ],
+    "./components/MeetingControls.js": [
+      "Background"
+    ],
+    "./components/SignaturePlacement.js": [
+      "Abbrechen",
+      "Speichern"
+    ],
+    "./components/DocumentViewer.js": [
+      "Klicken = neues Feld | Felder ziehen = verschieben | Ecke ziehen = Größe ändern",
+      "Herunterladen"
+    ],
+    "./components/ParticipantPanel.js": [
+      "Schnell-Diagnose senden"
+    ],
+    "./components/DocumentPanel.js": [
+      "Keine Dokumente",
+      "Zum Unterschreiben senden",
+      "Abbrechen",
+      "Wird geladen...",
+      "Keine Einträge",
+      "Herunterladen",
+      "Per E-Mail senden",
+      "Löschen"
+    ],
+    "./components/QuickScansPanel.js": [
+      "Alle Geräte-Diagnosen, die Hosts während Live-Meetings angefragt haben.",
+      "Aktualisieren",
+      "Noch keine Quick-Scans angefragt.",
+      "Hosts können im Teilnehmer-Menü während eines Meetings eine Diagnose senden.",
+      "Fehler entdeckt",
+      "alles grün"
+    ],
+    "./components/IncomingCallModal.js": [
+      "Ablehnen"
+    ],
+    "./components/NewsEditorDialog.js": [
+      "Pflicht",
+      "Zielgruppe",
+      "Berufsgruppen",
+      "Rollen",
+      "Pro Kanal wird ein Verteilweg eingetragen — Pflicht: Intranet."
+    ],
+    "./components/WhiteboardPanel.js": [
+      "Doppelklick zum Bearbeiten",
+      "Klicken um Notiz zu platzieren"
+    ],
+    "./components/CommandPalette.js": [
+      "Suche in News, Meetings, Chats und Nutzer",
+      "Mindestens 2 Zeichen eingeben"
+    ],
+    "./components/AuditLogPanel.js": [
+      "Alle Aktionen",
+      "Aktualisieren",
+      "Laden...",
+      "Keine Eintraege gefunden"
+    ],
+    "./components/BreakoutPanel.js": [
+      "Raum erstellen",
+      "Keine Räume erstellt",
+      "Keine Teilnehmer",
+      "entfernen",
+      "Hinzufügen:",
+      "Nachricht an alle Räume..."
+    ],
+    "./components/PdfRenderer.js": [
+      "PDF konnte nicht gerendert werden"
+    ],
+    "./components/OnboardingTour.js": [
+      "Kurze Einfuehrung in MeetFlow"
+    ],
+    "./components/Sidebar.js": [
+      "Ungelesen",
+      "Alle Chats öffnen →"
+    ],
+    "./components/EditorialCalendar.js": [
+      "Redaktions-Kalender"
+    ],
+    "./components/QuickScanOverlay.js": [
+      "bittet um eine Schnell-Diagnose deines Geräts.",
+      "Diagnose eingegangen"
+    ],
+    "./components/HostPanel.js": [
+      "Alle Stummschaltung aufheben",
+      "Alle stummschalten",
+      "Nachricht an alle..."
+    ],
+    "./components/BulkInviteDialog.js": [
+      "Mehrere Benutzer einladen",
+      "E-Mail-Adressen (komma-, semikolon- oder zeilengetrennt)",
+      "Mitglied",
+      "Moderator",
+      "Gruppe zuweisen (optional)",
+      "E-Mail-Einladung versenden (temporäres Passwort inklusive)",
+      "Abbrechen",
+      "Bereits vorhanden anzeigen",
+      "Ungültige anzeigen",
+      "Bereits vorhanden",
+      "Ungültig",
+      "Weitere einladen",
+      "Keine Gruppe"
+    ],
+    "./components/EmailVerificationBanner.js": [
+      "Bitte bestätige deine E-Mail-Adresse"
+    ],
+    "./components/NewsModerationPanel.js": [
+      "Meldungen",
+      "Laden...",
+      "Keine Daten",
+      "Pflicht-Lesebestätigungsraten",
+      "Aktualisieren",
+      "Keine Meldungen in dieser Kategorie",
+      "Kein Grund angegeben",
+      "Inhalt löschen",
+      "Push für einen Beitrag erneut senden",
+      "Keine Beiträge gefunden",
+      "Noch keine Push-Benachrichtigungen versendet",
+      "Priorität",
+      "Fehler",
+      "Offene Meldungen",
+      "Einzigartige Reagierer",
+      "Pflicht-News"
+    ],
+    "./components/SignaturePad.js": [
+      "Abbrechen"
+    ],
+    "./components/SignatureFieldsPanel.js": [
+      "Signaturfeld hinzufügen",
+      "Keine Signaturfelder definiert",
+      "Definieren Sie, wo unterschrieben werden soll",
+      "Alle Teilnehmer",
+      "Abbrechen",
+      "Hinzufügen"
+    ],
+    "./components/InstallPrompt.js": [
+      "Schneller Zugriff, Push-Benachrichtigungen und Offline-Hinweis."
+    ],
+    "./components/admin/AutoAssignRulesPanel.js": [
+      "Laden...",
+      "Noch keine Regeln definiert",
+      "Deaktiviert",
+      "Regel aktiviert",
+      "Alle Rollen",
+      "Kein Preset",
+      "Abbrechen",
+      "Speichern",
+      "Berufsgruppe"
+    ],
+    "./components/admin/CapabilitySelector.js": [
+      "Keine Treffer",
+      "Alle abwaehlen"
+    ],
+    "./components/admin/PoliciesPanel.js": [
+      "E-Mail-Verifizierung erforderlich",
+      "Automatisch zu \"Mitglied\" nach Verifizierung",
+      "Default-Gruppe für neue Nutzer",
+      "Gruppe nach Verifizierung",
+      "Max. Teilnehmer",
+      "Richtlinie speichern",
+      "Keine Richtlinien konfiguriert"
+    ],
+    "./components/admin/ReminderConfigPanel.js": [
+      "Laden...",
+      "Erinnerungs-Einstellungen",
+      "Erinnerungen aktiviert"
+    ],
+    "./components/admin/WSHealthWidget.js": [
+      "Aktualisieren"
+    ],
+    "./components/admin/RolesCapsPanel.js": [
+      "Laden...",
+      "Administrator, Moderator, Mitarbeiter, Gast",
+      "Rollen-Rechte-Matrix",
+      "Zusaetzliche Rechte gewaehren, entziehen oder bulk-applicieren",
+      "Rechte bearbeiten",
+      "Rolle:",
+      "Abbrechen",
+      "Speichern",
+      "Keine Capabilities",
+      "Ablauf entfernen"
+    ],
+    "./components/admin/PresetEditorPanel.js": [
+      "Laden...",
+      "Vordefinierte Rechte-Sets fuer One-Click-Anwendung auf Nutzer und Gruppen",
+      "Abbrechen",
+      "Speichern"
+    ],
+    "./components/admin/GroupsPanel.js": [
+      "Laden...",
+      "Neue Gruppe",
+      "Noch keine Gruppen erstellt",
+      "Erste Gruppe erstellen",
+      "Mitglied hinzufuegen",
+      "Abbrechen",
+      "Mitglied waehlen...",
+      "Optionale Beschreibung"
+    ],
+    "./components/admin/ApiConfigPanel.js": [
+      "KI aktiviert",
+      "Ohne Aktivierung sind keine KI-Zusammenfassungen verfuegbar",
+      "Der Universal Key fuer OpenAI, Anthropic und Gemini Modelle",
+      "Storage verbunden",
+      "Kein Key konfiguriert — Storage nicht verfuegbar"
+    ],
+    "./components/admin/SystemAuditPanel.js": [
+      "Alle Kategorien",
+      "Rechte-Änderungen",
+      "Alle Aktionen",
+      "Keine Einträge gefunden.",
+      "alle Nutzer"
+    ],
+    "./components/admin/HealthDashboard.js": [
+      "Keine Daten verfügbar.",
+      "Kein E-Mail-Versand in den letzten 7 Tagen.",
+      "Kein Absender konfiguriert.",
+      "Session-Aktivität (24 h)",
+      "Keine Auffälligkeiten",
+      "Noch keine Läufe protokolliert.",
+      "Alert-Benachrichtigungen",
+      "Stündliche Prüfung über den Wartungs-Cron.",
+      "E-Mail-Erfolgsrate &lt; (%)",
+      "Cron-Idle-Alert ab (Minuten ohne Lauf · 0 = aus)",
+      "Bei jedem E-Mail-Versandfehler alarmieren",
+      "Sonst nur, wenn die 7d-Rate unter die Schwelle fällt.",
+      "Kanäle",
+      "Empfänger (Komma-getrennte E-Mails, leer = alle Admins)"
+    ],
+    "./components/admin/EmailConfigPanel.js": [
+      "Wähle den Versandweg für Meeting-Einladungen, Newsletter und Systemmails.",
+      "E-Mail-Versand aktiviert",
+      "Bei aus: E-Mails werden nur geloggt (simuliert).",
+      "Kein Provider",
+      "Verschlüsselung",
+      "Keine (nur lokal)",
+      "Absender-E-Mail (optional)",
+      "Test-E-Mail über SMTP",
+      "Domain oder E-Mail",
+      "Keine Einträge gefunden.",
+      "klinik.de oder newsletter@klinik.de"
+    ],
+    "./components/chat/FilePreview.js": [
+      "Herunterladen"
+    ]
+  }
+}

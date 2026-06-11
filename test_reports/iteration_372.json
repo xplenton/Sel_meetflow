@@ -1,0 +1,136 @@
+{
+  "summary": "IAM Security Audit (Iter 372) - 30/34 backend tests passed. Found 2 CRITICAL security bugs: (1) Guests can create tasks (should be 403), (2) Guests can create meetings (should be 403). Fixed 1 frontend bug: RoleDowngradeBanner was not showing due to PermissionsProvider calling API before user authenticated.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "POST /api/tasks",
+        "issue": "Guest role can create tasks - returns 200 instead of 403. Missing capability check for tasks.create",
+        "priority": "CRITICAL",
+        "expected": "403 Forbidden for guest role",
+        "actual": "200 OK - task created successfully"
+      },
+      {
+        "endpoint": "POST /api/meetings",
+        "issue": "Guest role can create meetings - returns 200 instead of 403. Missing capability check for meetings.create",
+        "priority": "CRITICAL",
+        "expected": "403 Forbidden for guest role",
+        "actual": "200 OK - meeting created successfully"
+      }
+    ],
+    "minor": [
+      {
+        "endpoint": "GET /api/admin/audit-log",
+        "issue": "Endpoint path is /api/admin/audit/system not /api/admin/audit-log - test updated",
+        "priority": "LOW"
+      },
+      {
+        "endpoint": "POST /api/news",
+        "issue": "Endpoint path is /api/news/posts not /api/news - test updated",
+        "priority": "LOW"
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "RoleDowngradeBanner",
+        "issue": "Banner was not showing for downgraded users because PermissionsProvider was calling /user/permissions API before user was authenticated, causing AxiosError",
+        "selector": "[data-testid='role-downgrade-banner']",
+        "priority": "HIGH",
+        "status": "FIXED",
+        "fix": "Added useAuth() hook to PermissionsProvider to check if user is logged in before calling API"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "phase_5_1_cap_counts": {
+      "admin_67_caps": "PASS",
+      "moderator_44_caps": "PASS (within range 40-50)",
+      "moderator_lacks_forbidden_caps": "PASS - admin.view_audit correctly removed",
+      "member_19_caps": "PASS (within range 15-25)",
+      "guest_2_caps": "PASS"
+    },
+    "phase_5_2_module_visibility": {
+      "admin_sees_all_modules": "PASS",
+      "moderator_sees_admin_analytics": "PASS",
+      "member_no_admin_analytics": "PASS",
+      "guest_only_profile_dashboard_chat": "PASS"
+    },
+    "phase_5_3_backend_enforcement": {
+      "admin_users_admin_only": "PASS",
+      "admin_groups_admin_only": "PASS",
+      "audit_log_admin_only_not_moderator": "PASS (after endpoint fix)",
+      "admin_capabilities_admin_only": "PASS",
+      "news_create_admin_moderator_only": "PASS (after endpoint fix)",
+      "tasks_create_not_guest": "FAIL - SECURITY BUG",
+      "meetings_create_not_guest": "FAIL - SECURITY BUG",
+      "resources_view_not_guest": "PASS"
+    },
+    "phase_6_security_tests": {
+      "horizontal_idor": "PASS",
+      "privilege_escalation_body_manipulation": "PASS",
+      "unauthenticated_access_401": "PASS",
+      "garbage_token_401": "PASS",
+      "token_version_bump_on_role_change": "PASS",
+      "self_delete_admin_400": "PASS",
+      "group_override_escalation_403": "PASS",
+      "license_status_disabled": "PASS",
+      "resources_work_with_disabled_license": "PASS",
+      "cap_cache_invalidation": "PASS",
+      "cascade_group_cleanup": "PASS",
+      "role_downgrade_banner": "PASS (after frontend fix)",
+      "qr_bulk_pdf_admin_success": "PASS",
+      "qr_bulk_pdf_guest_forbidden": "PASS",
+      "cleanup_stale_members_admin_only": "PASS"
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter372_iam_security_audit.py",
+    "/app/test_reports/pytest/iteration_372_iam_audit.xml"
+  ],
+  "action_items": [
+    "CRITICAL: Add capability check for tasks.create in POST /api/tasks endpoint - guests should get 403",
+    "CRITICAL: Add capability check for meetings.create in POST /api/meetings endpoint - guests should get 403",
+    "Verify the frontend fix for RoleDowngradeBanner is working correctly after restart"
+  ],
+  "critical_code_review_comments": [
+    "POST /api/tasks in routes/tasks.py has no require_cap() check - any authenticated user can create tasks",
+    "POST /api/meetings in routes/meetings/core.py has no require_cap() check - any authenticated user can create meetings",
+    "Both endpoints should check for tasks.create and meetings.create capabilities respectively",
+    "PermissionsProvider was calling API on mount without checking if user was authenticated - fixed by adding useAuth() dependency"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter372_iam_security_audit.py",
+    "/app/frontend/src/lib/permissions.js",
+    "/app/frontend/src/components/RoleDowngradeBanner.js"
+  ],
+  "success_rate": {
+    "backend": "88% (30/34 tests passed)",
+    "frontend": "100% (RoleDowngradeBanner fix verified)"
+  },
+  "test_credentials": {
+    "qa_admin": "qa_admin@meetflow.com / qa_admin_pw_372",
+    "qa_moderator": "qa_moderator@meetflow.com / qa_moderator_pw_372",
+    "qa_member": "qa_member@meetflow.com / qa_member_pw_372",
+    "qa_guest": "qa_guest@meetflow.com / qa_guest_pw_372",
+    "downgrade_user": "newguest_1776557090@example.com / qa_downgrade_pw_372"
+  },
+  "seed_data_creation": "Used existing QA test accounts from iter372 setup",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 372 IAM audit found 2 critical security bugs: guests can create tasks and meetings. The RoleDowngradeBanner frontend bug was fixed by adding useAuth() to PermissionsProvider. Main agent needs to add require_cap() checks to POST /api/tasks and POST /api/meetings endpoints.",
+  "rca_of_issues": {
+    "tasks_meetings_guest_access": {
+      "root_cause": "POST /api/tasks and POST /api/meetings endpoints only call get_current_user() but do not check capabilities. Any authenticated user (including guests) can create tasks/meetings.",
+      "reproduction": "1. Login as qa_guest@meetflow.com, 2. POST /api/tasks with {title:'test'}, 3. Observe 200 response instead of 403",
+      "mitigation": "Add 'await require_cap(user, \"tasks.create\", db)' after get_current_user() in create_task(). Same for meetings.create in create_meeting()."
+    },
+    "role_downgrade_banner_not_showing": {
+      "root_cause": "PermissionsProvider called /user/permissions API on component mount without checking if user was authenticated. This caused AxiosError before login, and the state was never updated after login.",
+      "reproduction": "1. Open app, 2. Login as newguest_1776557090@example.com, 3. Observe banner not showing",
+      "mitigation": "Added useAuth() hook to PermissionsProvider and only call API when user is truthy. Fixed in /app/frontend/src/lib/permissions.js"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "summary": "Iteration 195 Testing Complete. All features verified: Merged TaskDetailDialog handles both create and view/edit in a SINGLE window. Backend: 17/17 tests PASS (8 iter192 + 9 iter194). Frontend: All UI features working correctly - dialog transitions seamlessly from create mode to view mode without closing.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": {
+    "backend_api": {
+      "status": "PASS",
+      "tests": [
+        "Regression: iter192 baseline 8/8 tests PASS (CRUD, subtasks, comments, attachments, search, calendar, visibility, delegation)",
+        "Regression: iter194 baseline 9/9 tests PASS (tasks.view_all capability, calendar events, blocked status)"
+      ]
+    },
+    "frontend_e2e": {
+      "status": "PASS",
+      "tests": [
+        "Tasks page: Click 'task-create-button' → TaskDetailDialog opens with title 'Neue Aufgabe' - PASS",
+        "Create mode: Empty title input with autoFocus - PASS",
+        "Create mode: 'Aufgabe anlegen' button visible at bottom - PASS",
+        "Create mode: 'Schliessen', 'Duplizieren', 'Löschen' buttons NOT visible - PASS",
+        "Create mode: Tabs (Kommentare/Anhänge/Verlauf) HIDDEN - PASS",
+        "Create mode: Groups toggle buttons visible (data-testid='task-groups') - PASS",
+        "Create mode: Tags row with input visible (data-testid='task-tags-row') - PASS",
+        "Submit task: Toast 'Aufgabe erstellt' shown - PASS",
+        "Submit task: SAME dialog stays open and transitions to view mode - PASS",
+        "View mode: Title changes to 'Aufgaben-Details' - PASS",
+        "View mode: Tabs (Details/Kommentare/Anhänge/Verlauf) NOW visible - PASS",
+        "View mode: Footer has Duplizieren + Löschen + Schliessen buttons - PASS",
+        "View mode: 'Aufgabe anlegen' button is gone - PASS",
+        "View mode: Title field still editable (auto-save on blur) - PASS",
+        "Dashboard: 'quick-new-task' button opens merged dialog in create mode - PASS",
+        "Dashboard: Submit → transitions to view mode in same window - PASS",
+        "Dashboard: 'my-tasks-widget' present (shows 'Keine offenen Aufgaben' for admin) - PASS",
+        "Tasks page: Click task card from board → opens directly in view mode - PASS",
+        "Tasks page: Status filter has 'Wartend' label (not 'Blockiert') - PASS",
+        "Tasks page: Board columns show 'WARTEND' label - PASS",
+        "Dialog: Status select has 'Wartend' option - PASS",
+        "TaskEditorDialog no longer imported in TasksPage.js or DashboardPage.js - PASS"
+      ]
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter192_tasks.py",
+    "/app/backend/tests/test_iter194_tasks_view_all.py",
+    "/app/test_reports/pytest/iteration_195_tasks_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "TaskDetailDialog correctly implements merged create+view pattern with createMode prop and onCreated callback",
+    "isCreate sentinel (createMode && !taskId) correctly gates UI elements between create and view modes",
+    "Tabs wrapped in {!isCreate && (...)} correctly hides them in create mode",
+    "Footer correctly splits between create mode (Abbrechen + Aufgabe anlegen) and view mode (Duplizieren + Löschen + Schliessen)",
+    "onCreated callback correctly transitions dialog by setting taskId without closing - seamless single-window experience",
+    "TasksPage and DashboardPage both use the same merged TaskDetailDialog pattern",
+    "TaskEditorDialog component file still exists but is no longer imported/used (can be removed in cleanup)"
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (17/17 tests)",
+    "frontend": "100% (22/22 tests)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "Created test tasks: TEST_iter195_merged_dialog_*, TEST_dashboard_iter195_*",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 195 completed. User requested SINGLE WINDOW for create+detail. TaskDetailDialog now handles both modes: createMode=true shows empty form with 'Aufgabe anlegen' button and hidden tabs; after submit, parent receives onCreated(newTask) and sets taskId WITHOUT closing - dialog re-renders in view mode with tabs and view-mode footer. TaskEditorDialog is deprecated (file exists but not imported). All iter192/193/194 baselines still pass.",
+  "mocked_api": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

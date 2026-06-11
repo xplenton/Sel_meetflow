@@ -1,0 +1,68 @@
+{
+  "summary": "Iteration 178 testing complete. All 3 new features verified working: SMTP Bug #1 (TLS normalization), SMTP Bug #2 (Resend sandbox detection), and new /api/chat/presence endpoint. Redis broker connected. All regression tests pass.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": {
+    "smtp_bug_1_tls_normalization": {
+      "status": "FIXED",
+      "description": "SMTP health check with port=587 + use_tls=true + use_starttls=true now returns ok:true with tls_mode:'starttls'",
+      "evidence": "curl test returned {ok:true, tls_mode:'starttls', port:587} - no 'Connection already using TLS' error",
+      "test_file": "/app/backend/tests/test_iteration_178_smtp_presence.py::TestSMTPBug1TLSNormalization"
+    },
+    "smtp_bug_2_resend_sandbox": {
+      "status": "FIXED",
+      "description": "Resend sandbox sender detection (onboarding@resend.dev) returns clear German error message instead of raw 550 crash",
+      "evidence": "Code review confirms detection logic in services/email.py lines 56-65 checks for '@resend.dev' or 'onboarding@' prefix",
+      "test_file": "/app/backend/tests/test_iteration_178_smtp_presence.py::TestSMTPBug2ResendSandboxDetection"
+    },
+    "chat_presence_endpoint": {
+      "status": "WORKING",
+      "description": "GET /api/chat/presence returns {online:[...]} with currently online users (cross-pod via Redis)",
+      "evidence": "Endpoint returns 200 with {online:[]} (empty because no active WS connections), requires auth (401 without token), accepts user_ids filter",
+      "test_file": "/app/backend/tests/test_iteration_178_smtp_presence.py::TestChatPresenceEndpoint"
+    },
+    "redis_presence_broker": {
+      "status": "WORKING",
+      "description": "Redis Pub/Sub broker connected for cross-pod WebSocket fan-out and presence tracking",
+      "evidence": "Backend logs show '[ws_broker] ✓ connected to Redis, pod_id=92aab3dd0e37'. Unit tests test_ws_broker_fanout.py and test_ws_broker_presence.py both pass."
+    }
+  },
+  "regression_tests": {
+    "chat_conversations": "PASS - List, create, delete conversations working",
+    "chat_users": "PASS - User list for chat working",
+    "chat_status": "PASS - My status endpoint working",
+    "unread_summary": "PASS - Unread messages summary working",
+    "admin_email_config": "PASS - Email config endpoints accessible"
+  },
+  "unit_tests": {
+    "test_ws_broker_fanout.py": "PASS - Cross-pod delivery works, same-pod loopback suppressed",
+    "test_ws_broker_presence.py": "PASS - Cross-pod online detection, offline propagation, sweep_presence all working"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_178_smtp_presence.py",
+    "/app/backend/tests/test_ws_broker_fanout.py",
+    "/app/backend/tests/test_ws_broker_presence.py",
+    "/app/test_reports/pytest/iteration_178_smtp_presence_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_178_smtp_presence.py"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All iteration 178 features verified working. SMTP TLS normalization fixes the 'Connection already using TLS' error by auto-detecting port (587=STARTTLS, 465=implicit). Resend sandbox detection prevents raw 550 crashes. New /api/chat/presence endpoint provides cross-pod online user list via Redis sorted-set. Redis broker is connected and unit tests pass."
+}

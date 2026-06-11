@@ -1,0 +1,83 @@
+{
+  "summary": "Iter 240 - 4 Features tested: (1) Permission Defaults for member/moderator, (2) ResourcesPage Cleanup (Verwaltung-Button + Lageplan-Tab removed), (3) Lageplan Integration with subview toggle per type tab, (4) InOfficeWidget Chat Integration (Avatar click -> DM/Book actions). Backend: 17/17 pytest tests passed, 3 skipped. Frontend: All UI components verified working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Dashboard",
+        "issues": ["WebSocket connection warnings in console (non-blocking, reconnection works)"]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter240_features.py",
+    "/app/test_reports/pytest/iteration_240_features.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_iter240_features.py"
+  ],
+  "success_rate": {
+    "backend": "100% (17/17 tests passed, 3 skipped due to no other users in test fixture)",
+    "frontend": "100% (all Iter 240 features verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123",
+    "test_member": "test_member_de124330@meetflow.com / testpass123"
+  },
+  "seed_data_creation": "Created test desk bookings for admin and test_member to enable InOfficeWidget testing with multiple users",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 240 fully tested. Four features: (1) Permission Defaults - member role now has view:resources, resources.book, resources.book_with_approval by default. Moderator has additional resources.approve, resources.view_all_bookings, resources.cancel_any, resources.process_catering. (2) ResourcesPage Cleanup - Verwaltung-Button (data-testid='resources-to-admin-btn') and tab-floorplan removed. (3) Lageplan Integration - Each type tab (rooms/desks/vehicles) has Liste/Lageplan toggle (data-testid='subview-toggle-{type}', 'subview-list-{type}', 'subview-floorplan-{type}'). FloorPlanView uses new /api/floorplans/{id}/items?type={type} endpoint. (4) InOfficeWidget Chat Integration - Avatar click opens PersonActionDialog (data-testid='in-office-action-dialog') with DM button (data-testid='in-office-action-dm') and Book button (data-testid='in-office-action-book'). DM creates/opens conversation via POST /api/chat/conversations and navigates to /chat?conv=... Book navigates to /resources?tab=desks.",
+  "features_verified": {
+    "backend_member_permissions_view_resources": "PASS - Member has view:resources capability",
+    "backend_member_permissions_resources_book": "PASS - Member has resources.book capability",
+    "backend_member_permissions_resources_book_with_approval": "PASS - Member has resources.book_with_approval capability",
+    "backend_member_no_resources_approve": "PASS - Member does NOT have resources.approve",
+    "backend_member_no_resources_manage": "PASS - Member does NOT have resources.manage",
+    "backend_member_can_get_rooms": "PASS - GET /api/resources?type=room returns 200 for member",
+    "backend_member_can_get_desks": "PASS - GET /api/resources?type=desk returns 200 for member",
+    "backend_member_can_get_vehicles": "PASS - GET /api/resources?type=vehicle returns 200 for member",
+    "backend_floorplan_items_endpoint": "PASS - GET /api/floorplans/{id}/items returns 200",
+    "backend_floorplan_items_type_room": "PASS - type=room filter works correctly",
+    "backend_floorplan_items_type_desk": "PASS - type=desk filter works correctly",
+    "backend_floorplan_items_type_vehicle": "PASS - type=vehicle filter works correctly",
+    "backend_floorplan_items_no_type": "PASS - Returns all types when no filter",
+    "backend_floorplan_items_structure": "PASS - Response has floor_plan_id, at, items, desks fields",
+    "backend_legacy_floorplan_desks": "PASS - GET /api/floorplans/{id}/desks still works",
+    "backend_chat_conversations_create": "PASS - POST /api/chat/conversations creates DM",
+    "backend_chat_conversations_idempotent": "PASS - Same members return same conversation",
+    "backend_admin_moderator_caps": "PASS - Admin has all moderator caps",
+    "backend_in_office_regression": "PASS - GET /api/resources-in-office still works",
+    "frontend_resources_page_loads": "PASS - Resources page loads correctly",
+    "frontend_verwaltung_btn_removed": "PASS - data-testid='resources-to-admin-btn' NOT present",
+    "frontend_tab_floorplan_removed": "PASS - data-testid='tab-floorplan' NOT present",
+    "frontend_tabs_present": "PASS - rooms, desks, vehicles, mine, occupancy tabs present",
+    "frontend_subview_toggle_desk": "PASS - Liste/Lageplan toggle works in desks tab",
+    "frontend_subview_toggle_room": "PASS - Liste/Lageplan toggle works in rooms tab",
+    "frontend_subview_toggle_vehicle": "PASS - Liste/Lageplan toggle works in vehicles tab",
+    "frontend_floorplan_canvas": "PASS - Floorplan canvas visible after clicking Lageplan",
+    "frontend_resources_list": "PASS - Resources list visible after clicking Liste",
+    "frontend_empty_state_rooms": "PASS - Empty state message for rooms visible",
+    "frontend_empty_state_vehicles": "PASS - Empty state message for vehicles visible",
+    "frontend_in_office_widget": "PASS - InOfficeWidget renders on dashboard",
+    "frontend_in_office_avatars": "PASS - Multiple avatars visible",
+    "frontend_in_office_dialog": "PASS - 'Alle anzeigen' opens full list dialog",
+    "frontend_person_action_dialog": "PASS - Avatar click opens PersonActionDialog",
+    "frontend_dm_button": "PASS - DM button visible for other users",
+    "frontend_book_button": "PASS - Book button visible for other users",
+    "frontend_own_avatar_message": "PASS - 'Das bist du' shown for own avatar",
+    "frontend_dm_navigation": "PASS - DM button navigates to /chat?conv=...",
+    "frontend_book_navigation": "PASS - Book button navigates to /resources?tab=desks"
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

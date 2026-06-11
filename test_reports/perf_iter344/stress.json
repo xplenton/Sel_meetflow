@@ -1,0 +1,1496 @@
+[
+  {
+    "phase": "stress_100",
+    "users": 100,
+    "rounds": 5,
+    "duration_target_s": null,
+    "elapsed_s": 49.11,
+    "rps": 152.71,
+    "total_calls": 7500,
+    "errors": 0,
+    "error_rate_pct": 0.0,
+    "overall_avg_ms": 552.2,
+    "overall_p95_ms": 2335.5,
+    "overall_p99_ms": 4077.0,
+    "backend_rss_mb_min": 25.7,
+    "backend_rss_mb_max": 25.7,
+    "backend_rss_delta_mb": 0.0,
+    "backend_cpu_pct_max": 0.0,
+    "samples": [
+      {
+        "t": 1780479091.5392609,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479096.5710304,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479101.656114,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479106.6697612,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479111.7096443,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479116.769557,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479121.8086412,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479126.86886,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479131.8877058,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479136.9605393,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      }
+    ],
+    "token_refreshes": 0,
+    "token_refresh_failures": 0,
+    "endpoints": [
+      {
+        "endpoint": "bookings_list",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1442.1,
+        "p50_ms": 513.0,
+        "p95_ms": 4797.0,
+        "p99_ms": 10113.6,
+        "max_ms": 11797.8,
+        "bytes": 213166500,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "calendar_events",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 551.1,
+        "p50_ms": 94.7,
+        "p95_ms": 4325.7,
+        "p99_ms": 5561.1,
+        "max_ms": 6059.3,
+        "bytes": 111091000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "tasks_list",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 967.1,
+        "p50_ms": 644.2,
+        "p95_ms": 2906.8,
+        "p99_ms": 3515.8,
+        "max_ms": 4633.2,
+        "bytes": 16875000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "news_feed",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 885.2,
+        "p50_ms": 406.2,
+        "p95_ms": 2881.1,
+        "p99_ms": 4078.5,
+        "max_ms": 4787.0,
+        "bytes": 9208500,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "resources_list",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 597.6,
+        "p50_ms": 279.8,
+        "p95_ms": 2807.1,
+        "p99_ms": 2851.8,
+        "max_ms": 2889.5,
+        "bytes": 98255500,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "chat_conversations",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 682.9,
+        "p50_ms": 260.9,
+        "p95_ms": 2507.4,
+        "p99_ms": 3500.8,
+        "max_ms": 4090.2,
+        "bytes": 25274500,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "dashboard_stats",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 391.7,
+        "p50_ms": 46.8,
+        "p95_ms": 2105.6,
+        "p99_ms": 2252.3,
+        "max_ms": 2539.7,
+        "bytes": 634000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "chat_unread",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 524.7,
+        "p50_ms": 211.0,
+        "p95_ms": 1943.6,
+        "p99_ms": 3380.7,
+        "max_ms": 3660.4,
+        "bytes": 500000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "cost_centers",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 498.6,
+        "p50_ms": 197.4,
+        "p95_ms": 1910.5,
+        "p99_ms": 2713.6,
+        "max_ms": 3293.5,
+        "bytes": 1430000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "users_directory",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 529.0,
+        "p50_ms": 247.4,
+        "p95_ms": 1898.9,
+        "p99_ms": 2699.5,
+        "max_ms": 3000.2,
+        "bytes": 16882000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "my_bookings",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 438.7,
+        "p50_ms": 210.5,
+        "p95_ms": 1290.4,
+        "p99_ms": 2303.6,
+        "max_ms": 2805.6,
+        "bytes": 3592000,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "catering_items",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 236.2,
+        "p50_ms": 127.6,
+        "p95_ms": 861.1,
+        "p99_ms": 1498.1,
+        "max_ms": 2773.3,
+        "bytes": 3640500,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "notifications",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 244.2,
+        "p50_ms": 148.8,
+        "p95_ms": 748.7,
+        "p99_ms": 859.2,
+        "max_ms": 1011.6,
+        "bytes": 4957166,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "auth_me",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 213.3,
+        "p50_ms": 134.6,
+        "p95_ms": 611.0,
+        "p99_ms": 1096.8,
+        "max_ms": 1545.0,
+        "bytes": 1560368,
+        "status_codes": {
+          "200": 500
+        }
+      },
+      {
+        "endpoint": "user_permissions",
+        "calls": 500,
+        "ok": 500,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 80.3,
+        "p50_ms": 33.4,
+        "p95_ms": 243.3,
+        "p99_ms": 1104.4,
+        "max_ms": 1718.9,
+        "bytes": 4953500,
+        "status_codes": {
+          "200": 500
+        }
+      }
+    ]
+  },
+  {
+    "phase": "stress_150",
+    "users": 150,
+    "rounds": 5,
+    "duration_target_s": null,
+    "elapsed_s": 75.19,
+    "rps": 149.63,
+    "total_calls": 11250,
+    "errors": 2,
+    "error_rate_pct": 0.02,
+    "overall_avg_ms": 891.3,
+    "overall_p95_ms": 2964.3,
+    "overall_p99_ms": 6101.0,
+    "backend_rss_mb_min": 25.7,
+    "backend_rss_mb_max": 25.7,
+    "backend_rss_delta_mb": 0.0,
+    "backend_cpu_pct_max": 0.0,
+    "samples": [
+      {
+        "t": 1780479140.8821704,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479145.9205925,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479150.9581006,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479156.018083,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479161.0613315,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479166.1233504,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479171.1608794,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479176.221048,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479181.2559655,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479186.3165803,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479191.334842,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479196.4217687,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479201.4603338,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479206.5319347,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479211.6197069,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      }
+    ],
+    "token_refreshes": 1,
+    "token_refresh_failures": 0,
+    "endpoints": [
+      {
+        "endpoint": "calendar_events",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1534.7,
+        "p50_ms": 246.1,
+        "p95_ms": 9097.7,
+        "p99_ms": 13018.8,
+        "max_ms": 14725.1,
+        "bytes": 166636500,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "bookings_list",
+        "calls": 750,
+        "ok": 748,
+        "err": 2,
+        "timeout": 0,
+        "err_rate_pct": 0.27,
+        "avg_ms": 2210.1,
+        "p50_ms": 1427.5,
+        "p95_ms": 6401.6,
+        "p99_ms": 7675.5,
+        "max_ms": 7993.6,
+        "bytes": 318897084,
+        "status_codes": {
+          "200": 748,
+          "-1": 2
+        }
+      },
+      {
+        "endpoint": "tasks_list",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1543.4,
+        "p50_ms": 1487.1,
+        "p95_ms": 3309.6,
+        "p99_ms": 4174.8,
+        "max_ms": 5506.8,
+        "bytes": 25312500,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "news_feed",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1330.4,
+        "p50_ms": 1175.9,
+        "p95_ms": 3274.7,
+        "p99_ms": 4414.6,
+        "max_ms": 7519.3,
+        "bytes": 13812750,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "resources_list",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 954.9,
+        "p50_ms": 603.0,
+        "p95_ms": 2962.8,
+        "p99_ms": 2972.5,
+        "max_ms": 4103.5,
+        "bytes": 147383250,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "chat_conversations",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 994.9,
+        "p50_ms": 687.1,
+        "p95_ms": 2895.0,
+        "p99_ms": 3891.4,
+        "max_ms": 4977.8,
+        "bytes": 37911750,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "cost_centers",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 803.5,
+        "p50_ms": 589.2,
+        "p95_ms": 2398.0,
+        "p99_ms": 3235.7,
+        "max_ms": 4009.4,
+        "bytes": 2145000,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "chat_unread",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 797.5,
+        "p50_ms": 598.7,
+        "p95_ms": 2197.0,
+        "p99_ms": 2925.8,
+        "max_ms": 3585.2,
+        "bytes": 750000,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "users_directory",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 806.2,
+        "p50_ms": 612.6,
+        "p95_ms": 2106.7,
+        "p99_ms": 3097.4,
+        "max_ms": 4968.9,
+        "bytes": 25323000,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "my_bookings",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 705.9,
+        "p50_ms": 543.1,
+        "p95_ms": 1853.8,
+        "p99_ms": 2907.8,
+        "max_ms": 3978.1,
+        "bytes": 5388000,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "catering_items",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 409.3,
+        "p50_ms": 312.1,
+        "p95_ms": 1117.9,
+        "p99_ms": 2188.5,
+        "max_ms": 2805.2,
+        "bytes": 5460750,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "notifications",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 438.2,
+        "p50_ms": 370.2,
+        "p95_ms": 990.3,
+        "p99_ms": 1898.3,
+        "max_ms": 3602.4,
+        "bytes": 7435733,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "auth_me",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 381.1,
+        "p50_ms": 306.6,
+        "p95_ms": 883.9,
+        "p99_ms": 1975.5,
+        "max_ms": 2499.8,
+        "bytes": 2583498,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "user_permissions",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 206.3,
+        "p50_ms": 72.8,
+        "p95_ms": 799.6,
+        "p99_ms": 2228.2,
+        "max_ms": 3146.7,
+        "bytes": 7430250,
+        "status_codes": {
+          "200": 750
+        }
+      },
+      {
+        "endpoint": "dashboard_stats",
+        "calls": 750,
+        "ok": 750,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 253.5,
+        "p50_ms": 197.1,
+        "p95_ms": 546.0,
+        "p99_ms": 3104.1,
+        "max_ms": 6096.0,
+        "bytes": 951000,
+        "status_codes": {
+          "200": 750
+        }
+      }
+    ]
+  },
+  {
+    "phase": "stress_200",
+    "users": 200,
+    "rounds": 5,
+    "duration_target_s": null,
+    "elapsed_s": 101.02,
+    "rps": 148.49,
+    "total_calls": 15000,
+    "errors": 3,
+    "error_rate_pct": 0.02,
+    "overall_avg_ms": 1088.9,
+    "overall_p95_ms": 4046.4,
+    "overall_p99_ms": 11449.3,
+    "backend_rss_mb_min": 25.7,
+    "backend_rss_mb_max": 25.7,
+    "backend_rss_delta_mb": 0.0,
+    "backend_cpu_pct_max": 0.0,
+    "samples": [
+      {
+        "t": 1780479216.2997074,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479221.3198638,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479226.332754,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479231.4156628,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479236.4279928,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479241.510628,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479246.5227811,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479251.537063,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479256.632592,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479261.7148097,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479266.7313173,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479271.8176105,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479276.8395467,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479281.9182327,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479286.9370606,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479291.9560428,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479297.0229137,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479302.0362544,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479307.068345,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479312.1139112,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479317.1267276,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      }
+    ],
+    "token_refreshes": 1,
+    "token_refresh_failures": 0,
+    "endpoints": [
+      {
+        "endpoint": "calendar_events",
+        "calls": 1000,
+        "ok": 998,
+        "err": 2,
+        "timeout": 0,
+        "err_rate_pct": 0.2,
+        "avg_ms": 2664.6,
+        "p50_ms": 115.3,
+        "p95_ms": 19109.4,
+        "p99_ms": 23326.6,
+        "max_ms": 27712.0,
+        "bytes": 221737636,
+        "status_codes": {
+          "200": 998,
+          "-1": 2
+        }
+      },
+      {
+        "endpoint": "bookings_list",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 2779.7,
+        "p50_ms": 816.4,
+        "p95_ms": 12103.1,
+        "p99_ms": 17752.8,
+        "max_ms": 19831.2,
+        "bytes": 426333000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "resources_list",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1110.2,
+        "p50_ms": 499.0,
+        "p95_ms": 4602.7,
+        "p99_ms": 5998.1,
+        "max_ms": 9147.6,
+        "bytes": 196511000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "tasks_list",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1831.8,
+        "p50_ms": 1197.8,
+        "p95_ms": 4200.8,
+        "p99_ms": 6378.9,
+        "max_ms": 9983.3,
+        "bytes": 33750000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "news_feed",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1492.1,
+        "p50_ms": 850.1,
+        "p95_ms": 4139.9,
+        "p99_ms": 6221.4,
+        "max_ms": 10167.5,
+        "bytes": 18417000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "my_bookings",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 904.5,
+        "p50_ms": 347.4,
+        "p95_ms": 3915.8,
+        "p99_ms": 6419.4,
+        "max_ms": 8538.2,
+        "bytes": 7184000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "chat_conversations",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1101.6,
+        "p50_ms": 455.8,
+        "p95_ms": 3519.8,
+        "p99_ms": 5489.3,
+        "max_ms": 12085.5,
+        "bytes": 50549000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "users_directory",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 833.5,
+        "p50_ms": 360.2,
+        "p95_ms": 2867.2,
+        "p99_ms": 6509.4,
+        "max_ms": 8796.4,
+        "bytes": 33764000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "cost_centers",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 823.0,
+        "p50_ms": 361.6,
+        "p95_ms": 2774.2,
+        "p99_ms": 4116.4,
+        "max_ms": 10935.6,
+        "bytes": 2860000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "chat_unread",
+        "calls": 1000,
+        "ok": 999,
+        "err": 1,
+        "timeout": 0,
+        "err_rate_pct": 0.1,
+        "avg_ms": 865.4,
+        "p50_ms": 396.8,
+        "p95_ms": 2703.0,
+        "p99_ms": 4016.4,
+        "max_ms": 10293.5,
+        "bytes": 999000,
+        "status_codes": {
+          "200": 999,
+          "-1": 1
+        }
+      },
+      {
+        "endpoint": "notifications",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 511.9,
+        "p50_ms": 291.6,
+        "p95_ms": 1821.2,
+        "p99_ms": 2114.9,
+        "max_ms": 6191.4,
+        "bytes": 9914376,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "catering_items",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 369.7,
+        "p50_ms": 210.8,
+        "p95_ms": 1214.1,
+        "p99_ms": 2033.2,
+        "max_ms": 2811.2,
+        "bytes": 7281000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "auth_me",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 403.6,
+        "p50_ms": 280.6,
+        "p95_ms": 1005.6,
+        "p99_ms": 1980.9,
+        "max_ms": 6096.9,
+        "bytes": 3392312,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "dashboard_stats",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 541.8,
+        "p50_ms": 86.4,
+        "p95_ms": 869.7,
+        "p99_ms": 6891.2,
+        "max_ms": 26541.0,
+        "bytes": 1268000,
+        "status_codes": {
+          "200": 1000
+        }
+      },
+      {
+        "endpoint": "user_permissions",
+        "calls": 1000,
+        "ok": 1000,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 100.4,
+        "p50_ms": 39.7,
+        "p95_ms": 296.4,
+        "p99_ms": 928.5,
+        "max_ms": 5106.0,
+        "bytes": 9907000,
+        "status_codes": {
+          "200": 1000
+        }
+      }
+    ]
+  },
+  {
+    "phase": "stress_250",
+    "users": 250,
+    "rounds": 5,
+    "duration_target_s": null,
+    "elapsed_s": 142.18,
+    "rps": 131.88,
+    "total_calls": 18750,
+    "errors": 0,
+    "error_rate_pct": 0.0,
+    "overall_avg_ms": 1701.0,
+    "overall_p95_ms": 5846.0,
+    "overall_p99_ms": 11311.8,
+    "backend_rss_mb_min": 25.7,
+    "backend_rss_mb_max": 25.7,
+    "backend_rss_delta_mb": 0.0,
+    "backend_cpu_pct_max": 0.0,
+    "samples": [
+      {
+        "t": 1780479317.5508795,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479322.6682613,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479327.710296,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479332.7681673,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479337.7842693,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479342.8724294,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479347.95851,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479352.9807575,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479358.0598907,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479363.111881,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479368.1747658,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479373.2576387,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479378.2769768,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479383.3585024,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479388.3741958,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479393.4609904,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479398.4762762,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479403.5638342,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479408.5778766,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479413.6586165,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479418.6746202,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479423.7108173,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479428.7757046,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479433.8562906,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479438.8762825,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479443.95669,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479448.98203,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479454.05993,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780479459.0795474,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      }
+    ],
+    "token_refreshes": 2,
+    "token_refresh_failures": 0,
+    "endpoints": [
+      {
+        "endpoint": "calendar_events",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 4382.0,
+        "p50_ms": 598.4,
+        "p95_ms": 14588.0,
+        "p99_ms": 18295.3,
+        "max_ms": 20836.6,
+        "bytes": 277727500,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "bookings_list",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 4260.8,
+        "p50_ms": 4209.1,
+        "p95_ms": 9187.0,
+        "p99_ms": 10871.5,
+        "max_ms": 11871.6,
+        "bytes": 532916250,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "tasks_list",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 3129.0,
+        "p50_ms": 2293.0,
+        "p95_ms": 8748.2,
+        "p99_ms": 9562.0,
+        "max_ms": 10786.0,
+        "bytes": 42187500,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "dashboard_stats",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1190.4,
+        "p50_ms": 89.0,
+        "p95_ms": 6051.2,
+        "p99_ms": 9794.1,
+        "max_ms": 11351.4,
+        "bytes": 1585000,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "news_feed",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 2146.3,
+        "p50_ms": 2006.8,
+        "p95_ms": 4037.4,
+        "p99_ms": 4847.1,
+        "max_ms": 8299.5,
+        "bytes": 23021250,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "chat_conversations",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1978.0,
+        "p50_ms": 1997.1,
+        "p95_ms": 3430.5,
+        "p99_ms": 4270.7,
+        "max_ms": 5602.3,
+        "bytes": 63186250,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "cost_centers",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1315.9,
+        "p50_ms": 1296.4,
+        "p95_ms": 2552.6,
+        "p99_ms": 3385.5,
+        "max_ms": 4454.1,
+        "bytes": 3575000,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "chat_unread",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1410.1,
+        "p50_ms": 1401.6,
+        "p95_ms": 2514.5,
+        "p99_ms": 3108.1,
+        "max_ms": 4168.0,
+        "bytes": 1250000,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "resources_list",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1304.1,
+        "p50_ms": 1201.8,
+        "p95_ms": 2497.4,
+        "p99_ms": 3195.6,
+        "max_ms": 4219.3,
+        "bytes": 245638750,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "users_directory",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1286.7,
+        "p50_ms": 1273.9,
+        "p95_ms": 2343.2,
+        "p99_ms": 2707.5,
+        "max_ms": 4198.2,
+        "bytes": 42205000,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "my_bookings",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 1185.3,
+        "p50_ms": 1152.1,
+        "p95_ms": 2193.4,
+        "p99_ms": 2702.0,
+        "max_ms": 3649.4,
+        "bytes": 8980000,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "notifications",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 594.7,
+        "p50_ms": 504.3,
+        "p95_ms": 1416.9,
+        "p99_ms": 1781.4,
+        "max_ms": 2701.3,
+        "bytes": 12392742,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "catering_items",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 595.1,
+        "p50_ms": 541.6,
+        "p95_ms": 1250.0,
+        "p99_ms": 1686.1,
+        "max_ms": 2197.6,
+        "bytes": 9101250,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "auth_me",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 569.9,
+        "p50_ms": 493.0,
+        "p95_ms": 1119.8,
+        "p99_ms": 1258.5,
+        "max_ms": 2631.6,
+        "bytes": 4111146,
+        "status_codes": {
+          "200": 1250
+        }
+      },
+      {
+        "endpoint": "user_permissions",
+        "calls": 1250,
+        "ok": 1250,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 166.4,
+        "p50_ms": 23.4,
+        "p95_ms": 893.2,
+        "p99_ms": 1105.0,
+        "max_ms": 2773.1,
+        "bytes": 12383750,
+        "status_codes": {
+          "200": 1250
+        }
+      }
+    ]
+  }
+]

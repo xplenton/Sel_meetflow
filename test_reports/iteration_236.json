@@ -1,0 +1,56 @@
+{
+  "summary": "Iter 236 - Drag & Drop Move Booking Feature: All tests PASSED. Backend: 11/11 pytest tests passed. Frontend: OccupancyOverview with drag-drop, confirm dialog, cancel/confirm buttons, success toast, tab navigation all working correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter236_drag_drop_move.py",
+    "/app/test_reports/pytest/iteration_236_drag_drop.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_iter236_drag_drop_move.py"
+  ],
+  "success_rate": {
+    "backend": "100% (11/11 tests passed)",
+    "frontend": "100% (all Iter 236 features verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Used existing demo data from POST /api/resources-seed-demo",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 236 fully tested. Drag & Drop move booking feature is complete. PUT /api/resource-bookings/{id} now accepts resource_id to move booking to different resource (same type only). Frontend OccupancyOverview has draggable booking bars, drop zones, and confirm dialog with source/target display. Cancel closes dialog without API call, Confirm triggers PUT and shows success toast.",
+  "features_verified": {
+    "backend_put_move_same_type": "PASS - PUT /api/resource-bookings/{id} with resource_id moves booking to another resource of same type",
+    "backend_put_move_different_type_400": "PASS - PUT with resource_id of different type returns 400 'Ziel-Ressource hat einen anderen Typ'",
+    "backend_put_move_conflict_409": "PASS - PUT with conflicting time slot on target resource returns 409",
+    "backend_put_move_inactive_400": "PASS - PUT with inactive target resource returns 400",
+    "backend_put_time_only": "PASS - PUT without resource_id only changes time, keeps same resource",
+    "backend_occupancy_endpoint": "PASS - GET /api/resource-occupancy returns resources, bookings, blackouts",
+    "backend_occupancy_type_filter": "PASS - type=room|desk|vehicle filters correctly",
+    "backend_tab_endpoints": "PASS - All resource type endpoints (room/desk/vehicle) and my-bookings work",
+    "frontend_occupancy_overview": "PASS - data-testid='occupancy-overview' component renders",
+    "frontend_booking_bars_draggable": "PASS - Booking bars have draggable=true attribute",
+    "frontend_drop_zones": "PASS - data-testid='occupancy-drop-{resource_id}' zones present",
+    "frontend_click_to_book": "PASS - data-testid='occupancy-book-{resource_id}' areas open BookingDialog",
+    "frontend_move_dialog": "PASS - data-testid='occupancy-move-dialog' appears on drop",
+    "frontend_move_dialog_content": "PASS - Dialog shows booking title, source/target resources with arrow, new time period",
+    "frontend_move_confirm_btn": "PASS - data-testid='occupancy-move-confirm' triggers PUT and shows success toast",
+    "frontend_move_cancel_btn": "PASS - data-testid='occupancy-move-cancel' closes dialog without API call",
+    "frontend_success_toast": "PASS - 'Buchung verschoben' toast appears after successful move",
+    "frontend_tab_navigation": "PASS - All tabs (Raeume, Arbeitsplaetze, Fahrzeuge, Meine Buchungen, Belegung, Lageplan) load without errors"
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

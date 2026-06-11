@@ -1,0 +1,158 @@
+{
+  "project_domain": "Enterprise Video Meeting Platform (SaaS)",
+  "theme": "light",
+  "archetype": "Archetype 1 (Organic & Earthy) - Modified for Calm Enterprise SaaS",
+  "design_philosophy": "A clean, modern, and highly readable interface emphasizing calm focus. Designed for enterprise, healthcare, and education to reduce meeting anxiety. Uses soft earthy tones rather than harsh corporate blues or clinical whites. Adheres to strict optical alignment and logical hierarchy.",
+  "typography": {
+    "heading_font": "Manrope",
+    "body_font": "Work Sans",
+    "mono_font": "IBM Plex Mono",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl tracking-tight leading-none font-light",
+      "h2": "text-2xl sm:text-3xl tracking-tight font-medium",
+      "h3": "text-xl sm:text-2xl font-medium",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base leading-relaxed text-[#4B5563]",
+      "small_label": "text-xs uppercase tracking-[0.2em] font-bold text-[#6B7280]"
+    },
+    "guidelines": "Never use Inter for headings. Keep letter-spacing tight for headings and loose for body. Use varied weights (font-light for massive heroes, font-bold for tiny overlines)."
+  },
+  "colors": {
+    "background": {
+      "default": "#F9F9F8",
+      "alt": "#F3F4F1"
+    },
+    "surface": {
+      "default": "#FFFFFF",
+      "glass": "rgba(255, 255, 255, 0.7)",
+      "video_tile": "#1A1D1B"
+    },
+    "primary": {
+      "default": "#4A5D4E",
+      "hover": "#3E4E42",
+      "text": "#FFFFFF"
+    },
+    "secondary": {
+      "default": "#E8EAE6",
+      "hover": "#DCE0D9",
+      "text": "#1F2937"
+    },
+    "status": {
+      "destructive": "#C87967",
+      "destructive_hover": "#B56555",
+      "warning": "#D4A373",
+      "success": "#6B8E23",
+      "live_indicator": "#E25C5C"
+    },
+    "text": {
+      "primary": "#1C1F1D",
+      "secondary": "#4B5563",
+      "muted": "#9CA3AF"
+    },
+    "border": {
+      "default": "#E2E4E0",
+      "focus": "#4A5D4E",
+      "glass": "rgba(255, 255, 255, 0.4)"
+    }
+  },
+  "layout_and_spacing": {
+    "spacing_scale": "Use Tailwind scale with generous multiplier (e.g., p-6, p-8, p-12).",
+    "dashboard_grid": {
+      "type": "Control Room Grid",
+      "classes": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+      "rules": "Dense, exact alignment. h-full on children to prevent jagged bottoms."
+    },
+    "pre_join_grid": {
+      "type": "Bento Grid",
+      "classes": "grid grid-cols-1 md:grid-cols-12 gap-8",
+      "spans": "Video Preview: col-span-12 md:col-span-8. Settings Panel: col-span-12 md:col-span-4."
+    },
+    "live_meeting_grid": {
+      "type": "Fluid Video Grid",
+      "classes": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4",
+      "rules": "Must fill viewport height minus header/control bar. Use object-cover for video elements."
+    }
+  },
+  "surfaces_and_components": {
+    "cards": {
+      "classes": "bg-white border border-[#E2E4E0] rounded-xl shadow-sm",
+      "rules": "Internal padding must be p-6 or p-8. No soft muddy shadows, just crisp 1px borders with shadow-sm."
+    },
+    "glass_panels": {
+      "classes": "backdrop-blur-xl bg-white/70 border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08)] rounded-2xl",
+      "rules": "Used for floating control bars, sticky headers, and pre-join overlays."
+    },
+    "inputs_and_forms": {
+      "classes": "bg-transparent border-b-2 border-[#E2E4E0] focus:border-[#4A5D4E] rounded-none px-0 py-2 focus:ring-0 focus:outline-none transition-colors",
+      "rules": "Avoid default boxed inputs where possible; use clean underlined inputs for settings to fit the minimalist aesthetic."
+    },
+    "buttons": {
+      "primary": "bg-[#4A5D4E] text-white rounded-full px-6 py-2.5 font-medium hover:bg-[#3E4E42] transition-all active:scale-95",
+      "secondary": "bg-[#E8EAE6] text-[#1F2937] rounded-full px-6 py-2.5 font-medium hover:bg-[#DCE0D9] transition-all active:scale-95",
+      "destructive": "bg-[#C87967] text-white rounded-full px-6 py-2.5 font-medium hover:bg-[#B56555] transition-all active:scale-95",
+      "icon_button": "p-3 rounded-full flex items-center justify-center transition-all bg-[#E8EAE6] hover:bg-[#DCE0D9] text-[#1F2937]"
+    },
+    "meeting_controls": {
+      "container": "fixed bottom-8 left-1/2 -translate-x-1/2 backdrop-blur-xl bg-white/80 border border-white/40 rounded-full px-6 py-3 shadow-lg flex items-center gap-4",
+      "active_state": "bg-[#E8EAE6] text-[#1F2937]",
+      "muted_state": "bg-[#C87967] text-white"
+    }
+  },
+  "interactions_and_motion": {
+    "hover_states": "ALWAYS set explicit text color on hover (e.g., hover:bg-[#3E4E42] hover:text-white). Buttons should have active:scale-95.",
+    "focus_states": "High contrast ring: focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4A5D4E] focus-visible:ring-offset-2.",
+    "transitions": "Use specific properties: transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease. No transition-all for complex layouts.",
+    "page_load": "Fade in with a slight upward drift (y: 10px -> 0px) for main dashboard sections."
+  },
+  "accessibility_and_testing": {
+    "testing_attributes": "CRITICAL: All interactive elements MUST have data-testid. Format: data-testid='[action]-[element]'. Examples: data-testid='join-meeting-button', data-testid='toggle-mic-icon-button'.",
+    "contrast": "Ensure APCA compliant text contrast. Muted text should not fall below 4.5:1 ratio against background."
+  },
+  "media": {
+    "avatars": [
+      {
+        "url": "https://images.unsplash.com/photo-1573497491207-618cc224f243?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwYnVzaW5lc3MlMjBoZWFkc2hvdHN8ZW58MHx8fHwxNzc1OTQ0NDA4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional woman in white dress shirt",
+        "category": "host_avatar"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1609371497456-3a55a205d5eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwYnVzaW5lc3MlMjBoZWFkc2hvdHN8ZW58MHx8fHwxNzc1OTQ0NDA4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional woman in gray crew neck",
+        "category": "participant_avatar"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1609436132311-e4b0c9370469?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwYnVzaW5lc3MlMjBoZWFkc2hvdHN8ZW58MHx8fHwxNzc1OTQ0NDA4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional woman in gray/black scarf",
+        "category": "participant_avatar"
+      }
+    ],
+    "logos": [
+      {
+        "url": "https://images.unsplash.com/photo-1572533717789-543da73adb20?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwzfHxnZW5lcmljJTIwY29tcGFueSUyMGxvZ28lMjBtaW5pbWFsaXN0fGVufDB8fHx8MTc3NTk0NDQwOHww&ixlib=rb-4.1.0&q=85",
+        "description": "Devparc generic minimal logo",
+        "category": "brand_logo"
+      }
+    ],
+    "backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1771732267066-32c364cc5264?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTZ8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMG1pbmltYWwlMjBhYnN0cmFjdCUyMHNvZnQlMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NTk0NDQxN3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract soft pink and white gradient background",
+        "category": "auth_background"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1554757388-d18867a11d05?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwYmxhbmslMjBjYW52YXMlMjBkZXNrfGVufDB8fHx8MTc3NTk0NDQxN3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Minimalist blank canvas desk",
+        "category": "empty_state_dashboard"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Multilingual Support: Ensure all UI strings are abstracted into a localization framework or structured to support switching between English and German seamlessly.",
+    "Dashboard Setup: Implement the Dashboard utilizing Shadcn UI components but override border radiuses to 'rounded-xl' and borders to 'border-[#E2E4E0]'. No muddy shadows.",
+    "Pre-Join Layout: Divide screen 8-columns for video/placeholder and 4-columns for settings. Include inputs for display name and toggles for device testing.",
+    "Live Meeting View: The video grid must auto-adjust based on participant count (CSS Grid auto-fit/auto-fill). The control bar must hover at the bottom (fixed, z-50).",
+    "Testing: Add data-testid to every single button, form input, and interactive panel without exception.",
+    "Icons: Use lucide-react throughout. Maintain consistent 20px size and 2px stroke width unless in hero sections.",
+    "Never use generic Bootstrap columns. Emphasize asymmetry and tension in marketing pages if any, but maintain strict control room precision in the app dashboard."
+  ]
+}

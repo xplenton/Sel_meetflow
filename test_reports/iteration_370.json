@@ -1,0 +1,77 @@
+{
+  "summary": "Iteration 370 - Three Bug Fixes VERIFIED. All tests pass. (1) QR Modal via React Portal renders centered in viewport (y=292, center_x=960). (2) LicenseBanner shows NO false-positive - status=disabled in preview env means no banner. (3) Capabilities/Module fixes: 67 caps across 13 categories including new tasks/resources/invoices/fleet; MODULE_MAP includes meetings/surveys; ghost caps removed from ROLE_DEFAULTS.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "qr_modal_portal_fix": {
+      "status": "PASS",
+      "description": "QR Modal renders via createPortal to document.body. Modal position: y=292 (within viewport 0-1080), center_x=960 (horizontally centered). Contains QR image, deep-link, PNG download button, and Schliessen button."
+    },
+    "license_banner_false_positive_fix": {
+      "status": "PASS",
+      "description": "GET /api/license/status returns status='disabled' in preview env (no LICENSE_SERVER_URL). LicenseBanner component correctly shows NO banner when status is 'disabled'. No 'Anwendung ist gesperrt' text found on page."
+    },
+    "capabilities_67_across_13_categories": {
+      "status": "PASS",
+      "tests_passed": 4,
+      "description": "GET /api/admin/capabilities returns 67 capabilities across 13 categories: module, news, meetings, chat, documents, scheduling, surveys, tasks, resources, invoices, fleet, admin, global."
+    },
+    "new_category_labels": {
+      "status": "PASS",
+      "description": "New categories have correct German labels: Aufgaben (5 caps), Ressourcen & Catering (9 caps), Rechnungen & Buchhaltung (4 caps), Fuhrpark (1 cap)."
+    },
+    "ghost_caps_removed": {
+      "status": "PASS",
+      "description": "Ghost caps (resources.book_with_approval, resources.cancel_any, resources.process_catering) are NOT in ROLE_DEFAULTS for any role."
+    },
+    "module_map_meetings_surveys": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "GET /api/user/permissions for admin includes 'meetings' and 'surveys' in permissions array. MODULE_MAP correctly maps meetings→view:meetings, surveys→view:surveys."
+    },
+    "sichtbare_module_list": {
+      "status": "PASS",
+      "description": "Group dialog shows all 13 modules in SICHTBARE MODULE list: Dashboard, News & Mitteilungen, Umfragen, Aufgaben, Ressourcen, Webkonferenz, Terminplanung, Chat, Kalender, Aufnahmen, Profil, Verwaltung, Auswertungen."
+    },
+    "capability_selector_categories": {
+      "status": "PASS",
+      "description": "CapabilitySelector shows all 13 category sections with correct counts: module(12), news(8), meetings(6), chat(3), documents(4), scheduling(2), surveys(4), tasks(5), resources(9), admin(7), fleet(1), invoices(4), global(2)."
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter370_bug_fixes.py",
+    "/app/test_reports/pytest/iteration_370_bug_fixes.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "QR Modal fix uses createPortal(modal, document.body) to bypass ancestor transform breaking position:fixed - correct approach",
+    "LicenseBanner fix: on fetch error, setStatus(null) instead of showing error banner - prevents false-positives during network issues",
+    "CATEGORY_LABELS in CapabilitySelector.js correctly includes all 13 categories with German labels",
+    "ALL_MODULES in GroupsPanel.js correctly includes all 13 modules including surveys, tasks, resources, meetings",
+    "MODULE_MAP in permissions.py correctly maps meetings and surveys to their view:* capabilities",
+    "Ghost caps removed from ROLE_DEFAULTS - resources.book_with_approval, resources.cancel_any, resources.process_catering were never used in codebase"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter370_bug_fixes.py"
+  ],
+  "success_rate": {
+    "backend": "100% (8/8 tests passed)",
+    "frontend": "100% (all UI tests passed via Playwright)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "None - used existing test data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 370 fixes three bugs: (1) QR Modal now uses React Portal to document.body for correct viewport positioning, (2) LicenseBanner no longer shows false-positive 'Anwendung ist gesperrt' on network errors - only when server confirms invalid status, (3) Capabilities/Module alignment: 67 caps across 13 categories, MODULE_MAP includes meetings/surveys, ghost caps removed. All tests pass.",
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

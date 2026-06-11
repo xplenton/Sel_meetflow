@@ -1,0 +1,98 @@
+{
+  "summary": "Iteration 293 — Configurable Internal Invoice System: All features tested and working correctly. Backend: 28/28 tests passed. Frontend: All UI components verified and functional including InvoiceConfigPanel (3 sub-tabs), ManualInvoiceDialog with hybrid master-select, and live totals calculation.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter293_invoice_config.py",
+    "/app/test_reports/pytest/iteration_293_invoice_config.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Master Data CRUD: All 4 types (account, cost_center, cost_object, project) work correctly with duplicate code detection (409 Conflict)",
+    "Number Ranges: Pattern validation correctly rejects patterns without counter ({####}, {###}, {##}), is_default is exclusive",
+    "Templates: Required/visible fields configuration works, is_default is exclusive, delete blocked when template in use",
+    "Manual Invoice: Pflichtfeld validation returns 400 with code='missing_required_fields' and fields list",
+    "Invoice Number Allocation: Atomic counter works - sequential numbers RE-2026-0001, RE-2026-0002, etc.",
+    "Tax Calculation: Discount applied before tax - 10% discount on 1000 = 900 net, 7% tax = 63, gross = 963",
+    "PDF Generation: Returns application/pdf with >1000 bytes, includes header/footer/payment-terms from template snapshot",
+    "Accounting Update: PUT /api/invoices/{id}/accounting works on draft invoices, updates cost_center/account/cost_object/project_code",
+    "DATEV Export: UTF-8 BOM, semicolon delimiter, all 12 columns present (Rechnungsnummer, Datum, Empfänger, Konto, Kostenstelle, Kostenträger, Projekt, Brutto, Netto, MwSt, Währung, Status)",
+    "Capabilities: All 4 new capabilities (invoices.manage_templates, invoices.manage_master_data, invoices.create_manual, invoices.set_accounting) work correctly, admin has all by default, non-admin without cap gets 403"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter293_invoice_config.py"
+  ],
+  "success_rate": {
+    "backend": "100% (28/28 tests passed)",
+    "frontend": "100% (all UI components verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Test templates, number ranges, and master data created during testing - cleanup fixture removes test data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 293 fully tested. Key findings: (1) Admin → System → Rechnungen-Setup tab shows InvoiceConfigPanel with 3 sub-tabs (Vorlagen, Nummernkreise, Stammdaten), (2) Templates sub-tab shows list with Name, Pflichtfelder, MwSt %, Standard columns and edit/delete buttons, (3) Number Ranges dialog shows Pattern field with placeholder help text '{PREFIX} {YYYY} {YY} {MM} {####} {###} {##}', (4) Master Data sub-tab has type selector (Konten/Kostenstellen/Kostenträger/Projekte) with Code, Bezeichnung, Beschreibung, Aktiv columns, (5) Resources → Rechnungen → 'Manuelle Rechnung' button opens dialog with template/range selectors, hybrid master-select for accounting fields (dropdown + 'Frei' toggle), line items with live totals (Netto/MwSt/Brutto), (6) Invoice numbers are sequential (RE-2026-0001, RE-2026-0002, etc.), (7) Default template has cost_center and issue_date as required fields - tests must include these.",
+  "test_details": {
+    "backend_api": {
+      "master_data_create_account": "PASS - Creates item with type='account'",
+      "master_data_create_cost_center": "PASS - Creates item with type='cost_center'",
+      "master_data_create_cost_object": "PASS - Creates item with type='cost_object'",
+      "master_data_create_project": "PASS - Creates item with type='project'",
+      "master_data_list_by_type": "PASS - Filters by type parameter",
+      "master_data_duplicate_code_409": "PASS - Returns 409 Conflict for duplicate code",
+      "master_data_update": "PASS - Updates label, description, active",
+      "master_data_delete": "PASS - Removes item",
+      "number_range_valid_pattern": "PASS - Pattern with {####} accepted",
+      "number_range_invalid_pattern_400": "PASS - Pattern without counter rejected",
+      "number_range_three_digit_counter": "PASS - Pattern with {###} accepted",
+      "number_range_two_digit_counter": "PASS - Pattern with {##} accepted",
+      "number_range_is_default_exclusive": "PASS - Only one default at a time",
+      "number_range_list": "PASS - Returns all ranges",
+      "template_create": "PASS - Creates with required_fields and visible_fields",
+      "template_is_default_exclusive": "PASS - Only one default at a time",
+      "template_list": "PASS - Returns all templates",
+      "manual_invoice_missing_required_400": "PASS - Returns 400 with code='missing_required_fields'",
+      "manual_invoice_success": "PASS - Creates invoice with sequential number",
+      "manual_invoice_atomic_numbers": "PASS - Two invoices get different sequential numbers",
+      "manual_invoice_tax_with_discount": "PASS - Discount applied before tax calculation",
+      "manual_invoice_pdf": "PASS - Returns application/pdf >1000 bytes",
+      "accounting_update": "PASS - Updates cost_center/account/cost_object/project_code",
+      "datev_csv_export": "PASS - UTF-8 BOM, semicolon delimiter, 12 columns",
+      "datev_csv_filter_cost_center": "PASS - Filters by cost_center",
+      "datev_csv_filter_date_range": "PASS - Filters by from_date/to_date",
+      "capabilities_admin_has_all": "PASS - Admin can access all new endpoints",
+      "capabilities_non_admin_403": "PASS - Non-admin without cap gets 403"
+    },
+    "frontend_components": {
+      "admin_system_rechnungen_setup_tab": "PASS - Tab visible in System group",
+      "invoice_config_panel": "PASS - Panel with 3 sub-tabs visible",
+      "config_tab_templates": "PASS - Templates sub-tab with table and add button",
+      "config_tab_ranges": "PASS - Number Ranges sub-tab with table and add button",
+      "config_tab_master": "PASS - Master Data sub-tab with type selector and table",
+      "template_dialog": "PASS - Dialog with Name, MwSt %, Header, Footer, Payment Terms, Bank Details, Required/Visible fields toggles",
+      "range_dialog": "PASS - Dialog with Name, Prefix, Pattern, Start Number, Yearly Reset, Active, Default switches",
+      "range_pattern_help_text": "PASS - Placeholder help text visible",
+      "master_data_type_selector": "PASS - Dropdown with 4 types",
+      "master_data_add_button": "PASS - Eintrag button visible",
+      "resources_rechnungen_tab": "PASS - Tab visible in Resources page",
+      "billing_manual_invoice_button": "PASS - 'Manuelle Rechnung' button visible",
+      "manual_invoice_dialog": "PASS - Dialog opens with all fields",
+      "manual_invoice_template_select": "PASS - Template dropdown with default selected",
+      "manual_invoice_range_select": "PASS - Number range dropdown",
+      "manual_invoice_recipient_input": "PASS - Empfänger input with required marker",
+      "manual_invoice_cost_center_hybrid": "PASS - Dropdown with 'Frei' toggle for free text",
+      "manual_invoice_line_items": "PASS - Line items with Bezeichnung, Menge, Einheit, €/Einheit, MwSt %, Rabatt %",
+      "manual_invoice_add_line_button": "PASS - '+ Position' button visible",
+      "manual_invoice_live_totals": "PASS - Netto/MwSt/Brutto calculated live (750.00/52.50/802.50 EUR)",
+      "manual_invoice_save_button": "PASS - 'Rechnung erstellen' button visible"
+    }
+  }
+}

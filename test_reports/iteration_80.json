@@ -1,0 +1,114 @@
+{
+  "summary": "Iteration 80 - Survey Archive + Meeting Templates with Custom Recurring: All 25 backend tests PASSED (100%). Frontend UI verified: Survey archive/restore buttons, expires_at input, archived surveys list with 'Archiv (22)' toggle. Meeting templates with custom recurring schedule editor showing weekday buttons, time inputs, weeks selector. Admin page regression OK (pagination, filters, force-logout).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_80_survey_archive_templates.py",
+    "/app/test_reports/pytest/iteration_80_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BACKEND: services/surveys_archive.py - auto_archive_expired_surveys() correctly filters by status!='archived' AND expires_at < cutoff, sets archived_by='system'",
+    "BACKEND: routes/surveys.py lines 160-196 - archive/restore/run endpoints properly check admin/moderator role, return updated doc",
+    "BACKEND: routes/surveys.py lines 13-36 - GET /surveys correctly defaults to status='published', excludes archived from default list",
+    "BACKEND: services/maintenance.py lines 102-106 - _cleanup_loop_tick now calls auto_archive_expired_surveys() in background",
+    "BACKEND: models.py lines 107-124 - TemplateCreateRequest extended with recurring_schedule, recurring_weeks, invited_emails",
+    "BACKEND: routes/meetings.py lines 1042-1061 - PUT /templates/{id} updates all fields including new recurring fields",
+    "BACKEND: routes/meetings.py lines 1063-1133 - create_from_template with generate_series=true calls generate_custom_schedule",
+    "BACKEND: services/meetings_recurring.py lines 128-177 - generate_custom_schedule creates series meetings for each weekday slot × weeks",
+    "FRONTEND: SurveysPage.js lines 43-65 - Archive toggle, restore buttons, archived surveys list with proper data-testids",
+    "FRONTEND: SurveysPage.js lines 521-582 - SurveyEditor has expires_at datetime-local input (data-testid='survey-expires-input')",
+    "FRONTEND: MeetingCreatePage.js lines 60-73 - loadTemplate copies recurring_schedule, recurring_weeks, invited_emails to form",
+    "FRONTEND: MeetingCreatePage.js lines 337-349 - Template list shows series label for templates with recurring_schedule"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_80_survey_archive_templates.py"
+  ],
+  "success_rate": {
+    "backend": "100% (25/25 passed)",
+    "frontend": "100% (all UI elements verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Created test surveys and templates during testing, cleaned up after tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 80 validated Survey Archive (manual + auto) and Meeting Templates with Custom Recurring Schedule. Key behaviors: (1) POST /api/surveys/{id}/archive sets status='archived', archived_at, archived_by=user_id. (2) POST /api/surveys/{id}/restore sets status='published', clears archived_at. (3) POST /api/surveys/archive/run {grace_days:14} auto-archives expired surveys with archived_by='system'. (4) GET /api/surveys (no status) excludes archived, GET /api/surveys?status=archived returns only archived. (5) GET /api/surveys/pending-count excludes archived. (6) POST /api/templates with recurring=true, recurring_pattern='custom', recurring_schedule=[{weekday,start_time,end_time}], recurring_weeks, invited_emails. (7) PUT /api/templates/{id} updates all fields. (8) POST /api/templates/{id}/create-meeting with generate_series=true creates anchor + series meetings (_series_generated in response). (9) Frontend: SurveysPage has toggle-archived-surveys, archived-surveys-list, restore-{id}, archive-{id} buttons, survey-expires-input. (10) Frontend: MeetingCreatePage has custom-schedule-editor, add-schedule-slot, schedule-slot-{n}, slot-{n}-wd-{weekday}, slot-{n}-start/end, schedule-weeks-input, template-series-{id} labels. Regression: All iteration 78 features (pagination, filters, force-logout, SMTP, DNS) still work.",
+  "test_results_summary": {
+    "survey_archive_manual": {
+      "archive_sets_status_archived": "PASSED",
+      "archive_sets_archived_at": "PASSED",
+      "archive_sets_archived_by_user_id": "PASSED",
+      "archive_requires_admin_moderator": "PASSED"
+    },
+    "survey_restore": {
+      "restore_sets_status_published": "PASSED",
+      "restore_clears_archived_at": "PASSED"
+    },
+    "survey_auto_archive": {
+      "run_endpoint_works": "PASSED",
+      "archives_expired_surveys": "PASSED",
+      "sets_archived_by_system": "PASSED",
+      "requires_admin": "PASSED"
+    },
+    "archived_exclusion": {
+      "excluded_from_default_list": "PASSED",
+      "excluded_from_published_filter": "PASSED",
+      "returned_with_archived_filter": "PASSED",
+      "excluded_from_pending_count": "PASSED"
+    },
+    "template_custom_schedule": {
+      "create_with_recurring_schedule": "PASSED",
+      "create_with_recurring_weeks": "PASSED",
+      "create_with_invited_emails": "PASSED",
+      "get_includes_custom_fields": "PASSED",
+      "update_all_fields": "PASSED",
+      "update_not_owned_returns_404": "PASSED"
+    },
+    "create_from_template": {
+      "with_generate_series_creates_series": "PASSED - _series_generated >= 4",
+      "without_generate_series_no_series": "PASSED",
+      "invited_emails_copied": "PASSED"
+    },
+    "regression_iteration_78": {
+      "admin_users_pagination": "PASSED",
+      "admin_users_filters": "PASSED",
+      "force_logout_all": "PASSED",
+      "email_config": "PASSED",
+      "dns_check": "PASSED",
+      "admin_stats": "PASSED",
+      "admin_groups": "PASSED",
+      "admin_presets": "PASSED"
+    },
+    "frontend_ui": {
+      "surveys_page_loads": "PASSED",
+      "toggle_archived_surveys_visible": "PASSED - data-testid='toggle-archived-surveys'",
+      "archived_surveys_list_expands": "PASSED - data-testid='archived-surveys-list'",
+      "restore_buttons_visible": "PASSED - 22 restore buttons (data-testid='restore-{id}')",
+      "archive_buttons_visible": "PASSED - data-testid='archive-{id}'",
+      "survey_expires_input": "PASSED - data-testid='survey-expires-input'",
+      "meeting_create_page_loads": "PASSED",
+      "load_template_button": "PASSED",
+      "save_template_button": "PASSED",
+      "custom_schedule_editor": "PASSED - data-testid='custom-schedule-editor'",
+      "add_schedule_slot_button": "PASSED - data-testid='add-schedule-slot'",
+      "schedule_slot_created": "PASSED - data-testid='schedule-slot-0'",
+      "weekday_buttons": "PASSED - data-testid='slot-0-wd-{weekday}'",
+      "time_inputs": "PASSED - data-testid='slot-0-start/end'",
+      "weeks_input": "PASSED - data-testid='schedule-weeks-input'",
+      "admin_page_regression": "PASSED - pagination, filters, force-logout all visible"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

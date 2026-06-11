@@ -1,0 +1,146 @@
+{
+  "ts": "2026-04-20T21:06:12",
+  "config": {
+    "concurrent_users": 500,
+    "chat_users": 100,
+    "chat_groups": 10,
+    "burst_spike_size": 1000,
+    "burst_window_ms": 500,
+    "burst_at_sec": 20,
+    "burst_duration_sec": 60,
+    "api_url": "http://localhost:8004"
+  },
+  "totals": {
+    "total_requests": 11224,
+    "burst_requests": 1000,
+    "run_duration_sec": 63.6,
+    "effective_rps": 176.5,
+    "status_counts": {
+      "200": 11031,
+      "502": 178,
+      "598": 15
+    },
+    "error_total": 193,
+    "error_rate_pct": 1.72
+  },
+  "per_endpoint": [
+    {
+      "endpoint": "/api/chat/conversations/{id}/messages",
+      "requests": 1320,
+      "errors": 119,
+      "error_rate_pct": 9.02,
+      "p50_ms": 2594.4,
+      "p95_ms": 10510.7,
+      "p99_ms": 13904.9,
+      "avg_ms": 3476.3
+    },
+    {
+      "endpoint": "/api/chat/unread-summary",
+      "requests": 1175,
+      "errors": 0,
+      "error_rate_pct": 0.0,
+      "p50_ms": 1116.6,
+      "p95_ms": 7502.5,
+      "p99_ms": 9927.4,
+      "avg_ms": 1925.2
+    },
+    {
+      "endpoint": "/api/meetings",
+      "requests": 1021,
+      "errors": 5,
+      "error_rate_pct": 0.49,
+      "p50_ms": 1460.3,
+      "p95_ms": 8691.4,
+      "p99_ms": 11096.9,
+      "avg_ms": 2395.5
+    },
+    {
+      "endpoint": "/api/auth/me",
+      "requests": 995,
+      "errors": 0,
+      "error_rate_pct": 0.0,
+      "p50_ms": 829.3,
+      "p95_ms": 6107.4,
+      "p99_ms": 7374.5,
+      "avg_ms": 1521.9
+    },
+    {
+      "endpoint": "/api/news/feed",
+      "requests": 983,
+      "errors": 12,
+      "error_rate_pct": 1.22,
+      "p50_ms": 2016.3,
+      "p95_ms": 10794.5,
+      "p99_ms": 12893.7,
+      "avg_ms": 3091.9
+    },
+    {
+      "endpoint": "/api/news/categories",
+      "requests": 968,
+      "errors": 0,
+      "error_rate_pct": 0.0,
+      "p50_ms": 1172.8,
+      "p95_ms": 7000.6,
+      "p99_ms": 8690.2,
+      "avg_ms": 1795.5
+    },
+    {
+      "endpoint": "/api/chat/conversations",
+      "requests": 966,
+      "errors": 1,
+      "error_rate_pct": 0.1,
+      "p50_ms": 1009.5,
+      "p95_ms": 6916.1,
+      "p99_ms": 8786.2,
+      "avg_ms": 1769.4
+    },
+    {
+      "endpoint": "/api/news/unread-count",
+      "requests": 964,
+      "errors": 0,
+      "error_rate_pct": 0.0,
+      "p50_ms": 1605.9,
+      "p95_ms": 8416.0,
+      "p99_ms": 10193.6,
+      "avg_ms": 2395.7
+    },
+    {
+      "endpoint": "/api/notifications",
+      "requests": 956,
+      "errors": 0,
+      "error_rate_pct": 0.0,
+      "p50_ms": 1100.0,
+      "p95_ms": 7013.4,
+      "p99_ms": 8292.6,
+      "avg_ms": 1772.8
+    },
+    {
+      "endpoint": "/api/surveys",
+      "requests": 939,
+      "errors": 5,
+      "error_rate_pct": 0.53,
+      "p50_ms": 1713.3,
+      "p95_ms": 9903.3,
+      "p99_ms": 11506.8,
+      "avg_ms": 2668.3
+    },
+    {
+      "endpoint": "/api/dashboard/stats",
+      "requests": 937,
+      "errors": 51,
+      "error_rate_pct": 5.44,
+      "p50_ms": 3194.0,
+      "p95_ms": 13907.9,
+      "p99_ms": 16578.5,
+      "avg_ms": 4745.3
+    }
+  ],
+  "burst": {
+    "spike_size": 1000,
+    "target_window_ms": 500,
+    "dispatch_time_ms": 212.1,
+    "burst_total_wall_time_ms": 16135.4,
+    "effective_dispatch_rps": 4715.2,
+    "burst_completion_rps": 62.0
+  }
+}

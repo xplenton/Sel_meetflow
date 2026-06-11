@@ -1,0 +1,92 @@
+{
+  "summary": "Iteration 71 - Editorial Calendar, ICS-Auto-Email, News Push Refactor: All 15 backend tests passed (100%). Frontend tests verified EditorialCalendar dialog with all navigation controls, legend showing 6 statuses, and clicking calendar posts opens NewsEditorDialog for editing.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_71_features.py",
+    "/app/test_reports/pytest/iteration_71_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "NEWS: GET /api/news/editorial-calendar returns {start, end, total, items[]} with calendar_date for each post",
+    "NEWS: Editorial calendar respects start/end query params for date filtering",
+    "NEWS: Editorial calendar returns owner_id, owner_name, channels, priority for each item",
+    "NEWS: Editorial calendar returns 403 for users without news.create or news.moderate capability",
+    "MEETINGS: POST /api/meetings/{id}/send-invitations manually sends ICS email invites",
+    "MEETINGS: send-invitations with no recipients returns {total:0, sent:0, failed:0, reason:'no_recipients'}",
+    "MEETINGS: send-invitations with specific emails array sends to those emails only",
+    "MEETINGS: send-invitations returns 403 for non-host users",
+    "MEETINGS: POST /api/meetings with invited_emails and meeting_type=scheduled triggers fire-and-forget ICS dispatch",
+    "NEWS: POST /api/news/push/send still works after refactor to services/news_push.py",
+    "FRONTEND: 'Redaktions-Kalender' button visible for users with news.create capability (data-testid='open-editorial-calendar')",
+    "FRONTEND: EditorialCalendar dialog opens with data-testid='editorial-calendar-dialog'",
+    "FRONTEND: Calendar grid (data-testid='cal-grid') shows 7-column weekly layout",
+    "FRONTEND: Navigation buttons: cal-prev, cal-next, cal-today, cal-weeks-select (4/6/12 weeks), cal-close all present",
+    "FRONTEND: Legend (data-testid='cal-legend') shows all 6 statuses: Entwurf, Pruefung, Freigabe, Geplant, Live, Archiviert",
+    "FRONTEND: Clicking calendar post (data-testid='cal-post-{id}') opens NewsEditorDialog for editing"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_71_features.py"
+  ],
+  "success_rate": {
+    "backend": "100% (15/15 tests passed)",
+    "frontend": "100% (all UI elements verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Test data created during tests was cleaned up via fixture teardown",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 71 tested: (1) NEWS editorial-calendar - GET /api/news/editorial-calendar returns posts with calendar_date, respects start/end params, returns owner_info (owner_id, owner_name, channels, priority), 403 for unauthorized. (2) MEETINGS send-invitations - POST /api/meetings/{id}/send-invitations manually sends ICS invites, returns {total, sent, failed}, supports specific emails array, returns reason='no_recipients' when empty, 403 for non-host. (3) MEETINGS auto-ICS - POST /api/meetings with invited_emails and meeting_type=scheduled triggers fire-and-forget ICS dispatch. (4) NEWS push refactor - POST /api/news/push/send still works via services/news_push.py wrapper. (5) FRONTEND EditorialCalendar - Button 'Redaktions-Kalender' visible for news.create users, dialog opens with cal-grid, navigation (prev/next/today/weeks-select/close), legend with 6 statuses, clicking post opens NewsEditorDialog. (6) REGRESSION - scheduled publish coercion, participant_count (instant=1, scheduled=0), soft-cancel series, cleanup endpoint all still working.",
+  "test_results_summary": {
+    "editorial_calendar_api": {
+      "returns_items_with_calendar_date": "PASSED",
+      "respects_date_range_params": "PASSED",
+      "returns_owner_info": "PASSED",
+      "403_for_unauthorized": "PASSED"
+    },
+    "send_invitations_api": {
+      "endpoint_exists_and_works": "PASSED",
+      "specific_emails_array": "PASSED",
+      "no_recipients_returns_reason": "PASSED",
+      "403_for_non_host": "PASSED"
+    },
+    "auto_ics_dispatch": {
+      "meeting_creation_with_invited_emails": "PASSED"
+    },
+    "news_push_refactor": {
+      "push_send_still_works": "PASSED"
+    },
+    "regression_iter_70": {
+      "scheduled_publish_coercion": "PASSED",
+      "participant_count_instant": "PASSED",
+      "participant_count_scheduled": "PASSED",
+      "soft_cancel_series": "PASSED",
+      "cleanup_endpoint": "PASSED"
+    },
+    "frontend_editorial_calendar": {
+      "button_visible": "FOUND (data-testid='open-editorial-calendar')",
+      "dialog_opens": "PASSED (data-testid='editorial-calendar-dialog')",
+      "cal_grid": "FOUND",
+      "cal_prev": "FOUND",
+      "cal_next": "FOUND",
+      "cal_today": "FOUND",
+      "cal_weeks_select": "FOUND",
+      "cal_close": "FOUND",
+      "cal_legend": "FOUND (6 statuses)",
+      "cal_posts": "FOUND (4 posts visible)",
+      "click_post_opens_editor": "PASSED"
+    }
+  },
+  "mocked_apis": {
+    "resend_sandbox": "Resend email delivery is in test-mode; ICS invites may show failed=1 unless sending to verified test email (selim@adilovic.de). This is expected behavior, NOT a code bug."
+  }
+}

@@ -1,0 +1,308 @@
+[
+  {
+    "phase": "smoke",
+    "users": 20,
+    "rounds": 3,
+    "duration_target_s": null,
+    "elapsed_s": 5.64,
+    "rps": 159.62,
+    "total_calls": 901,
+    "errors": 0,
+    "error_rate_pct": 0.0,
+    "overall_avg_ms": 101.6,
+    "overall_p95_ms": 345.6,
+    "overall_p99_ms": 795.3,
+    "backend_rss_mb_min": 25.7,
+    "backend_rss_mb_max": 25.7,
+    "backend_rss_delta_mb": 0.0,
+    "backend_cpu_pct_max": 0.0,
+    "samples": [
+      {
+        "t": 1780478372.9109507,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      },
+      {
+        "t": 1780478377.923034,
+        "rss_mb": 25.7,
+        "cpu_pct": 0.0
+      }
+    ],
+    "token_refreshes": 0,
+    "token_refresh_failures": 0,
+    "endpoints": [
+      {
+        "endpoint": "bookings_list",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 322.2,
+        "p50_ms": 199.7,
+        "p95_ms": 1091.0,
+        "p99_ms": 1094.6,
+        "max_ms": 1101.7,
+        "bytes": 25556400,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "calendar_events",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 201.3,
+        "p50_ms": 66.2,
+        "p95_ms": 748.4,
+        "p99_ms": 795.3,
+        "max_ms": 1917.7,
+        "bytes": 13330920,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "resources_list",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 156.4,
+        "p50_ms": 97.0,
+        "p95_ms": 496.5,
+        "p99_ms": 585.3,
+        "max_ms": 586.9,
+        "bytes": 11790660,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "dashboard_stats",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 100.5,
+        "p50_ms": 19.5,
+        "p95_ms": 386.7,
+        "p99_ms": 393.1,
+        "max_ms": 474.3,
+        "bytes": 76080,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "tasks_list",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 161.2,
+        "p50_ms": 131.9,
+        "p95_ms": 307.3,
+        "p99_ms": 348.8,
+        "max_ms": 382.3,
+        "bytes": 2025000,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "news_feed",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 112.1,
+        "p50_ms": 100.8,
+        "p95_ms": 243.7,
+        "p99_ms": 361.1,
+        "max_ms": 395.2,
+        "bytes": 1105020,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "users_directory",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 67.4,
+        "p50_ms": 51.5,
+        "p95_ms": 196.8,
+        "p99_ms": 217.8,
+        "max_ms": 230.1,
+        "bytes": 2025840,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "chat_conversations",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 63.9,
+        "p50_ms": 32.5,
+        "p95_ms": 195.8,
+        "p99_ms": 260.0,
+        "max_ms": 269.6,
+        "bytes": 3032940,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "notifications",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 61.0,
+        "p50_ms": 33.1,
+        "p95_ms": 194.0,
+        "p99_ms": 194.1,
+        "max_ms": 549.1,
+        "bytes": 594882,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "my_bookings",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 80.0,
+        "p50_ms": 64.3,
+        "p95_ms": 188.9,
+        "p99_ms": 195.6,
+        "max_ms": 407.3,
+        "bytes": 431040,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "chat_unread",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 53.5,
+        "p50_ms": 49.4,
+        "p95_ms": 124.9,
+        "p99_ms": 177.1,
+        "max_ms": 195.1,
+        "bytes": 60000,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "cost_centers",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 47.4,
+        "p50_ms": 21.3,
+        "p95_ms": 119.1,
+        "p99_ms": 280.7,
+        "max_ms": 305.4,
+        "bytes": 171600,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "catering_items",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 34.3,
+        "p50_ms": 17.2,
+        "p95_ms": 101.4,
+        "p99_ms": 111.2,
+        "max_ms": 137.1,
+        "bytes": 436860,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "user_permissions",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 35.9,
+        "p50_ms": 12.4,
+        "p95_ms": 92.7,
+        "p99_ms": 180.0,
+        "max_ms": 183.2,
+        "bytes": 594420,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "auth_me",
+        "calls": 60,
+        "ok": 60,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 27.8,
+        "p50_ms": 17.0,
+        "p95_ms": 89.1,
+        "p99_ms": 119.9,
+        "max_ms": 288.2,
+        "bytes": 179784,
+        "status_codes": {
+          "200": 60
+        }
+      },
+      {
+        "endpoint": "tasks_create",
+        "calls": 1,
+        "ok": 1,
+        "err": 0,
+        "timeout": 0,
+        "err_rate_pct": 0.0,
+        "avg_ms": 30.0,
+        "p50_ms": 30.0,
+        "p95_ms": 30.0,
+        "p99_ms": 30.0,
+        "max_ms": 30.0,
+        "bytes": 524,
+        "status_codes": {
+          "200": 1
+        }
+      }
+    ]
+  }
+]

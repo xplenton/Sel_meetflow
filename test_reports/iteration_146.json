@@ -1,0 +1,103 @@
+{
+  "summary": "Iteration 146 Testing Complete - DND Bypass for Chat Calls + Reachability Endpoint. Backend: 20/20 tests passed. All features verified: (1) _eligible_recipients signature changed from urgent to bypass_dnd, (2) Calls bypass DND (recipients=2 including DND user), (3) Text messages filter DND users (recipients=1), (4) Secondary push fires for calls (is_call check), (5) GET /api/meetings/{id}/reachability returns invitee reachability info with push_enabled/online/in_meeting/is_guest booleans, (6) Reachability endpoint is host-only (403 for non-host), (7) Guest invitees returned with is_guest=true and all booleans false, (8) Host filtered from invitees list, (9) Regression: /ring endpoint works, (10) Regression: /join triggers ring for scheduled meetings.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "test_01_login_admin": {"status": "PASS", "details": "Admin login successful"},
+    "test_02_login_or_create_testuser2": {"status": "PASS", "details": "Testuser2 created/logged in"},
+    "test_03_login_or_create_testuser3": {"status": "PASS", "details": "Testuser3 created/logged in"},
+    "test_04_set_testuser2_to_dnd": {"status": "PASS", "details": "Testuser2 status set to DND"},
+    "test_05_create_group_conversation": {"status": "PASS", "details": "Group conversation created with 3 members"},
+    "test_06_start_call_from_group_chat": {"status": "PASS", "details": "Call started, push attempted to 2 recipients (including DND user)"},
+    "test_07_send_text_message_to_group": {"status": "PASS", "details": "Text message sent, push attempted to 1 recipient (DND user filtered)"},
+    "test_08_create_meeting_for_reachability_test": {"status": "PASS", "details": "Meeting created with invitees including guest"},
+    "test_09_reachability_endpoint_host_access": {"status": "PASS", "details": "Host can access reachability endpoint, response structure verified"},
+    "test_10_reachability_endpoint_non_host_forbidden": {"status": "PASS", "details": "Non-host gets 403 Forbidden"},
+    "test_11_reachability_endpoint_not_found": {"status": "PASS", "details": "Non-existent meeting returns 404"},
+    "test_12_regression_ring_endpoint": {"status": "PASS", "details": "POST /api/meetings/{id}/ring works"},
+    "test_13_regression_join_meeting_rings_invitees": {"status": "PASS", "details": "Join triggers ring for scheduled meetings"},
+    "test_14_reset_testuser2_status": {"status": "PASS", "details": "Testuser2 status reset to online"},
+    "test_15_cleanup_test_data": {"status": "PASS", "details": "Test data cleaned up"},
+    "test_code_review_eligible_recipients_signature": {"status": "PASS", "details": "bypass_dnd parameter verified in _eligible_recipients"},
+    "test_code_review_push_new_chat_message_call_bypass": {"status": "PASS", "details": "is_call derivation and bypass_dnd logic verified"},
+    "test_code_review_dnd_filter_logic": {"status": "PASS", "details": "DND filter checks bypass_dnd flag"},
+    "test_code_review_reachability_endpoint_exists": {"status": "PASS", "details": "Reachability endpoint structure verified"},
+    "test_code_review_host_only_access": {"status": "PASS", "details": "Host-only access verified"}
+  },
+  "code_review": {
+    "chat_push_eligible_recipients": {
+      "file": "/app/backend/services/chat_push.py",
+      "lines": "20-52",
+      "verdict": "CORRECT",
+      "details": "Signature changed from urgent to bypass_dnd. DND users filtered when bypass_dnd=False, included when bypass_dnd=True."
+    },
+    "chat_push_new_chat_message": {
+      "file": "/app/backend/services/chat_push.py",
+      "lines": "60-140",
+      "verdict": "CORRECT",
+      "details": "is_call = message_type == 'call'. bypass_dnd=urgent or is_call. Secondary push fires for urgent OR is_call."
+    },
+    "reachability_endpoint": {
+      "file": "/app/backend/routes/meetings/core.py",
+      "lines": "157-207",
+      "verdict": "CORRECT",
+      "details": "Returns invitees with push_enabled/online/in_meeting/is_guest. Host filtered. Guest invitees have is_guest=true and all booleans false."
+    }
+  },
+  "log_evidence": {
+    "call_with_dnd_user": "[chat-push] call conv=conv_2f93dcd5e2 from=user_6d5b8761ae5e → sent=0 failed=2 recipients=2",
+    "text_without_dnd_user": "[chat-push] text conv=conv_2f93dcd5e2 from=user_6d5b8761ae5e → sent=0 failed=1 recipients=1",
+    "interpretation": "Call included 2 recipients (DND user included), text message included 1 recipient (DND user filtered). This confirms bypass_dnd logic works correctly."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_146_dnd_bypass_reachability.py",
+    "/app/test_reports/pytest/iteration_146_dnd_bypass_reachability_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "_eligible_recipients signature correctly changed from urgent to bypass_dnd",
+    "Calls always bypass DND (is_call = message_type == 'call', bypass_dnd=urgent or is_call)",
+    "Secondary push fires for calls too (if urgent or is_call:)",
+    "Reachability endpoint correctly returns invitee reachability info",
+    "Guest invitees (no user_id) correctly returned with is_guest=true and all booleans false",
+    "Host correctly filtered from invitees list"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_146_dnd_bypass_reachability.py"
+  ],
+  "success_rate": {
+    "backend": "100% (20/20 tests passed)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123",
+    "testuser_iter146_2": "testuser_iter146_2@meetflow.com / testuser146_2",
+    "testuser_iter146_3": "testuser_iter146_3@meetflow.com / testuser146_3"
+  },
+  "seed_data_creation": "Test users and conversations created during pytest execution, cleaned up after tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 146 DND bypass for chat calls verified. Key changes: (1) _eligible_recipients now takes bypass_dnd kwarg instead of urgent, (2) push_new_chat_message sets bypass_dnd=True for calls (message_type=='call'), (3) Secondary push fires for calls too (not just urgent). Reachability endpoint at GET /api/meetings/{id}/reachability returns per-invitee push_enabled/online/in_meeting/is_guest booleans. Host-only access (403 for non-host). Guest invitees (no user_id) returned with is_guest=true.",
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  },
+  "iter146_feature_verification": {
+    "dnd_bypass_for_calls": "VERIFIED - recipients=2 for call (DND user included)",
+    "dnd_filter_for_text": "VERIFIED - recipients=1 for text (DND user filtered)",
+    "bypass_dnd_parameter": "VERIFIED - signature changed from urgent to bypass_dnd",
+    "secondary_push_for_calls": "VERIFIED - if urgent or is_call: triggers second push",
+    "reachability_endpoint": "VERIFIED - returns invitees with push_enabled/online/in_meeting/is_guest",
+    "reachability_host_only": "VERIFIED - 403 for non-host",
+    "reachability_guest_handling": "VERIFIED - is_guest=true, all booleans false",
+    "regression_ring_endpoint": "VERIFIED - POST /api/meetings/{id}/ring works",
+    "regression_join_rings": "VERIFIED - join triggers ring for scheduled meetings"
+  }
+}

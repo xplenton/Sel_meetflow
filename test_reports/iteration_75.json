@@ -1,0 +1,77 @@
+{
+  "summary": "Iteration 75 - Onboarding Persistence & 'Meine Rechte' UI: All 13 backend tests passed, all frontend tests passed. POST /api/users/me/onboarding-complete requires auth (401 without), sets onboarding_completed_at ISO timestamp, persists in user document (verified via GET /api/auth/me). GET /api/user/permissions now includes capability_labels field with {label, category, description} for each capability in German. ProfilePage 'Meine Rechte' block shows 46 capabilities grouped by 9 categories (module, news, meetings, chat, documents, scheduling, surveys, admin, global). OnboardingTour correctly skips when user.onboarding_completed_at is set. Regression: Email preferences and unsubscribe endpoints still work.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_75_features.py",
+    "/app/test_reports/pytest/iteration_75_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BACKEND: routes/auth.py - POST /users/me/onboarding-complete (lines 161-171) correctly requires auth via get_current_user, sets onboarding_completed_at ISO timestamp, returns {onboarding_completed_at: <iso>}",
+    "BACKEND: routes/admin.py - GET /user/permissions (lines 146-156) correctly builds capability_labels dict from CAPABILITIES list, only includes caps that user has",
+    "BACKEND: dependencies.py - get_current_user returns full user document minus password_hash, so onboarding_completed_at flows to /api/auth/me automatically",
+    "FRONTEND: OnboardingTour.js - Correctly checks user.onboarding_completed_at before showing tour (line 33), calls api.post('/users/me/onboarding-complete') on finish (line 48)",
+    "FRONTEND: ProfilePage.js - 'Meine Rechte' block (lines 289-371) fetches /api/user/permissions, groups capabilities by category using CATEGORY_LABELS, displays German labels from capability_labels",
+    "FRONTEND: ProfilePage.js - All data-testid attributes present: my-permissions-block, my-permissions-toggle, my-permissions-list, cap-category-{cat}"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_75_features.py"
+  ],
+  "success_rate": {
+    "backend": "100% (13/13 passed)",
+    "frontend": "100% (all UI tests passed)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "None - used existing admin user",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 75 tested Onboarding Persistence and 'Meine Rechte' UI. Key findings: (1) POST /api/users/me/onboarding-complete requires auth, sets onboarding_completed_at ISO timestamp, persists in user document. (2) GET /api/user/permissions now includes capability_labels field with {label, category, description} for each capability. (3) ProfilePage 'Meine Rechte' block shows 46 capabilities grouped by 9 categories with German labels. (4) OnboardingTour correctly skips when user.onboarding_completed_at is set. (5) Regression: Email preferences (GET/PUT /users/me/email-preferences) and unsubscribe endpoints (GET/POST /unsubscribe/{token}, POST /unsubscribe/{token}/resubscribe) still work correctly.",
+  "test_results_summary": {
+    "onboarding_complete_endpoint": {
+      "requires_auth": "PASSED - returns 401 without auth",
+      "sets_timestamp": "PASSED - returns {onboarding_completed_at: <iso>}",
+      "persists_in_user": "PASSED - GET /api/auth/me returns onboarding_completed_at"
+    },
+    "user_permissions_capability_labels": {
+      "returns_capability_labels": "PASSED - capability_labels field present in response",
+      "correct_structure": "PASSED - each entry has {label, category, description}",
+      "matches_capabilities": "PASSED - capability_labels keys match capabilities list",
+      "admin_has_all_caps": "PASSED - admin has 46 capabilities",
+      "german_labels": "PASSED - labels are in German (Dashboard, News, Verwaltung, etc.)"
+    },
+    "profile_meine_rechte_ui": {
+      "block_exists": "PASSED - data-testid='my-permissions-block' found",
+      "toggle_expands": "PASSED - clicking toggle shows my-permissions-list",
+      "categories_displayed": "PASSED - 9 categories found (module, news, meetings, chat, documents, scheduling, surveys, admin, global)",
+      "capabilities_count": "PASSED - 46 capabilities displayed",
+      "role_shown": "PASSED - 'Rolle: Admin' displayed in header"
+    },
+    "onboarding_tour_behavior": {
+      "skips_when_completed": "PASSED - OnboardingTour NOT visible for admin with onboarding_completed_at set"
+    },
+    "regression_email_preferences": {
+      "get_preferences": "PASSED - returns newsletter_enabled, meeting_invites_enabled, digest_frequency",
+      "put_preferences": "PASSED - updates and persists preferences"
+    },
+    "regression_unsubscribe": {
+      "invalid_token_get": "PASSED - returns 400",
+      "invalid_token_post": "PASSED - returns 400",
+      "invalid_token_resubscribe": "PASSED - returns 400",
+      "ui_error_state": "PASSED - shows 'Ungueltiger Unsubscribe-Link' with login link"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

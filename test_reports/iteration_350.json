@@ -1,0 +1,62 @@
+{
+  "summary": "Iteration 350 - Two Bug Fixes Verified. All 16 tests PASSED. BUG 1: availability_only=true status filter now correctly returns only confirmed/pending_approval bookings (aligned with availability_snapshot). BUG 2: /resource-bookings/invoices/aggregate.pdf now returns 200 with valid PDF (was 500 before fix).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "bug1_availability_only_status_filter": {
+      "status": "PASS",
+      "tests_passed": 4,
+      "description": "availability_only=true now only returns bookings with status in (confirmed, pending_approval). Verified: (1) only allowed statuses returned, (2) cancelled/no_show/completed excluded, (3) privacy-safe stubs format, (4) consistency with availability_snapshot endpoint."
+    },
+    "bug2_aggregate_pdf_fix": {
+      "status": "PASS",
+      "tests_passed": 6,
+      "description": "GET /api/resource-bookings/invoices/aggregate.pdf now returns 200 with valid PDF (%PDF-1.4 magic). Verified with various filters (cost_center, account) and consistency with JSON endpoint."
+    },
+    "regression_booking_endpoints": {
+      "status": "PASS",
+      "tests_passed": 6,
+      "description": "All existing booking endpoints still work: list_bookings (with/without filters), availability_snapshot, single booking invoice.pdf, catering aggregate.pdf."
+    }
+  },
+  "code_review": {
+    "routes/resources/bookings/crud.py": "Lines 73-81: Added status filter when availability_only=True to align with availability_snapshot. Filter: {\"$in\": [\"confirmed\", \"pending_approval\"]}. This ensures the 'Frei bis HH:MM' badge matches the slot grid.",
+    "services/booking_aggregator.py": "NEW file (181 LoC). Extracted compute_booking_invoice_aggregate() from invoices.py. Both JSON and PDF endpoints now call this shared service, fixing the Depends() argument shifting bug.",
+    "routes/resources/invoices.py": "Lines 400-432 (aggregate_booking_invoice) and 435-477 (aggregate_booking_invoice_pdf) now both call services.booking_aggregator.compute_booking_invoice_aggregate instead of the PDF endpoint calling the JSON handler directly.",
+    "frontend/QuickBookSlotPicker.js": "Line 91-96: Added defensive frontend filter to only render bookings with status 'confirmed' or 'pending_approval' as blocked slots. Aligns with backend fix."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter350_bug_fixes.py",
+    "/app/test_reports/pytest/iteration_350_bug_fixes.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BUG 1 fix is correct: availability_only=true now uses same status filter as availability_snapshot",
+    "BUG 2 fix is correct: extracting to service module avoids Depends() argument shifting",
+    "Frontend defensive filter in QuickBookSlotPicker.js is a good safety net",
+    "Both fixes are minimal and targeted - no unnecessary changes"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter350_bug_fixes.py"
+  ],
+  "success_rate": {
+    "backend": "100% (16/16 tests passed)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "Used existing bookings for testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 350 fixes two bugs: (1) availability_only=true status filter alignment with availability_snapshot, (2) aggregate.pdf 500 error fixed by extracting to booking_aggregator service. All 16 tests pass. Outlook Calendar sync remains MOCKED (503 stub).",
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": ["Outlook Calendar OAuth sync (503 stub)"]
+  }
+}

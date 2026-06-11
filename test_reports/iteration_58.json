@@ -1,0 +1,105 @@
+{
+  "summary": "Comprehensive testing of User Status System and Pending Reports features. All backend APIs (19/19 tests) and frontend UI components working correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_status_and_reports.py",
+    "/app/test_reports/pytest/status_reports_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BACKEND API Tests (19/19 passed):",
+    "- PUT /api/chat/my-status: Sets status to online/away/dnd/offline correctly",
+    "- PUT /api/chat/my-status with invalid value: Returns 400 as expected",
+    "- GET /api/chat/my-status: Returns current status with focus-time override",
+    "- POST /api/chat/statuses: Bulk fetch statuses for multiple users works",
+    "- GET /api/news/reports/pending-count: Admin gets count, non-reviewer gets 0 (not 403)",
+    "- All endpoints require authentication (401/403 without auth)",
+    "",
+    "FRONTEND UI Tests (all passed):",
+    "- Dashboard: pending-reports-widget visible for admin with 2 open reports",
+    "- Dashboard: Widget shows 'MODERATION ERFORDERLICH' and '2 offene Meldungen'",
+    "- Dashboard: Clicking widget navigates to /admin",
+    "- Sidebar: status-picker-trigger visible with current status label",
+    "- Sidebar: Status picker menu opens with all 4 options (Online, Abwesend, Nicht stoeren, Offline)",
+    "- Sidebar: Status change via picker updates label (tested Online -> Abwesend)",
+    "- Sidebar: Admin badge shows '2' for pending reports",
+    "",
+    "NewsPage Tests:",
+    "- 'ANGEPINNT' section header visible when pinned posts exist",
+    "- 'NEUESTE' section header visible below pinned posts",
+    "- News editor dialog opens with all fields (title, content, priority, switches)",
+    "- Visual separator between pinned and latest posts working",
+    "",
+    "ChatPage Tests:",
+    "- Conversation list loads with StatusDot indicators",
+    "- DND banner 'Nicht stoeren aktiv' visible (admin has active focus)",
+    "- Chat area, input, send button all functional",
+    "- StatusDot shows gray hollow circles for offline users",
+    "",
+    "AdminPage Tests:",
+    "- News-Moderation tab accessible",
+    "- Reports panel with filter buttons (Alle, Offen, Bearbeitet, Verworfen)",
+    "- Report actions (Als bearbeitet markieren, Verwerfen) visible",
+    "- Sidebar reports badge shows correct count (2)",
+    "",
+    "Focus-Time Override Behavior (as designed):",
+    "- Admin has active Focus #7 until 19:11",
+    "- Status is forced to 'dnd' (Nicht stoeren) due to focus time",
+    "- Manual status change to 'away' works but focus override takes precedence",
+    "- This is expected behavior per the spec"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_status_and_reports.py"
+  ],
+  "success_rate": {
+    "backend": "100% (19/19 tests passed)",
+    "frontend": "100% (all UI components working)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123",
+    "autor": "autor-test@meetflow.com / 9e619d6544"
+  },
+  "seed_data_creation": "None - used existing test data",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "User Status System fully implemented: (1) PUT/GET /api/chat/my-status for manual status changes; (2) POST /api/chat/statuses for bulk status fetch; (3) GET /api/news/reports/pending-count returns count for reviewers, 0 for others; (4) StatusPicker component in sidebar with 4 status options; (5) StatusDot component shows colored dots (online=green, away=beige, dnd=red, offline=gray ring); (6) pending-reports-widget on dashboard for admins; (7) Focus-time override forces status to 'dnd' when active. Admin currently has active focus time 'Focus #7' which overrides manual status to 'dnd'.",
+  "features_verified": {
+    "backend_status_endpoints": {
+      "put_my_status": "Sets status_mode to online/away/dnd/offline, returns 400 for invalid",
+      "get_my_status": "Returns current status with focus-time override",
+      "post_statuses": "Bulk fetch statuses for user_ids list"
+    },
+    "backend_pending_count": {
+      "admin_access": "Returns {count: N} for admin/redakteur/freigeber",
+      "non_reviewer_access": "Returns {count: 0} for autor/member (not 403)"
+    },
+    "frontend_status_picker": {
+      "trigger": "data-testid='status-picker-trigger' shows current status label",
+      "menu": "data-testid='status-picker-menu' with 4 options",
+      "options": "status-option-online, status-option-away, status-option-dnd, status-option-offline"
+    },
+    "frontend_pending_widget": {
+      "widget": "data-testid='pending-reports-widget' visible when admin + count > 0",
+      "navigation": "Click navigates to /admin"
+    },
+    "frontend_news_sections": {
+      "pinned_header": "'ANGEPINNT' section header when pinned posts exist",
+      "latest_header": "'NEUESTE' section header for non-pinned posts"
+    },
+    "frontend_chat_status": {
+      "status_dot": "StatusDot component shows colored indicators",
+      "dnd_banner": "data-testid='chat-dnd-banner' shows when user is in DND mode"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false
+  }
+}

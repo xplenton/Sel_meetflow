@@ -1,0 +1,26 @@
+{
+  "short_name": "MeetFlow",
+  "name": "MeetFlow - Arbeitsplattform",
+  "description": "Alles für den Arbeitsalltag — Chat, Aufgaben, Meetings und Ressourcen in einer Plattform.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#4A5D4E",
+  "background_color": "#F9F9F8",
+  "lang": "de",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/favicon.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    { "name": "Dashboard", "short_name": "Start", "url": "/dashboard", "description": "Übersicht und nächste Schritte" },
+    { "name": "News", "short_name": "News", "url": "/news", "description": "Neuigkeiten lesen" },
+    { "name": "Chat", "short_name": "Chat", "url": "/chat", "description": "Kollegen schreiben" },
+    { "name": "Meeting starten", "short_name": "Meeting", "url": "/meetings/new", "description": "Neues Meeting" }
+  ],
+  "categories": ["productivity", "medical", "communication", "business"]
+}

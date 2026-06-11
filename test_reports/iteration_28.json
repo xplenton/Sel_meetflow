@@ -1,0 +1,74 @@
+{
+  "summary": "Tested drag & drop signature placement on PUBLIC signing page (/sign/:signToken). All features working correctly: GET /api/sign/{sign_token} returns meeting_id and file_ext, public sign page shows name/email form, SignaturePad appears after proceed, placement overlay appears after signing (not immediate save), draggable signature visible, cancel returns to SignaturePad, confirm saves with position, success screen shows after save, backend stores pos_x/pos_y/page.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "passed_tests": [
+    "BACKEND: GET /api/sign/07a232b0a3c24d1a returns meeting_id field",
+    "BACKEND: GET /api/sign/07a232b0a3c24d1a returns file_ext field",
+    "BACKEND: POST /api/sign/{sign_token} stores pos_x, pos_y, page from placement",
+    "FRONTEND: Public sign page (/sign/:signToken) loads without auth",
+    "FRONTEND: Name input (signer-name-input) visible and functional",
+    "FRONTEND: Email input (signer-email-input) visible and functional",
+    "FRONTEND: Proceed button (proceed-to-sign-btn) disabled until name entered",
+    "FRONTEND: SignaturePad appears after clicking proceed button",
+    "FRONTEND: Typed signature mode works (sig-tab-type)",
+    "FRONTEND: After signing, placement overlay (signature-placement-overlay) appears",
+    "FRONTEND: Draggable signature (draggable-signature) shows typed text",
+    "FRONTEND: Position info (placement-position-info) shows X=200, Y=400 default",
+    "FRONTEND: Zoom controls (placement-zoom-in, placement-zoom-out) present",
+    "FRONTEND: Cancel button (placement-cancel) returns to SignaturePad",
+    "FRONTEND: Confirm button (placement-confirm) saves signature with position",
+    "FRONTEND: Position updates after drag (X=863, Y=480 after drag)",
+    "FRONTEND: Success screen (sign-success) shows after confirm",
+    "FRONTEND: Success toast 'Erfolgreich unterschrieben und platziert' appears"
+  ],
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (3/3 tests passed)",
+    "frontend": "100% (15/15 tests passed)"
+  },
+  "test_credentials": {
+    "note": "No auth needed for public sign page",
+    "test_sign_token": "07a232b0a3c24d1a",
+    "test_doc": "doc_104c70d9c4",
+    "test_meeting": "meet_02b9b928e7"
+  },
+  "seed_data_creation": "Used existing test document with sign_token 07a232b0a3c24d1a",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Tested PUBLIC sign page drag & drop placement. The flow is: /sign/:signToken -> Enter name/email -> Click 'Weiter zur Unterschrift' -> SignaturePad (draw or type) -> Click 'Unterschreiben' -> SignaturePlacement overlay appears -> Drag signature to position -> Click 'Platzieren & Speichern' -> Success screen. Key data-testids: public-sign-page, signer-name-input, signer-email-input, proceed-to-sign-btn, signature-pad, sig-tab-type, signature-typed-input, submit-signature-btn, signature-placement-overlay, draggable-signature, placement-position-info, placement-cancel, placement-confirm, sign-success. Backend stores pos_x, pos_y, page in signatures array.",
+  "mocked_apis": {
+    "email_sending": "Email sending is MOCKED (logged to console, no real email sent)"
+  },
+  "features_verified": {
+    "public_sign_page_placement": {
+      "url": "/sign/:signToken",
+      "auth_required": false,
+      "flow": [
+        "1. Load public sign page",
+        "2. Enter name (required) and email (optional)",
+        "3. Click 'Weiter zur Unterschrift' button",
+        "4. SignaturePad appears (draw or type mode)",
+        "5. Create signature and click 'Unterschreiben'",
+        "6. SignaturePlacement overlay appears with document preview",
+        "7. Drag signature to desired position",
+        "8. Click 'Platzieren & Speichern' to save",
+        "9. Success screen appears"
+      ],
+      "backend_api": {
+        "get": "GET /api/sign/{sign_token} - returns doc_id, filename, meeting_id, file_ext, meeting_title, uploader_name, signatures, view_url",
+        "post": "POST /api/sign/{sign_token} - accepts signer_name, signer_email, type, signature_data, pos_x, pos_y, page"
+      }
+    }
+  }
+}

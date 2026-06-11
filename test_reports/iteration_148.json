@@ -1,0 +1,119 @@
+{
+  "summary": "Iteration 148 Testing Complete - Calendar-driven DND Auto-Status Sync. Backend: 20/20 tests passed. All features verified: (1) PUT /api/chat/my-status sets status_manually_set_at (ISO timestamp) in users collection, (2) PUT /api/chat/my-status sets status_auto_dnd=false (Manual-Override), (3) _is_manual() returns True when status_manually_set_at < 24h, (4) _is_manual() returns False when status_manually_set_at > 24h, (5) sync_calendar_dnd() iterates only connected users (chat_ws.connections), (6) sync_calendar_dnd() skips users with manual status set within 24h, (7) sync_calendar_dnd() sets user to dnd + status_auto_dnd=true when _has_active_meeting()=true AND not manual, (8) sync_calendar_dnd() reverts status_auto_dnd=true back to online when _has_active_meeting()=false, (9) _has_active_meeting() considers both host_id meetings and meeting_participants entries, (10) Regression: WS disconnect clears status_manually_set_at and status_auto_dnd, (11) Regression: POST /api/meetings/{id}/ring works, (12) Regression: push_new_chat_message uses bypass_dnd correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "test_01_login_admin": {"status": "PASS", "details": "Admin login successful, user_id captured"},
+    "test_02_put_my_status_sets_manually_set_at": {"status": "PASS", "details": "PUT /api/chat/my-status sets status to 'away'"},
+    "test_03_verify_status_manually_set_at_via_login": {"status": "PASS", "details": "status_manually_set_at and status_auto_dnd=false verified via login response"},
+    "test_04_put_my_status_sets_status_auto_dnd_false": {"status": "PASS", "details": "Manual DND status set, status_auto_dnd=false"},
+    "test_05_verify_db_fields_via_python_import": {"status": "PASS", "details": "Direct DB access confirms status_manually_set_at (ISO) and status_auto_dnd=false"},
+    "test_06_is_manual_returns_true_within_24h": {"status": "PASS", "details": "_is_manual() returns True for recently set status"},
+    "test_07_is_manual_returns_false_for_old_timestamp": {"status": "PASS", "details": "_is_manual() returns False for timestamp > 24h old"},
+    "test_08_create_meeting_for_has_active_meeting_test": {"status": "PASS", "details": "Test meeting created with scheduled_at=NOW"},
+    "test_09_has_active_meeting_returns_true_for_host": {"status": "PASS", "details": "_has_active_meeting() returns True for host with active meeting"},
+    "test_10_has_active_meeting_considers_participants": {"status": "PASS", "details": "_has_active_meeting() returns True for meeting participant"},
+    "test_11_sync_calendar_dnd_skips_manual_users": {"status": "PASS", "details": "sync_calendar_dnd() skipped_manual >= 1 for user with manual status"},
+    "test_12_sync_calendar_dnd_sets_auto_dnd": {"status": "PASS", "details": "sync_calendar_dnd() sets status_mode=dnd and status_auto_dnd=true"},
+    "test_13_sync_calendar_dnd_reverts_auto_dnd": {"status": "PASS", "details": "sync_calendar_dnd() reverts to online when no active meeting"},
+    "test_14_regression_ring_endpoint": {"status": "PASS", "details": "POST /api/meetings/{id}/ring works (iter 143 feature)"},
+    "test_15_regression_bypass_dnd_in_chat_push": {"status": "PASS", "details": "bypass_dnd parameter verified in _eligible_recipients and push_new_chat_message"},
+    "test_16_code_review_calendar_status_module": {"status": "PASS", "details": "calendar_status.py has _is_manual, _has_active_meeting, sync_calendar_dnd, MANUAL_STICKINESS_HOURS=24"},
+    "test_17_code_review_maintenance_integration": {"status": "PASS", "details": "maintenance.py integrates sync_calendar_dnd in _cleanup_loop_tick"},
+    "test_18_code_review_chat_ws_disconnect_clears_fields": {"status": "PASS", "details": "WS disconnect clears status_manually_set_at and status_auto_dnd"},
+    "test_19_code_review_put_my_status_sets_fields": {"status": "PASS", "details": "PUT /chat/my-status sets status_manually_set_at and status_auto_dnd=false"},
+    "test_20_cleanup_test_data": {"status": "PASS", "details": "Test data cleaned up"}
+  },
+  "code_review": {
+    "calendar_status_is_manual": {
+      "file": "/app/backend/services/calendar_status.py",
+      "lines": "32-48",
+      "verdict": "CORRECT",
+      "details": "_is_manual() checks if status_manually_set_at is within MANUAL_STICKINESS_HOURS (24h). Returns True if manual, False otherwise."
+    },
+    "calendar_status_has_active_meeting": {
+      "file": "/app/backend/services/calendar_status.py",
+      "lines": "51-102",
+      "verdict": "CORRECT",
+      "details": "_has_active_meeting() checks focus_times, hosted meetings (host_id), and participant meetings (meeting_participants). Returns True if any active meeting window covers now_dt."
+    },
+    "calendar_status_sync_calendar_dnd": {
+      "file": "/app/backend/services/calendar_status.py",
+      "lines": "105-156",
+      "verdict": "CORRECT",
+      "details": "sync_calendar_dnd() iterates only connected users (chat_ws.connections.keys()). Skips manual users, skips in_meeting users. Sets dnd+status_auto_dnd=true when active meeting, reverts to online when no active meeting and was_auto_dnd."
+    },
+    "maintenance_integration": {
+      "file": "/app/backend/services/maintenance.py",
+      "lines": "129-138",
+      "verdict": "CORRECT",
+      "details": "sync_calendar_dnd imported from services.calendar_status and called in _cleanup_loop_tick between caldav_sync and loop-end."
+    },
+    "chat_put_my_status": {
+      "file": "/app/backend/routes/chat.py",
+      "lines": "913-944",
+      "verdict": "CORRECT",
+      "details": "PUT /chat/my-status sets status_manually_set_at=now and status_auto_dnd=false. This marks the status as manually set so calendar-DND auto-sync leaves it alone for 24h."
+    },
+    "chat_ws_disconnect": {
+      "file": "/app/backend/routes/chat.py",
+      "lines": "117-134",
+      "verdict": "CORRECT",
+      "details": "WS disconnect finally block sets status_mode='offline', status_manually_set_at=None, status_auto_dnd=False. Clears manual override stickiness on disconnect."
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_148_calendar_status.py",
+    "/app/test_reports/pytest/iteration_148_calendar_status_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "calendar_status.py correctly implements 24h manual stickiness via MANUAL_STICKINESS_HOURS constant",
+    "_has_active_meeting() correctly checks both host_id meetings and meeting_participants entries",
+    "sync_calendar_dnd() correctly iterates only connected users (chat_ws.connections.keys())",
+    "sync_calendar_dnd() correctly skips users with in_meeting flag set (already handled by _set_user_in_meeting)",
+    "PUT /chat/my-status correctly sets status_manually_set_at and status_auto_dnd=false",
+    "WS disconnect correctly clears status_manually_set_at and status_auto_dnd",
+    "maintenance.py correctly integrates sync_calendar_dnd in _cleanup_loop_tick"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_148_calendar_status.py"
+  ],
+  "success_rate": {
+    "backend": "100% (20/20 tests passed)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Test meetings created during pytest execution, cleaned up after tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 148 calendar-driven DND auto-status sync verified. Key changes: (1) New services/calendar_status.py with _is_manual(), _has_active_meeting(), sync_calendar_dnd(), (2) PUT /chat/my-status sets status_manually_set_at + status_auto_dnd=false, (3) WS disconnect clears status_manually_set_at + status_auto_dnd, (4) maintenance.py integrates sync_calendar_dnd in _cleanup_loop_tick. The sync only affects connected users (chat_ws.connections) and respects 24h manual stickiness.",
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  },
+  "iter148_feature_verification": {
+    "put_my_status_sets_manually_set_at": "VERIFIED - status_manually_set_at is ISO timestamp in users collection",
+    "put_my_status_sets_status_auto_dnd_false": "VERIFIED - status_auto_dnd=false on manual status change",
+    "is_manual_within_24h": "VERIFIED - returns True when status_manually_set_at < 24h",
+    "is_manual_after_24h": "VERIFIED - returns False when status_manually_set_at > 24h",
+    "sync_iterates_connected_users": "VERIFIED - uses chat_ws.connections.keys()",
+    "sync_skips_manual_users": "VERIFIED - skipped_manual count incremented",
+    "sync_sets_auto_dnd": "VERIFIED - sets status_mode=dnd and status_auto_dnd=true",
+    "sync_reverts_auto_dnd": "VERIFIED - reverts to online when no active meeting",
+    "has_active_meeting_host": "VERIFIED - returns True for host with active meeting",
+    "has_active_meeting_participant": "VERIFIED - returns True for meeting participant",
+    "ws_disconnect_clears_fields": "VERIFIED - clears status_manually_set_at and status_auto_dnd",
+    "regression_ring_endpoint": "VERIFIED - POST /api/meetings/{id}/ring works",
+    "regression_bypass_dnd": "VERIFIED - push_new_chat_message uses bypass_dnd correctly"
+  }
+}

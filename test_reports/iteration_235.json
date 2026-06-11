@@ -1,0 +1,51 @@
+{
+  "summary": "Iter 235 - Demo-Daten-Seed + Belegungs-Uebersicht. All features verified. Backend: 159 passed/5 skipped (pytest). Frontend: Demo-Daten button, OccupancyOverview Gantt-chart, RBAC capabilities all working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/pytest/iteration_235_resources.xml",
+    "/app/backend/tests/test_resources_sprint10.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (159 passed, 5 skipped - as expected)",
+    "frontend": "100% (all Iter 235 features verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Demo-Seed creates: 12 rooms (incl. splittable + catering + approval-required), 12 desks (with floorplan positions), 10 vehicles (Benzin/Diesel/Elektro/Hybrid with fuel cards), 15 catering items, 10 cost centers, 5 accounts, ~97 bookings over 14 days. Idempotent - second call overwrites Demo_ prefixed data.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 235 fully tested. Demo-Seed endpoint POST /api/resources-seed-demo creates comprehensive test data. Occupancy overview GET /api/resource-occupancy returns Gantt-style data with resources, bookings, blackouts. Frontend OccupancyOverview component shows timeline with type/days filters, navigation buttons, colored booking bars (green=confirmed, amber=pending, rose=blackout). Splittable rooms show parent + sub-areas as indented rows with arrow prefix.",
+  "features_verified": {
+    "backend_seed_demo_creates_resources": "PASS - POST /api/resources-seed-demo creates 12 rooms, 12 desks, 10 vehicles, 15 catering items, 10 cost centers, 5 accounts, ~97 bookings",
+    "backend_seed_demo_idempotent": "PASS - Second call produces same counts, no duplicates",
+    "backend_occupancy_basic": "PASS - GET /api/resource-occupancy returns resources + bookings + blackouts",
+    "backend_occupancy_type_filter": "PASS - type=room|desk|vehicle filters correctly",
+    "backend_occupancy_rejects_huge_window": "PASS - >60 days returns 400 error",
+    "frontend_seed_demo_btn": "PASS - data-testid='seed-demo-btn' with amber styling, Sparkles icon",
+    "frontend_seed_demo_confirm_dialog": "PASS - Confirm dialog shows list of what will be created",
+    "frontend_seed_demo_success_toast": "PASS - Success toast shows counts after seed",
+    "frontend_tab_occupancy": "PASS - data-testid='tab-occupancy' with CalendarRange icon, label 'Belegung'",
+    "frontend_occupancy_overview": "PASS - data-testid='occupancy-overview' component renders",
+    "frontend_occupancy_type_select": "PASS - data-testid='occupancy-type-select' with Alle/Raeume/Desks/Fahrzeuge options",
+    "frontend_occupancy_days_select": "PASS - data-testid='occupancy-days-select' with 3/7/14/30 day options",
+    "frontend_occupancy_navigation": "PASS - prev/today/next/refresh buttons all present and functional",
+    "frontend_occupancy_day_headers": "PASS - Day columns with weekday + date, today highlighted",
+    "frontend_occupancy_resource_rows": "PASS - data-testid='occupancy-row-<id>' for each resource",
+    "frontend_occupancy_booking_bars": "PASS - data-testid='occupancy-booking-<bid>' with correct colors (green=confirmed, amber=pending)",
+    "frontend_occupancy_splittable_rooms": "PASS - Parent + sub-areas shown as indented rows with arrow prefix",
+    "frontend_occupancy_blackouts": "PASS - Blackout periods shown in rose color",
+    "frontend_rbac_capabilities": "PASS - All 8 resource capabilities visible in /admin?tab=roles-caps: resources.book, resources.book_for_others, resources.manage, resources.approve, resources.view_all_bookings, catering.process, catering.manage_items, bookings.invoice"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "summary": "Iteration 77 - SMTP Provider, DNS Check, Force-Logout Features: All 37 backend tests PASSED (100%). Frontend UI verified: SMTP config block with all inputs (host, port, encryption, username, password, from_name, from_email), SMTP health button, SMTP test mail button, DNS check block with domain input and check button, DNS result with 4 ampel tiles (MX, SPF, DKIM, DMARC), provider select with 4 options (none, resend, sendgrid, smtp), force-logout-all button, per-user force-logout buttons (500 found). Token version mechanism working correctly - old tokens return 401 'Session invalidated' after force-logout.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Admin Integrations", "issues": ["SMTP fallback toggle only visible when provider is Resend or SendGrid (expected behavior per code)"]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_77_smtp_forcelogout.py",
+    "/app/test_reports/pytest/iteration_77_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BACKEND: services/email_smtp.py - send_via_smtp and smtp_health_check implemented correctly with aiosmtplib, proper error handling",
+    "BACKEND: services/dns_check.py - check_domain uses dns.resolver for MX/SPF/DKIM/DMARC with proper async threading",
+    "BACKEND: services/email.py - SMTP primary + fallback logic implemented correctly, returns {fallback: true} when SMTP fallback used",
+    "BACKEND: routes/admin.py lines 55-89 - force-logout endpoints correctly bump token_version, exclude caller on force-logout-all",
+    "BACKEND: dependencies.py lines 18-31 - create_access_token and create_refresh_token now accept token_version, encode as 'tv' claim",
+    "BACKEND: dependencies.py lines 52-55 - get_current_user checks tv claim against user.token_version, returns 401 'Session invalidated' if token_tv < user_tv",
+    "BACKEND: routes/auth.py lines 190-194 - refresh endpoint validates tv claim, returns 401 'Session invalidated' for old tokens",
+    "FRONTEND: EmailConfigPanel.js - SMTP block with all inputs, DNS check block with ampel tiles, provider select with 4 options",
+    "FRONTEND: AdminPage.js lines 250-252 - force-logout-all-btn positioned next to invite-user-btn, per-user force-logout buttons with data-testid='force-logout-{user_id}'"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_77_smtp_forcelogout.py"
+  ],
+  "success_rate": {
+    "backend": "100% (37/37 passed)",
+    "frontend": "100% (all UI elements verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Test users created with TEST_ prefix during pytest run (TEST_forcelogout_*, TEST_tokeninvalid_*, TEST_logoutall_*, TEST_newtv_*, TEST_oldrefresh_*), cleaned up in test teardown",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 77 validated 3 new features: (1) SMTP Provider - PUT /api/admin/email-config accepts smtp block {host, port, username, password, use_tls, use_starttls, from_name, from_email} + fallback_to_smtp flag, GET returns masked password. Provider select has 4 options: none, resend, sendgrid, smtp. (2) DNS Check - GET /api/admin/email-config/dns-check?domain=example.com&provider=resend returns {domain, mx, spf, dkim, dmarc, severity, summary, hints}. Each record has {ok:bool, records:[]}. Falls back to stored sender_email domain if no params. (3) Force-Logout - POST /api/admin/users/{user_id}/force-logout bumps token_version by 1, old tokens return 401 'Session invalidated'. POST /api/admin/force-logout-all increments token_version for ALL users except caller. Token version encoded as 'tv' claim in JWT, validated on every authenticated request and refresh. Regression: All auth + admin flows from iteration 75/76 still work.",
+  "test_results_summary": {
+    "smtp_configuration": {
+      "get_email_config_returns_smtp_block": "PASSED",
+      "put_email_config_with_smtp_block": "PASSED",
+      "put_email_config_preserves_masked_password": "PASSED",
+      "email_config_provider_options": "PASSED - all 4 options (none, resend, sendgrid, smtp) accepted"
+    },
+    "smtp_health": {
+      "smtp_health_with_invalid_host": "PASSED - returns {ok: false, error}",
+      "smtp_health_missing_host": "PASSED - returns error",
+      "smtp_health_uses_stored_config_when_no_body": "PASSED",
+      "smtp_health_requires_admin": "PASSED - 401 without auth"
+    },
+    "dns_check": {
+      "dns_check_with_domain_param": "PASSED - returns mx/spf/dkim/dmarc with ok and records",
+      "dns_check_with_email_address": "PASSED - extracts domain from email",
+      "dns_check_fallback_to_stored_config": "PASSED",
+      "dns_check_invalid_domain": "PASSED",
+      "dns_check_requires_admin": "PASSED - 401 without auth"
+    },
+    "force_logout_per_user": {
+      "force_logout_bumps_token_version": "PASSED - increments by 1",
+      "force_logout_requires_admin": "PASSED - 401 without auth",
+      "force_logout_nonexistent_user": "PASSED - returns 404",
+      "force_logout_invalidates_old_tokens": "PASSED - old tokens return 401 'Session invalidated'"
+    },
+    "force_logout_all": {
+      "force_logout_all_returns_modified_count": "PASSED",
+      "force_logout_all_excludes_caller": "PASSED - admin session remains valid",
+      "force_logout_all_invalidates_other_users": "PASSED",
+      "force_logout_all_requires_admin": "PASSED - 401 without auth"
+    },
+    "token_version_in_new_tokens": {
+      "relogin_after_force_logout_gets_new_tv": "PASSED - new session works"
+    },
+    "refresh_with_new_tv": {
+      "old_refresh_token_returns_401_after_force_logout": "PASSED - returns 401 'Session invalidated'"
+    },
+    "regression_auth_admin": {
+      "auth_login": "PASSED",
+      "auth_refresh": "PASSED",
+      "auth_me": "PASSED",
+      "admin_email_config_get_put_test": "PASSED",
+      "admin_users_crud": "PASSED",
+      "admin_stats": "PASSED",
+      "admin_groups": "PASSED",
+      "admin_capabilities": "PASSED",
+      "admin_presets": "PASSED",
+      "admin_cap_rules": "PASSED",
+      "user_permissions_with_capability_labels": "PASSED",
+      "email_preferences": "PASSED",
+      "unsubscribe_invalid_token": "PASSED",
+      "onboarding_complete": "PASSED"
+    },
+    "frontend_ui": {
+      "admin_page_loads": "PASSED",
+      "smtp_config_block": "PASSED - all inputs found",
+      "smtp_health_btn": "PASSED",
+      "smtp_test_mail_btn": "PASSED",
+      "dns_check_block": "PASSED",
+      "dns_domain_input": "PASSED",
+      "dns_check_btn": "PASSED",
+      "dns_result_ampel_tiles": "PASSED - mx, spf, dkim, dmarc tiles found",
+      "provider_select_4_options": "PASSED - Kein Provider, Resend, SendGrid, SMTP (Klinik-Mailserver)",
+      "force_logout_all_btn": "PASSED",
+      "per_user_force_logout_btns": "PASSED - 500 buttons found"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": ["Actual SMTP e-mail delivery (no test SMTP server in env) - smtp_health_check with invalid host verified failure path"]
+  }
+}

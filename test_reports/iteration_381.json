@@ -1,0 +1,35 @@
+{
+  "summary": "Iter 381 — Tested Admin Reset Password feature (backend) + Cache utility refactor logout cleanup (frontend). All 6 backend pytest cases pass: reset-password endpoint returns policy-conforming temp PW, sets must_change_password=true, login w/ temp PW returns must_change_password=true, change-password enforces 4-of-4 policy (rejects weak 'abc123'), accepts policy-conforming new PW, non-admin (member) gets 403 on reset endpoint. Frontend smoke confirms: login as qa_admin works (data-testid is `login-email-input`, NOT `login-identifier-input` as request hinted), dashboard loads, sidebar with all modules visible, NotificationBell present, no error elements, cache hydration works (bell visible <800ms after re-login).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Logout cache cleanup", "issue": "After window.location.replace('/login') redirect (1.5s wait), `mf_license_status_cache` is re-populated and sessionStorage has 3 items. Other 7 mf_*_cache keys (notif, chat, perms, tasks, news_reports) ARE correctly cleared. Likely cause: LicenseBanner is mounted globally (also on /login route) and re-fetches the license cache after redirect. The clearAllUserCaches() call itself runs before navigation (verified in code), but post-redirect components re-hydrate. Request explicitly says only mf_lang/mf_install_*/mf_theme should remain. Decide: either gate LicenseBanner write/sessionStorage writes behind authenticated state, or accept this as expected for a global component.", "affected_selectors": ["mf_license_status_cache", "sessionStorage"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter381_admin_reset_password.py",
+    "/app/test_reports/pytest/iter381_admin_reset_password.xml"
+  ],
+  "action_items": [
+    "Consider gating LicenseBanner (and any other global component) cache-writes behind authenticated user state, so that after logout->redirect, mf_license_status_cache + sessionStorage stay empty as the requirement states.",
+    "Optional: clarify request expectation — if license cache on /login is acceptable, no change needed; otherwise add a guard in LicenseBanner.js to skip writing when user==null.",
+    "Note: request mentioned data-testid `login-identifier-input` but actual testid is `login-email-input`. Either update the test contract docs or rename testid for consistency with the new combined identifier field."
+  ],
+  "critical_code_review_comments": [
+    "AdminUserRow.js uses window.confirm + window.prompt for the reset-password flow. Functional but not test-friendly and poor UX (browser-native dialogs cannot be styled, no copy-to-clipboard button). Suggest replacing with a proper Dialog + Clipboard API for the temp-PW display.",
+    "/api/admin/users/{user_id}/reset-password performs an extra DB read for token_version inside the $set update — could be merged into the same find_one_and_update for atomicity.",
+    "Backend tests show all flows green including history check, weak-PW rejection, and 403 on non-admin."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter381_admin_reset_password.py (NEW)"
+  ],
+  "success_rate": {"backend": "100% (6/6)", "frontend": "85% (cache cleanup partial)"},
+  "test_credentials": "Used qa_admin@meetflow.com / qa_admin_pw_372 and qa_member@meetflow.com / Qa_member_Pw_372!!. Demo user reset target was auto-seeded via POST /api/resources-seed-demo (returned valid demo_* user).",
+  "seed_data_creation": "POST /api/resources-seed-demo (idempotent) — used to pick a demo_* user for password-reset target.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Login testid is `login-email-input` (combined email-or-Personalnummer field). UserMenu has two logout items: `user-menu-logout` (regular /auth/logout) and `user-menu-logout-everywhere` (POST /auth/logout-everywhere — bumps token_version, opens AlertDialog with `logout-everywhere-confirm`). Use the regular one for cache-cleanup tests. Admin reset-password UI uses window.confirm/window.prompt — Playwright must register `page.on('dialog', ...)` handlers to interact. Backend reset endpoint at POST /api/admin/users/{user_id}/reset-password works end-to-end.",
+  "rca of the issue": "Frontend cache leftover (mf_license_status_cache + 3 sessionStorage items after logout): AuthContext.logoutFn correctly calls clearAllUserCaches() (which does sessionStorage.clear() + removes all mf_* except mf_lang/mf_theme/mf_install_*) BEFORE window.location.replace('/login'). However, after the hard navigation the LicenseBanner component is mounted globally (including on /login) and immediately fetches /api/license/status, writing back mf_license_status_cache via setCache. Similarly some i18n/theme/install hooks write sessionStorage on bootstrap. Mitigation: skip the write in LicenseBanner when no authenticated user is present (LicenseBanner.js — wrap fetch+setCache in a `if (user) {...}` guard from AuthContext)."
+}

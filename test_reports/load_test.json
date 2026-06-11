@@ -1,0 +1,53 @@
+{
+  "passed": 12,
+  "failed": 3,
+  "errors": [
+    "Read receipts created",
+    "Surveys + responses created",
+    "Focus times created"
+  ],
+  "details": {
+    "users": {
+      "created": 985,
+      "tokens": 12,
+      "time": 53.3
+    },
+    "news_posts": {
+      "created": 100,
+      "time": 4.6
+    },
+    "comments": {
+      "created": 497,
+      "total": 500,
+      "time": 25.6
+    },
+    "reactions": {
+      "created": 120,
+      "total": 120,
+      "time": 5.5
+    },
+    "reads": {
+      "created": 120,
+      "time": 5.5
+    },
+    "qa": {
+      "questions": 98,
+      "upvotes": 600,
+      "answers": 20,
+      "time": 33.4
+    },
+    "surveys": {
+      "surveys": 10,
+      "responses": 27,
+      "time": 3.5
+    },
+    "feedback": {
+      "created": 100,
+      "time": 5.0
+    },
+    "chat": {
+      "messages": 100,
+      "time": 7.8
+    }
+  }
+}

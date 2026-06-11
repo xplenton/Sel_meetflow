@@ -1,0 +1,73 @@
+{
+  "summary": "Iteration 85 - CalendarPage External CalDAV Events Visualization: All features PASSED. Frontend correctly fetches /api/users/me/caldav-events on mount, displays external events in day-detail with striped background styling, shows legend with 'Meeting' and 'Externer Termin' labels, and handles all-day events with 'ganztägig' label. Regression tests for Iter 84 CalDAV features all passed.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/iteration_85.json"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "FRONTEND: CalendarPage.js lines 40-46 - fetchExternal correctly calls /users/me/caldav-events with days=90 param",
+    "FRONTEND: CalendarPage.js lines 66-76 - externalDates and selectedDayExternal memos correctly filter and sort events",
+    "FRONTEND: CalendarPage.js lines 160-170 - Calendar modifiers correctly apply hasExternal only when no meetings exist on date",
+    "FRONTEND: CalendarPage.js lines 174-184 - Legend shows both Meeting and Externer Termin with correct color swatches",
+    "FRONTEND: CalendarPage.js lines 253-280 - External events block renders with striped background, grey border, summary, time range (HH:mm-HH:mm or ganztägig), and location"
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (4/4 regression tests passed)",
+    "frontend": "100% (all UI elements verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Temporary test events created in external_calendar_events collection for testing, then cleaned up",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 85 validated CalendarPage external events visualization: (1) GET /api/users/me/caldav-events?days=90 called on mount alongside /calendar/events. (2) externalDates memo creates Set of dates with external events. (3) hasExternal modifier applies striped background to dates with external events but NO meetings (meeting wins visually). (4) calendar-legend shows both 'Meeting' (green) and 'Externer Termin' (striped) swatches when either meetingDates or externalDates is non-empty. (5) external-events-block renders in day-detail when selectedDayExternal.length > 0, showing 'Externer Kalender (N)' heading. (6) Each external-event-{i} card shows summary, time range (HH:mm-HH:mm or 'ganztägig' for all-day), and location if present. (7) Styling uses striped diagonal pattern background + grey left border (dezent as requested). (8) When no external events on selected day, block is NOT rendered. (9) Regression: Iter 84 CalDAV endpoints (GET/PUT /caldav-config, POST /caldav-sync, GET /meetings/conflicts) all working.",
+  "test_results_summary": {
+    "api_calls_on_mount": {
+      "calendar_events_called": "PASSED",
+      "caldav_events_called": "PASSED"
+    },
+    "calendar_legend": {
+      "legend_visible": "PASSED",
+      "meeting_label_present": "PASSED",
+      "externer_termin_label_present": "PASSED"
+    },
+    "external_events_block": {
+      "renders_when_external_events_exist": "PASSED",
+      "shows_event_count_in_heading": "PASSED",
+      "shows_summary": "PASSED",
+      "shows_time_range": "PASSED",
+      "shows_ganztaegig_for_allday": "PASSED",
+      "shows_location_when_present": "PASSED",
+      "striped_background_styling": "PASSED"
+    },
+    "modifier_hasExternal": {
+      "applies_to_dates_with_external_only": "PASSED",
+      "meeting_wins_over_external": "PASSED"
+    },
+    "no_external_events": {
+      "block_not_rendered_when_empty": "PASSED",
+      "keine_meetings_message_shows": "PASSED"
+    },
+    "regression_iter84": {
+      "get_caldav_config": "PASSED",
+      "put_caldav_config": "PASSED",
+      "post_caldav_sync": "PASSED",
+      "get_meetings_conflicts": "PASSED"
+    }
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

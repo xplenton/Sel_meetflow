@@ -1,0 +1,81 @@
+{
+  "summary": "Iter 238 - Three new features tested: (1) In-Office-Today Widget, (2) Privacy Opt-Out, (3) Floorplan Multi-Picker. Backend: 14/14 pytest tests passed. Frontend: All UI components verified working. Minor bug fixed: Backend /api/resources-in-office early return was missing 'active_now' field.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "/api/resources-in-office",
+        "issue": "Early return (when no bookings) was missing 'active_now' field - FIXED",
+        "priority": "LOW"
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Resources Desks Tab",
+        "issues": ["Console warning: 'Encountered two children with the same key' - React key duplication in some component (non-blocking)"]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter238_features.py",
+    "/app/test_reports/pytest/iteration_238_features.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "React key warning in Resources page - should investigate duplicate keys in desk/resource list rendering"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter238_features.py",
+    "/app/backend/routes/resources/admin.py"
+  ],
+  "success_rate": {
+    "backend": "100% (14/14 tests passed)",
+    "frontend": "100% (all Iter 238 features verified)"
+  },
+  "test_credentials": {
+    "admin": "admin@meetflow.com / admin123"
+  },
+  "seed_data_creation": "Created test desk booking via UI for InOfficeWidget testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 238 fully tested. Three new features: (1) InOfficeWidget on dashboard shows colleagues with active desk bookings today - renders only when bookings exist, (2) Privacy opt-out via /profile toggle 'hide-from-office-widget-toggle' - users can hide from the widget, (3) Floorplan picker on /resources?tab=floorplan - shows dropdown only when >1 floorplan exists. Backend endpoints: GET /api/resources-in-office, GET/PUT /api/users/me/privacy, GET /api/floorplans. Regression tests for Iter 236 (drag-drop move) and Iter 237 (privacy mask) also passed.",
+  "features_verified": {
+    "backend_in_office_endpoint": "PASS - GET /api/resources-in-office returns {date, people, total, active_now}",
+    "backend_in_office_structure": "PASS - Response includes user_id, name, email, desk_number, building, floor, is_active_now",
+    "backend_privacy_get": "PASS - GET /api/users/me/privacy returns {hide_from_office_widget: bool}",
+    "backend_privacy_put_enable": "PASS - PUT /api/users/me/privacy with hide_from_office_widget=true succeeds",
+    "backend_privacy_put_disable": "PASS - PUT /api/users/me/privacy with hide_from_office_widget=false succeeds",
+    "backend_privacy_reflects_update": "PASS - GET reflects updated value after PUT",
+    "backend_privacy_hides_user": "PASS - User with hide_from_office_widget=true not in /api/resources-in-office",
+    "backend_floorplans_endpoint": "PASS - GET /api/floorplans returns array of floorplans",
+    "backend_floorplan_structure": "PASS - Each floorplan has floor_plan_id, name, building, floor",
+    "backend_drag_drop_regression": "PASS - PUT /api/resource-bookings/{id} with resource_id moves booking (Iter 236)",
+    "backend_occupancy_regression": "PASS - GET /api/resource-occupancy returns resources, bookings, blackouts (Iter 237)",
+    "backend_occupancy_type_filter": "PASS - type=room|desk|vehicle filters correctly",
+    "frontend_dashboard_loads": "PASS - Dashboard page loads with all widgets",
+    "frontend_in_office_widget": "PASS - data-testid='in-office-widget' renders when active desk bookings exist",
+    "frontend_in_office_avatars": "PASS - Avatar list with data-testid='in-office-avatar-{user_id}' shows",
+    "frontend_in_office_show_all": "PASS - data-testid='in-office-show-all-btn' opens dialog",
+    "frontend_in_office_dialog": "PASS - data-testid='in-office-dialog' shows full list with desk/floor/time info",
+    "frontend_in_office_floorplan_link": "PASS - data-testid='in-office-floorplan-link' navigates to floorplan",
+    "frontend_profile_privacy_block": "PASS - data-testid='privacy-block' visible on /profile",
+    "frontend_privacy_toggle": "PASS - data-testid='hide-from-office-widget-toggle' toggles and calls PUT API",
+    "frontend_privacy_toast": "PASS - Toast 'Privatsphaere aktualisiert' appears on toggle",
+    "frontend_resources_floorplan_tab": "PASS - /resources?tab=floorplan loads FloorPlanPickerView",
+    "frontend_floorplan_picker": "PASS - data-testid='floorplan-picker-select' shows when >1 floorplan exists",
+    "frontend_occupancy_overview": "PASS - data-testid='occupancy-overview' loads with timeline"
+  },
+  "bug_fixed": {
+    "file": "/app/backend/routes/resources/admin.py",
+    "issue": "Early return in /api/resources-in-office was missing 'active_now' field when no bookings exist",
+    "fix": "Added 'active_now': 0 to both early return statements (lines 976 and 989)"
+  },
+  "mocked_apis": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

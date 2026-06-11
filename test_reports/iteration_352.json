@@ -1,0 +1,104 @@
+{
+  "summary": "Iteration 352 - DRY Refactor: Resource Hierarchy Helpers VERIFIED. All 26 tests PASSED (12 new iter352 tests + 14 iter351 regression tests). The refactor correctly extracts splittable-parent + sub-room expansion logic into services/resource_hierarchy.py with expand_blocking_ids() and child_to_parent_map() helpers. Behavior is byte-identical to iter 351.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "check_conflicts_parent": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "POST /api/resources/{parent_id}/check-conflicts with children booked returns conflicts from children's bookings."
+    },
+    "check_conflicts_child": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "POST /api/resources/{child_id}/check-conflicts includes parent scope (returns 0 when no parent bookings)."
+    },
+    "check_conflicts_buffer": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "POST /api/resources/{parent_id}/check-conflicts with buffer_time: parent-buffer is still respected via expand_blocking_ids helper."
+    },
+    "availability_only_parent": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "GET /api/resource-bookings?resource_id={parent_id}&availability_only=true returns child bookings."
+    },
+    "availability_only_child": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "GET /api/resource-bookings?resource_id={child_id}&availability_only=true returns own bookings + parent bookings."
+    },
+    "availability_snapshot": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "GET /api/resource-availability-snapshot: parent shows next_busy when only children are booked (iter 351 behaviour preserved)."
+    },
+    "non_splittable_resources": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Non-splittable resources: check_conflicts/availability_only return original results unchanged (no fake parent/child expansion)."
+    },
+    "race_condition_winner": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Race-condition winner selection still works (verify_booking_winner uses a different code path, not affected)."
+    },
+    "end_to_end_booking_flow": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "End-to-end: create booking -> conflict check -> update -> cancel still works."
+    },
+    "resource_hierarchy_integration": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Verified expand_blocking_ids and child_to_parent_map are correctly integrated in all 3 call sites."
+    },
+    "iter351_regression": {
+      "status": "PASS",
+      "tests_passed": 14,
+      "description": "All 14 iter351 tests pass - backward compatibility confirmed."
+    }
+  },
+  "code_review": {
+    "services/resource_hierarchy.py": "NEW module with expand_blocking_ids(resource_id) -> (ids, resource, buffer_min) and child_to_parent_map() -> {child_id: parent_id}. Clean implementation with proper docstrings. Rules are kept verbatim from original conflict-check.",
+    "services/booking_conflicts.py (lines 54-59)": "Now imports and uses expand_blocking_ids from resource_hierarchy. Clean integration.",
+    "routes/resources/bookings/crud.py (lines 85-89)": "availability_only block now uses expand_blocking_ids for parent/child expansion. Correct implementation.",
+    "routes/resources/admin/analytics.py (lines 135-136)": "availability_snapshot uses child_to_parent_map for folding children into parent. Correct implementation."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter352_resource_hierarchy_refactor.py",
+    "/app/backend/tests/test_iter351_splitable_parent_rooms.py",
+    "/app/test_reports/pytest/iteration_352_resource_hierarchy_refactor.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "DRY refactor is correct: 3 call sites now share single source of truth for parent/child expansion logic",
+    "expand_blocking_ids correctly handles: (1) resource itself, (2) parent if child, (3) children if splittable parent, (4) buffer_time max of own and parent",
+    "child_to_parent_map correctly builds {child_id: parent_id} map for snapshot fold-in",
+    "Behavior is byte-identical to iter 351 - all 14 regression tests pass",
+    "No breaking changes detected"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter352_resource_hierarchy_refactor.py"
+  ],
+  "success_rate": {
+    "backend": "100% (26/26 tests passed: 12 iter352 + 14 iter351 regression)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "Test fixture creates fresh bookings on Child A and Child B for testing, then cleans up after tests complete.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 352 is a pure DRY refactor of iter 351's splittable-parent logic. The new services/resource_hierarchy.py module provides expand_blocking_ids() and child_to_parent_map() helpers used by 3 call sites: check_conflicts, availability_snapshot, and availability_only list filter. All 26 tests pass. Outlook Calendar sync remains MOCKED (503 stub).",
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": ["Outlook Calendar OAuth sync (503 stub)"]
+  }
+}

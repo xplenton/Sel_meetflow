@@ -1,0 +1,72 @@
+{
+  "summary": "IAM Security Audit RETEST (Iter 373) - ALL CRITICAL FIXES VERIFIED. 13/13 backend tests passed, frontend RoleDowngradeBanner UI verified. The 2 CRITICAL bugs from iter 372 (guests could create tasks/meetings) are now fixed.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Dashboard",
+        "issues": ["Minor: DialogContent accessibility warning - missing DialogTitle for screen readers"]
+      }
+    ]
+  },
+  "test_results": {
+    "phase_5_3_backend_enforcement_retest": {
+      "retest1_guest_cannot_create_tasks": "PASS - 403 Forbidden (was 200 before fix)",
+      "retest2_guest_cannot_create_meetings": "PASS - 403 Forbidden (was 200 before fix)",
+      "regression1_member_can_create_tasks": "PASS - 200 OK",
+      "regression2_member_can_create_meetings": "PASS - 200 OK",
+      "regression3_moderator_can_create_tasks": "PASS - 200 OK",
+      "regression4_admin_can_create_meetings": "PASS - 200 OK"
+    },
+    "phase_6_4_token_version_bump": "PASS - Old token invalidated after role change (401)",
+    "phase_6_8_cap_cache_invalidation": "PASS - resources.book denied within 2 seconds",
+    "phase_6_9_cascade_cleanup": "PASS - Deleted user removed from group members",
+    "phase_6_10_role_downgrade_banner_ui": "PASS - Banner visible with 'Effektive Rolle' and 'Gast' text",
+    "phase_6_11_qr_bulk_pdf_access": "PASS - Guest returns 403",
+    "additional_security_checks": {
+      "unauthenticated_access_401": "PASS",
+      "garbage_token_401": "PASS",
+      "guest_can_view_own_profile": "PASS"
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter373_iam_retest.py",
+    "/app/test_reports/pytest/iteration_373_iam_retest.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "VERIFIED: require_cap('tasks.create') added in /app/backend/routes/tasks.py line 139",
+    "VERIFIED: require_cap('meetings.create') added in /app/backend/routes/meetings/core.py line 115",
+    "VERIFIED: PermissionsProvider in /app/frontend/src/lib/permissions.js now checks useAuth() before API call"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter373_iam_retest.py"
+  ],
+  "success_rate": {
+    "backend": "100% (13/13 tests passed)",
+    "frontend": "100% (RoleDowngradeBanner UI verified)"
+  },
+  "test_credentials": {
+    "qa_admin": "qa_admin@meetflow.com / qa_admin_pw_372",
+    "qa_moderator": "qa_moderator@meetflow.com / qa_moderator_pw_372",
+    "qa_member": "qa_member@meetflow.com / qa_member_pw_372",
+    "qa_guest": "qa_guest@meetflow.com / qa_guest_pw_372",
+    "downgrade_user": "newguest_1776557090@example.com / qa_downgrade_pw_372"
+  },
+  "seed_data_creation": "Used existing QA test accounts from iter372 setup",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 373 IAM retest completed successfully. All 2 CRITICAL bugs from iter 372 are now fixed: (1) POST /api/tasks returns 403 for guests, (2) POST /api/meetings returns 403 for guests. Token invalidation, cap cache invalidation, cascade cleanup, and RoleDowngradeBanner UI all working correctly.",
+  "rca_of_issues": {
+    "tasks_meetings_guest_access_fix_verified": {
+      "root_cause": "POST /api/tasks and POST /api/meetings endpoints were missing require_cap() checks",
+      "fix_applied": "Added 'await require_cap(user, \"tasks.create\", db)' in tasks.py line 139 and 'await require_cap(user, \"meetings.create\", db)' in meetings/core.py line 115",
+      "verification": "Confirmed via pytest: qa_guest now receives 403 for both endpoints, while qa_member/moderator/admin still receive 200"
+    }
+  }
+}

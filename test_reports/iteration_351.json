@@ -1,0 +1,76 @@
+{
+  "summary": "Iteration 351 - Splitable Parent Rooms Bug Fix VERIFIED. All 14 tests PASSED. The fix correctly folds children's bookings into the parent's availability snapshot and availability_only queries. Parent resource res_adb9fd1d33e9 now shows next_busy=2026-06-03T16:00:00+00:00 (matching children's booking times), and availability_only=true on parent returns both children's bookings (bk_890af3eb4e54 and bk_8774f786a502).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "availability_snapshot_splitable_parent": {
+      "status": "PASS",
+      "tests_passed": 2,
+      "description": "Parent resource res_adb9fd1d33e9 now appears in snapshot with next_busy=2026-06-03T16:00:00+00:00 (matches children's booking start times). Child bookings are correctly folded into parent's availability status."
+    },
+    "availability_only_parent_child_expansion": {
+      "status": "PASS",
+      "tests_passed": 3,
+      "description": "GET /api/resource-bookings?resource_id=<parent_id>&availability_only=true now returns 2 bookings (both children's bookings). Resource IDs in response: [res_06f47697c287, res_3dc6b6488d8c]. Both have status=confirmed."
+    },
+    "parent_with_own_and_children_bookings": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Parent query correctly returns children's bookings. Parent's own bookings: 0, Child A bookings: 1, Child B bookings: 1, Total: 2."
+    },
+    "non_splitable_resources_unchanged": {
+      "status": "PASS",
+      "tests_passed": 1,
+      "description": "Non-splitable resources behave exactly as before - no children fold-in, no parent fold-in. Tested with res_dc078b08e2ca (ApprovalRoom_1779568783_1664)."
+    },
+    "sanity_existing_endpoints": {
+      "status": "PASS",
+      "tests_passed": 4,
+      "description": "All existing endpoints still work: create_booking, check-conflicts, mine_only, availability_snapshot."
+    },
+    "specific_booking_verification": {
+      "status": "PASS",
+      "tests_passed": 3,
+      "description": "Verified: (1) Child A booking bk_890af3eb4e54 exists (16:00-20:00, confirmed), (2) Child B booking bk_8774f786a502 exists (16:00-20:00, confirmed), (3) Parent is_splitable=True, (4) Both children have correct parent_resource_id."
+    }
+  },
+  "code_review": {
+    "routes/resources/admin/analytics.py (lines 111-176)": "availability_snapshot now builds child_to_parent map and folds sub-room bookings into parent's entry. Uses MAX for next_free so multiple parallel sub-bookings don't release parent early. Implementation is correct.",
+    "routes/resources/bookings/crud.py (lines 73-110)": "availability_only block now expands resource_id filter: (1) for parent (is_splitable=true), includes all children, (2) for child, includes parent. Symmetric blocking implemented correctly."
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter351_splitable_parent_rooms.py",
+    "/app/test_reports/pytest/iteration_351_splitable_parent_rooms.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Fix is correct: availability_snapshot now folds children's bookings into parent's status",
+    "Fix is correct: availability_only=true now expands resource_id filter for splitable parents/children",
+    "MAX logic for next_free ensures parent isn't marked free until ALL sub-rooms are free",
+    "Symmetric blocking: parent bookings block children, children bookings block parent",
+    "Non-splitable resources unaffected by the change"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter351_splitable_parent_rooms.py"
+  ],
+  "success_rate": {
+    "backend": "100% (14/14 tests passed)",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "Used existing test data: Parent res_adb9fd1d33e9 (UtilRoom_1779600637), Child A res_3dc6b6488d8c, Child B res_06f47697c287, bookings bk_890af3eb4e54 and bk_8774f786a502",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iter 351 fixes splitable parent room availability bug. Parent now correctly shows busy when children are booked. availability_snapshot folds children into parent, availability_only expands resource_id filter. All 14 tests pass. Outlook Calendar sync remains MOCKED (503 stub).",
+  "mocked_apis": {
+    "has_mocked_apis": true,
+    "mocked_apis_list": ["Outlook Calendar OAuth sync (503 stub)"]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "summary": "Iteration 182/183 backend testing complete. All 18 pytest tests pass. Bug fixes verified: invite email_sent=false when provider=none, bulk-invite per-row email status correct. New features verified: notification preferences API (GET/PUT /users/me/notification-prefs), partial patch, quiet hours, is_allowed() integration in news_push and chat_push services.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": {
+    "bug_fix_invite_email_sent": {
+      "status": "FIXED",
+      "description": "Invite email_sent flag is now only true when provider REAL sent it. With provider=none, returns email_sent=false, email_simulated=true",
+      "evidence": "Test test_invite_with_provider_none_returns_email_sent_false passes - returns {email_sent: false, email_simulated: true, email_provider: 'simulated', email_status: 'logged'}"
+    },
+    "bug_fix_bulk_invite_per_row": {
+      "status": "FIXED",
+      "description": "Bulk-Invite returns email_sent per row correctly (not counting 'logged' as 'sent')",
+      "evidence": "Test test_bulk_invite_returns_per_row_email_status passes - summary.sent=0 with provider=none, each row has email_sent=false, simulated=true"
+    },
+    "feature_email_config_test_inline_smtp": {
+      "status": "WORKING",
+      "description": "POST /api/admin/email-config/test accepts body.smtp for unsaved config testing with masked-password-fallback",
+      "evidence": "Tests test_email_config_test_accepts_inline_smtp and test_email_config_test_with_masked_password_fallback both pass"
+    },
+    "feature_notification_prefs_api": {
+      "status": "WORKING",
+      "description": "GET/PUT /api/users/me/notification-prefs - 5 categories (news/meetings/surveys/chat/feedback) × 2 channels (email/push)",
+      "evidence": "Tests test_get_default_notification_prefs, test_partial_patch_notification_prefs, test_update_quiet_hours all pass"
+    },
+    "feature_is_allowed_function": {
+      "status": "WORKING",
+      "description": "is_allowed(user_id, category, channel) blocks push when category disabled or quiet hours active; email ignores quiet hours; calls/urgent bypass prefs",
+      "evidence": "Direct function tests pass - unknown user/category/channel returns True (safe default), quiet hours only affect push"
+    },
+    "feature_news_push_skipped_prefs": {
+      "status": "WORKING",
+      "description": "news_push.dispatch_push_for_post has skipped_prefs counter; critical priority bypasses prefs",
+      "evidence": "Code review confirms is_allowed gate at line 118, skipped_prefs counter tracked and returned in stats"
+    },
+    "feature_chat_push_skipped_prefs": {
+      "status": "WORKING",
+      "description": "chat_push.push_new_chat_message has skipped_prefs counter; urgent/is_call bypasses prefs",
+      "evidence": "Code review confirms is_allowed gate at line 119, skipped_prefs counter tracked, urgent/is_call bypass at line 118"
+    }
+  },
+  "regression_tests": {
+    "iter_177_surveys": "PASS",
+    "iter_177_news_feed": "PASS",
+    "iter_177_meetings": "PASS",
+    "iter_178_chat_presence": "PASS",
+    "iter_179_chat_conversations": "PASS",
+    "admin_email_config": "PASS"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iteration_183_notif_prefs_invite.py",
+    "/app/backend/tests/test_iter183_notif_prefs_and_invite.py",
+    "/app/test_reports/pytest/iteration_183_notif_prefs_invite_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_iteration_183_notif_prefs_invite.py"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "N/A (backend-only testing requested)"
+  },
+  "test_credentials": "admin@meetflow.com / admin123",
+  "seed_data_creation": "None - test users created and cleaned up during tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All iteration 182/183 features verified working. Notification preferences API fully functional with 5 categories × 2 channels. is_allowed() properly integrated in news_push and chat_push services with skipped_prefs counters. Invite email_sent bug fixed - now correctly returns false when provider=none. Bulk invite per-row status also fixed. Email config test endpoint accepts inline SMTP for unsaved config testing. All regression tests from iter 177-179 pass."
+}

@@ -1,0 +1,227 @@
+/* MeetFlow Custom Styles */
+
+/* Page fade-in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+/* Glass morphism panels */
+.glass-panel {
+  backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Video tile styling */
+.video-tile {
+  background: #1A1D1B;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.video-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-tile .participant-name {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Meeting control bar */
+.control-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  padding: 8px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.control-bar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .control-bar {
+    bottom: 8px;
+    padding: 6px 10px;
+    gap: 2px;
+    border-radius: 16px;
+    max-width: calc(100vw - 16px);
+  }
+  .control-bar button {
+    padding: 7px;
+  }
+  .control-bar button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: #FFFFFF;
+  border-right: 1px solid #E2E4E0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+}
+
+/* Mobile-safety: prevent flex-1 main from exceeding the viewport due to
+   intrinsic min-content of child elements (common with long button rows
+   or wide badges). Keeps every page honest about its horizontal limits. */
+main {
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 767px) {
+  main {
+    overflow-x: hidden;
+  }
+}
+
+.sidebar.sidebar-open {
+  transform: translateX(0);
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    width: 280px;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+
+  /* iter 312 — reserve space at the bottom of every authenticated page so
+     content does not get hidden behind the fixed MobileBottomNav (h-14 +
+     safe-area inset). Affects only viewports that actually show the nav. */
+  body {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 2px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4B5563;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background-color: #F3F4F1;
+  color: #1C1F1D;
+}
+
+.sidebar-item.active {
+  background-color: #4A5D4E;
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Reaction animation */
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-80px) scale(1.3); }
+}
+
+.reaction-float {
+  animation: floatUp 2s ease-out forwards;
+}
+
+/* Pulse for live indicator */
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.pulse-live {
+  animation: pulse-live 1.5s ease-in-out infinite;
+}
+
+
+/* --- IncomingCallModal animations (iter 115) --- */
+/* Smooth fade-in on mount. Replaces shadcn's `animate-in fade-in` which
+   was sometimes jittery depending on plugin load order. */
+@keyframes incoming-call-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Urgent: subtle inner border pulse. NO opacity change on the outer
+   overlay (that's what caused the "flickering / looks weird" feedback
+   in iter 114). The inner ring expands / brightens rhythmically so the
+   urgency reads visually without strobing the entire page. */
+@keyframes incoming-call-urgent-ring {
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(255, 209, 194, 0.0);  opacity: 0.55; }
+  50%      { box-shadow: inset 0 0 40px 0 rgba(255, 209, 194, 0.35); opacity: 1; }
+}
+
+/* Urgent label: gentle opacity pulse ONLY on the "DRINGEND" text, not
+   the whole modal. */
+@keyframes incoming-call-label-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+/* Accept button: soft confidence pulse so it invites the user's eye
+   without looking frantic. */
+@keyframes incoming-call-accept-pulse {
+  0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 rgba(107, 142, 35, 0.45); }
+  50%      { transform: scale(1.045); box-shadow: 0 0 0 14px rgba(107, 142, 35, 0); }
+}

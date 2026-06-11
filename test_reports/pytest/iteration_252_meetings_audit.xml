@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="25" time="49.949" timestamp="2026-05-24T13:37:30.249211+00:00" hostname="agent-env-d37d05be-fbf6-449d-a49e-4c6a0d92a48d"><testcase classname="tests.test_iter252_meetings_audit" name="test_create_meeting_success" time="0.709" /><testcase classname="tests.test_iter252_meetings_audit" name="test_create_meeting_without_title_400" time="0.471"><failure message="AssertionError: Expected 400/422, got 200&#10;assert (200 == 400 or 200 == 422)&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code&#10; +  and   200 = &lt;Response [200 OK]&gt;.status_code">tests/test_iter252_meetings_audit.py:65: in test_create_meeting_without_title_400
+    assert r.status_code == 400 or r.status_code == 422, f"Expected 400/422, got {r.status_code}"
+E   AssertionError: Expected 400/422, got 200
+E   assert (200 == 400 or 200 == 422)
+E    +  where 200 = &lt;Response [200 OK]&gt;.status_code
+E    +  and   200 = &lt;Response [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_iter252_meetings_audit" name="test_list_meetings" time="0.450" /><testcase classname="tests.test_iter252_meetings_audit" name="test_get_meeting_detail" time="0.580" /><testcase classname="tests.test_iter252_meetings_audit" name="test_update_meeting" time="0.658" /><testcase classname="tests.test_iter252_meetings_audit" name="test_delete_meeting" time="0.571" /><testcase classname="tests.test_iter252_meetings_audit" name="test_join_meeting_nonexistent_404" time="0.449" /><testcase classname="tests.test_iter252_meetings_audit" name="test_tokenless_request_401" time="0.113" /><testcase classname="tests.test_iter252_meetings_audit" name="test_create_poll" time="0.556" /><testcase classname="tests.test_iter252_meetings_audit" name="test_vote_poll_success" time="0.626" /><testcase classname="tests.test_iter252_meetings_audit" name="test_vote_poll_invalid_option_400" time="0.656" /><testcase classname="tests.test_iter252_meetings_audit" name="test_vote_poll_already_voted_400" time="0.663" /><testcase classname="tests.test_iter252_meetings_audit" name="test_vote_closed_poll_400" time="0.661" /><testcase classname="tests.test_iter252_meetings_audit" name="test_create_question" time="0.582" /><testcase classname="tests.test_iter252_meetings_audit" name="test_upvote_question" time="0.624" /><testcase classname="tests.test_iter252_meetings_audit" name="test_send_chat_message" time="0.624" /><testcase classname="tests.test_iter252_meetings_audit" name="test_create_breakout_room" time="0.612" /><testcase classname="tests.test_iter252_meetings_audit" name="test_50_concurrent_get_meetings" time="0.659" /><testcase classname="tests.test_iter252_meetings_audit" name="test_50_concurrent_create_meetings" time="3.564" /><testcase classname="tests.test_iter252_meetings_audit" name="test_50_concurrent_chat_messages" time="0.872" /><testcase classname="tests.test_iter252_meetings_audit" name="test_50_concurrent_poll_votes_same_user" time="1.011" /><testcase classname="tests.test_iter252_meetings_audit" name="test_health_check" time="0.384" /><testcase classname="tests.test_iter252_meetings_audit" name="test_iter248_booking_race_regression" time="1.314" /><testcase classname="tests.test_iter252_meetings_audit" name="test_iter250_survey_race_regression" time="31.487"><failure message="httpx.ConnectTimeout">/root/.venv/lib/python3.11/site-packages/httpx/_transports/default.py:101: in map_httpcore_exceptions
+    yield
+/root/.venv/lib/python3.11/site-packages/httpx/_transports/default.py:394: in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpcore/_async/connection_pool.py:256: in handle_async_request
+    raise exc from None
+/root/.venv/lib/python3.11/site-packages/httpcore/_async/connection_pool.py:236: in handle_async_request
+    response = await connection.handle_async_request(
+/root/.venv/lib/python3.11/site-packages/httpcore/_async/connection.py:101: in handle_async_request
+    raise exc
+/root/.venv/lib/python3.11/site-packages/httpcore/_async/connection.py:78: in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpcore/_async/connection.py:124: in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpcore/_backends/auto.py:31: in connect_tcp
+    return await self._backend.connect_tcp(
+/root/.venv/lib/python3.11/site-packages/httpcore/_backends/anyio.py:113: in connect_tcp
+    with map_exceptions(exc_map):
+/usr/local/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+/root/.venv/lib/python3.11/site-packages/httpcore/_exceptions.py:14: in map_exceptions
+    raise to_exc(exc) from exc
+E   httpcore.ConnectTimeout
+
+The above exception was the direct cause of the following exception:
+tests/test_iter252_meetings_audit.py:685: in test_iter250_survey_race_regression
+    results = await asyncio.gather(*[respond() for _ in range(50)])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_iter252_meetings_audit.py:680: in respond
+    r = await c.post(f"{BASE_URL}/surveys/{survey_id}/responses", headers=H, json={
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1859: in post
+    return await self.request(
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.venv/lib/python3.11/site-packages/httpx/_transports/default.py:393: in handle_async_request
+    with map_httpcore_exceptions():
+/usr/local/lib/python3.11/contextlib.py:158: in __exit__
+    self.gen.throw(typ, value, traceback)
+/root/.venv/lib/python3.11/site-packages/httpx/_transports/default.py:118: in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+E   httpx.ConnectTimeout</failure></testcase><testcase classname="tests.test_iter252_meetings_audit" name="test_full_meeting_flow" time="0.811" /></testsuite></testsuites>

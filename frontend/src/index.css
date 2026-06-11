@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F9F9F8;
+  color: #1C1F1D;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
+}
+
+code {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+@layer base {
+  :root {
+    --background: 60 7% 97%;
+    --foreground: 150 6% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 6% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 6% 12%;
+    --primary: 144 12% 33%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 100 6% 91%;
+    --secondary-foreground: 210 6% 15%;
+    --muted: 100 6% 91%;
+    --muted-foreground: 215 8% 47%;
+    --accent: 100 6% 91%;
+    --accent-foreground: 210 6% 15%;
+    --destructive: 12 43% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 100 5% 89%;
+    --input: 100 5% 89%;
+    --ring: 144 12% 33%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
+   BRANDING — iter 125
+   When the org has configured a custom primary color via the admin
+   BrandingSettings panel, `html[data-branded]` is set and we remap
+   the app's hardcoded green (`#4A5D4E`) to the brand colour. This
+   mirrors the strategy used for dark-mode: cheap cascade overrides
+   instead of refactoring every Tailwind arbitrary class.
+   ============================================================ */
+html[data-branded="true"] .bg-\[\#4A5D4E\] { background-color: var(--brand-primary) !important; }
+html[data-branded="true"] .bg-\[\#3E4E42\] { background-color: var(--brand-primary-hover) !important; }
+html[data-branded="true"] .hover\:bg-\[\#3E4E42\]:hover { background-color: var(--brand-primary-hover) !important; }
+html[data-branded="true"] .text-\[\#4A5D4E\] { color: var(--brand-primary) !important; }
+html[data-branded="true"] .text-\[\#3E4E42\] { color: var(--brand-primary-hover) !important; }
+html[data-branded="true"] .border-\[\#4A5D4E\] { border-color: var(--brand-primary) !important; }
+html[data-branded="true"] .sidebar-item.active { background-color: var(--brand-primary) !important; color: var(--brand-primary-fg) !important; }
+/* Inputs focus ring remains the brand */
+html[data-branded="true"] .focus\:border-\[\#4A5D4E\]:focus { border-color: var(--brand-primary) !important; }
+
+@layer base {
+  [data-debug-wrapper="true"] {
+    display: contents !important;
+  }
+  [data-debug-wrapper="true"] > * {
+    margin-left: inherit; margin-right: inherit;
+    margin-top: inherit; margin-bottom: inherit;
+    padding-left: inherit; padding-right: inherit;
+    padding-top: inherit; padding-bottom: inherit;
+    column-gap: inherit; row-gap: inherit; gap: inherit;
+    border-left-width: inherit; border-right-width: inherit;
+    border-top-width: inherit; border-bottom-width: inherit;
+    border-left-style: inherit; border-right-style: inherit;
+    border-top-style: inherit; border-bottom-style: inherit;
+    border-left-color: inherit; border-right-color: inherit;
+    border-top-color: inherit; border-bottom-color: inherit;
+  }
+}
+
+/* ============================================================
+   DARK MODE — iter 124
+   Clinic night-shift friendly palette. Instead of rewriting 1000s
+   of hardcoded Tailwind arbitrary classes, we remap the ~10 most-used
+   hex colors via cascade overrides. Shadcn components pick up dark
+   via their HSL tokens (re-defined below).
+   ============================================================ */
+html.dark {
+  color-scheme: dark;
+  --background: 148 7% 7%;
+  --foreground: 55 15% 90%;
+  --card: 150 7% 12%;
+  --card-foreground: 55 15% 90%;
+  --popover: 150 7% 12%;
+  --popover-foreground: 55 15% 90%;
+  --primary: 95 28% 60%;
+  --primary-foreground: 148 20% 10%;
+  --secondary: 150 7% 18%;
+  --secondary-foreground: 55 10% 85%;
+  --muted: 150 7% 18%;
+  --muted-foreground: 100 5% 65%;
+  --accent: 150 7% 20%;
+  --accent-foreground: 55 10% 85%;
+  --destructive: 12 55% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 150 6% 22%;
+  --input: 150 6% 22%;
+  --ring: 95 28% 60%;
+}
+html.dark body { background-color: #0F1210; color: #E8EAE6; }
+
+/* Backgrounds */
+html.dark .bg-white { background-color: #1C1F1D !important; }
+html.dark .bg-\[\#F9F9F8\] { background-color: #0F1210 !important; }
+html.dark .bg-\[\#FAFAF8\] { background-color: #121512 !important; }
+html.dark .bg-\[\#F8F9F7\] { background-color: #121512 !important; }
+html.dark .bg-\[\#F9F9F6\] { background-color: #121512 !important; }
+html.dark .bg-\[\#F3F4F1\] { background-color: #242826 !important; }
+html.dark .bg-\[\#E8EAE6\] { background-color: #2F332F !important; }
+
+/* Sidebar + Card surfaces keep a subtle lift */
+html.dark aside.sidebar { background-color: #151815 !important; border-color: #2F332F !important; }
+html.dark .sidebar-item { color: #C7CBC7 !important; }
+html.dark .sidebar-item:hover { background-color: #242826 !important; }
+html.dark .sidebar-item.active { background-color: #2F3B31 !important; color: #E8EAE6 !important; }
+
+/* Borders */
+html.dark .border-\[\#E2E4E0\] { border-color: #2F332F !important; }
+html.dark .border-\[\#E8EAE6\] { border-color: #2F332F !important; }
+
+/* Text tokens */
+html.dark .text-\[\#1C1F1D\] { color: #E8EAE6 !important; }
+html.dark .text-\[\#4B5563\] { color: #B7BCB7 !important; }
+html.dark .text-\[\#6B7280\] { color: #A6ACA6 !important; }
+html.dark .text-\[\#9CA3AF\] { color: #8A8F8A !important; }
+
+/* Accents — primary brand becomes slightly lighter for contrast */
+html.dark .bg-\[\#4A5D4E\] { background-color: #5A7362 !important; }
+html.dark .bg-\[\#3E4E42\] { background-color: #4D6354 !important; }
+html.dark .hover\:bg-\[\#3E4E42\]:hover { background-color: #4D6354 !important; }
+html.dark .text-\[\#4A5D4E\] { color: #A8C4A5 !important; }
+html.dark .text-\[\#3E4E42\] { color: #A8C4A5 !important; }
+html.dark .border-\[\#4A5D4E\] { border-color: #5A7362 !important; }
+
+/* Inputs keep enough contrast for typing */
+html.dark input, html.dark textarea, html.dark select {
+  background-color: #1C1F1D !important;
+  color: #E8EAE6 !important;
+  border-color: #2F332F !important;
+}
+html.dark input::placeholder, html.dark textarea::placeholder { color: #6B7275 !important; }
+
+/* Shadow opacity boost so elevated surfaces stay visible on dark */
+html.dark .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,.5) !important; }
+html.dark .shadow { box-shadow: 0 2px 8px rgba(0,0,0,.55) !important; }
+html.dark .shadow-xl { box-shadow: 0 18px 40px rgba(0,0,0,.65) !important; }
+html.dark .shadow-2xl { box-shadow: 0 24px 60px rgba(0,0,0,.75) !important; }
+
+/* Hover bg of light gray variants */
+html.dark .hover\:bg-\[\#F3F4F1\]:hover { background-color: #242826 !important; }
+html.dark .hover\:bg-\[\#F9F9F8\]:hover { background-color: #1A1D1B !important; }

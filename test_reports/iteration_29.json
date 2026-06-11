@@ -1,0 +1,84 @@
+{
+  "summary": "Tested signature visibility bug fix. All features working correctly: DocumentViewer shows signature overlays at correct positions, SignaturePlacement shows existing signatures while placing new ones, download-signed PDF renders signatures at their positions on document area.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "passed_tests": [
+    "BACKEND: GET /api/meetings/{meeting_id}/documents returns signatures with pos_x, pos_y, page fields",
+    "BACKEND: Documents endpoint returns 10 signatures, 2 with positions (pos_x/pos_y > 0)",
+    "BACKEND: Pos Test signature at pos_x=100, pos_y=200",
+    "BACKEND: Confirm Test Signature at pos_x=859, pos_y=540",
+    "BACKEND: GET /download-signed returns valid PDF (application/pdf content type)",
+    "BACKEND: Download-signed PDF contains 'Pos Test' and 'Confirm Test Signature' text",
+    "BACKEND: Download-signed PDF contains document header 'Unterschriebenes Dokument'",
+    "BACKEND: Download-signed PDF contains signature count 'Unterschriften (10)'",
+    "BACKEND: All signatures appear in PDF summary section (admin@meetflow.com, test@test.de)",
+    "BACKEND: 8 signatures without positions correctly excluded from document area overlay",
+    "BACKEND: Typed signatures have correct format (string signature_data, not image)",
+    "FRONTEND: DocumentViewer (data-testid=document-viewer) visible when presenting document",
+    "FRONTEND: Signature count badge (data-testid=doc-sig-count) shows '10 Unterschriften'",
+    "FRONTEND: 2 signature overlays visible (sig-overlay-sig_9eeb3610, sig-overlay-sig_6298a3fd)",
+    "FRONTEND: Overlay 1 'Pos Test' at style='left: 100px; top: 200px;'",
+    "FRONTEND: Overlay 2 'Confirm Test Signature' at style='left: 859px; top: 540px;'",
+    "FRONTEND: Typed signatures shown as italic serif text on document",
+    "FRONTEND: SignaturePlacement overlay (data-testid=signature-placement-overlay) visible",
+    "FRONTEND: 2 existing signatures visible in placement view (existing-sig-0, existing-sig-1)",
+    "FRONTEND: Draggable signature (data-testid=draggable-signature) visible for new signature",
+    "FRONTEND: Position indicator shows coordinates and page number"
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_signature_visibility.py",
+    "/app/test_reports/pytest/signature_visibility_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_signature_visibility.py"
+  ],
+  "success_rate": {
+    "backend": "100% (6/6 tests passed)",
+    "frontend": "100% (all UI tests passed)"
+  },
+  "test_credentials": {
+    "admin": {
+      "email": "admin@meetflow.com",
+      "password": "admin123"
+    },
+    "test_meeting": "meet_044aab394f",
+    "test_document": "doc_49f0e85622",
+    "signatures_with_positions": [
+      {"sig_id": "sig_9eeb3610", "signature_data": "Pos Test", "pos_x": 100, "pos_y": 200},
+      {"sig_id": "sig_6298a3fd", "signature_data": "Confirm Test Signature", "pos_x": 859, "pos_y": 540}
+    ]
+  },
+  "seed_data_creation": "Used existing test document doc_49f0e85622 with 10 signatures (2 with positions)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Signature visibility bug fix verified. DocumentViewer fetches signatures from /meetings/{meeting_id}/documents endpoint and renders positioned ones (pos_x/pos_y > 0) as absolute overlays. SignaturePlacement also fetches existing signatures and shows them while placing new ones. Download-signed PDF uses ReportLab Canvas to draw signatures at their mapped positions (frontend 800x1000px to PDF A4). Key data-testids: document-viewer, doc-sig-count, sig-overlay-{sig_id}, signature-placement-overlay, existing-sig-{index}, draggable-signature.",
+  "mocked_apis": {
+    "email_sending": "Email sending is MOCKED (logged to console, no real email sent)"
+  },
+  "features_verified": {
+    "document_viewer_signature_overlays": {
+      "status": "WORKING",
+      "description": "DocumentViewer shows signature overlays at correct positions on document",
+      "data_testids": ["document-viewer", "doc-sig-count", "sig-overlay-*"]
+    },
+    "signature_placement_existing_sigs": {
+      "status": "WORKING",
+      "description": "SignaturePlacement shows existing signatures while placing new one",
+      "data_testids": ["signature-placement-overlay", "existing-sig-*", "draggable-signature"]
+    },
+    "download_signed_pdf": {
+      "status": "WORKING",
+      "description": "Download-signed PDF renders signatures at their positions on document area",
+      "endpoint": "GET /api/meetings/{meeting_id}/documents/{doc_id}/download-signed"
+    }
+  }
+}
